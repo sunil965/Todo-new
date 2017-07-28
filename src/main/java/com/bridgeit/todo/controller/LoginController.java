@@ -26,7 +26,7 @@ import com.bridgeit.todo.service.TokenService;
 import com.bridgeit.todo.service.UserServices;
 
 /**
- * Login Controller
+ * Login Controller and generic code
  * 
  * @author sunil kumar
  *
