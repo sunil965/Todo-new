@@ -1,0 +1,147 @@
+package com.bridgeit.todo.controller;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.bridgeit.todo.JSONResponse.ErrorResponse;
+import com.bridgeit.todo.JSONResponse.Response;
+import com.bridgeit.todo.JSONResponse.UserResponse;
+import com.bridgeit.todo.Utility.Encryptor;
+import com.bridgeit.todo.model.User;
+import com.bridgeit.todo.service.UserServices;
+import com.bridgeit.todo.validation.UserRegValidate;
+
+@RestController
+public class UserRegControl {
+
+	@Autowired
+	UserRegValidate validator;
+	@Autowired
+	UserServices service;
+
+	private final static Logger logger = Logger.getLogger("sunil");
+	private final static Logger logger1 = Logger.getRootLogger();
+
+	UserResponse userResponse = new UserResponse();
+	ErrorResponse errorResponse = new ErrorResponse();
+
+	/**
+	 * This controller method persist user object to User_Registration_Table in`TodoApp` database. 
+	 * @param user {@link User}
+	 * @param result {@link BindingResult}
+	 * @return {@link ResponseEntity<Response>}
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/registration", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<Response> registerUser(@RequestBody User user, BindingResult result) throws Exception {
+
+		validator.validate(user, result);
+		System.out.println(result.hasErrors());
+
+		if (result.hasErrors()) {
+			logger1.debug("Registration Failed!");
+			logger.debug("Registration Failed!");
+
+			List<FieldError> list = result.getFieldErrors();
+			errorResponse.setList(list);
+			errorResponse.setStatus(-1);
+			errorResponse.setMessage("Result binding error ....");
+
+			return new ResponseEntity<Response>(errorResponse, HttpStatus.NO_CONTENT);
+		}
+
+		String pass = user.getPassword();
+		String encPass = Encryptor.getDigest(pass);
+		user.setPassword(encPass);
+
+		try {
+			service.saveUserDetails(user);
+			logger1.debug("Registration Succesfull!");
+			logger.debug("Registration Succesfull!");
+			userResponse.setStatus(1);
+			userResponse.setMessage("User Successfully Added....");
+			userResponse.setUser(user);
+			return new ResponseEntity<Response>(userResponse, HttpStatus.OK);
+
+		} catch (Exception e) {
+			logger1.debug("Registration Failed!");
+			logger.debug("Registration Failed!");
+			e.printStackTrace();
+			errorResponse.setStatus(-1);
+			errorResponse.setMessage("some internal DAtabase server error...");
+			return new ResponseEntity<Response>(errorResponse, HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+
+	/**
+	 * This controller method updates user object to User_Registration_Table in`TodoApp` database.
+	 * @param user user {@link User}
+	 * @param result {@link BindingResult}
+	 * @return {@link ResponseEntity<Response>}
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/update", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<Response> updateUser(@RequestBody User user, BindingResult result) throws Exception {
+
+		validator.validate(user, result);
+		if (result.hasErrors()) {
+			logger.debug("Update is not sucessful!");
+			List<FieldError> list = result.getFieldErrors();
+			errorResponse.setList(list);
+			errorResponse.setStatus(-1);
+			errorResponse.setMessage("Result binding error ....");
+			return new ResponseEntity<Response>(errorResponse, HttpStatus.NOT_ACCEPTABLE);
+		}
+
+		String pass = user.getPassword();
+		String encPass = Encryptor.getDigest(pass);
+		user.setPassword(encPass);
+
+		try {
+			service.updateUserDetails(user);
+			logger.debug("Update sucessful!");
+			userResponse.setStatus(1);
+			userResponse.setMessage("User Successfully Added....");
+			userResponse.setUser(user);
+			return new ResponseEntity<Response>(userResponse, HttpStatus.OK);
+		} 
+		catch (Exception e) {
+			logger1.debug("Registration Failed!");
+			logger.debug("Registration Failed!");
+			e.printStackTrace();
+			errorResponse.setStatus(-1);
+			
+			errorResponse.setMessage("some internal DAtabase server error...");
+			return new ResponseEntity<Response>(errorResponse, HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+
+	/**
+	 * This method get details of a particular user with the given id in url.
+	 * @param id {@link Integer}
+	 * @return {@link ResponseEntity<List>}}
+	 */
+	@RequestMapping(value = "/getUserDetailsById/{id}")
+	public ResponseEntity<List<User>> getUserDetailsById(@PathVariable("id") int id) {
+		List<User> u = service.getUserById(id);
+		if(u != null){
+			return new ResponseEntity<List<User>>(u, HttpStatus.OK);
+		}
+		return new ResponseEntity<List<User>>(u, HttpStatus.NOT_FOUND);
+	}
+	
+}

@@ -1,0 +1,30 @@
+
+<div class="login-page">
+	<div class="form">
+		<h3>User Register Page</h3>
+		<form class="login-form" method="post"  name="reg" >
+		
+				<input type="text" name="user" id="uname" placeholder="username" ng-model="name" required/>
+				<span ng-show="reg.user.$touched && reg.user.$error.required" style="color: red">"Name can't be empty !!"</span> 
+				
+				<input type="email" name="mail" id="mailid" placeholder="email_id" ng-model="email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required/>
+				<span ng-show="reg.mail.$touched && reg.mail.$error.required" style="color: red">Email required !!!!"</span>
+			    <span ng-show="reg.mail.$touched && reg.mail.$error.pattern" style="color: red">"Email Id should contain '@' and '.'"</span>
+				
+				<input type="number" name="contact" id="contact" placeholder="contact" ng-model="contact" ng-pattern="/^\+?\d{10,10}$/" required/>
+				<span ng-show="reg.contact.$touched && reg.contact.$error.required" style="color: red">"Contact can't be empty !!!"</span>
+				<span ng-show="reg.contact.$touched && reg.contact.$error.pattern" style="color: red">"Contact must have 10 digits !!!"</span>
+				
+				
+				<input type="password" name="pwd" id="pwd1" placeholder="password" ng-model="password" maxlength="15" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required/>
+				<span ng-show="reg.pwd.$touched && reg.pwd.$error.required" style="color: red">"Password can't be empty !!!"</span>
+				<span ng-show="reg.pwd.$touched && reg.pwd.$error.pattern" style="color: red">"Password must be alphanumeric with 1 uppercase letter !!!"</span>
+				
+			<button ng-click="userRegistration()" type="submit" ng-disabled="reg.$invalid">register</button>
+			
+			<p class="message">
+				Already registered? <a ui-sref="login">Sign In</a>
+			</p>
+		</form>
+	</div>
+</div>

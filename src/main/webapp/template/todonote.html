@@ -1,0 +1,94 @@
+
+<nav id="topnav" class="navbar navbar-inverse navbar-fixed-top"
+	role="navigation">
+	<div class="container-fluid" id="container-fluid">
+		<div class="navbar-header" style="margin-left: 15">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+				aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#menu-toggle" id="menu-toggle"><span
+				aria-hidden="true"><img src="image/menu.svg" alt="Menu"></span></a>
+		</div>
+		<div>
+			<a class="navbar-brand" href="#"
+				style="margin-left: 10px; margin-top: 4px;"><font size="5px"
+				; color="black">Google Keep</font></a>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#"><img src="image/refresh.svg" alt="Refresh"></a></li>
+				<li><a href="#"><img src="image/list.svg" alt="List"></a></li>
+				<li><a href="#"><span aria-hidden="true"></span> Help</a></li>
+				<li ng-click="logout()"><img src="image/logout.png" alt="Logout"></li>
+			</ul>
+			<form class="navbar-form navbar-right" action="#" method="GET">
+				<div class="input-group">
+					<div class="input-group-btn" id="submit">
+						<button type="submit" class="btn btn-success">
+							<img alt="search" src="image/searchicon.png">
+							<!-- <span class="glyphicon glyphicon-search"></span> -->
+						</button>
+					</div>
+					<input type="text" class="form-control" placeholder="Search..."	id="query" name="search" value="">
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="container"></div>
+</nav>
+<div id="wrapper" class="toggled">
+	<div class="container-fluid">
+		<!-- Sidebar -->
+		<div id="sidebar-wrapper">
+			<ul class="sidebar-nav">
+				<li class="sidebar-brand"><br></li>
+				<li class="sidebar-brand"><a href="#" class="navbar-brand">
+						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>Profile
+				</a></li>
+				<li class="divider"></li>
+				<li><a href="#"><span aria-hidden="true"><img src="image/noteicon.png" alt="notes"></span> Notes</a></li>
+				<li><a href="#"><span aria-hidden="true"><img src="image/remindericon.svg" alt="notes"></span> Reminders</a></li>
+				<li class="divider"></li>
+				<li><a href="#"><span aria-hidden="true"><img src="image/archive.svg" alt="notes"></span> Archive</a></li>
+				<li><a href="#"><span aria-hidden="true"><img src="image/icons8-Trash Can-20.png" alt="notes"></span> Trash</a></li>
+			</ul>
+		</div>
+		<!-- /#sidebar-wrapper -->
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+
+						<!-- Create Note Card-->
+						 <div class="card">
+							<div id="title" contenteditable="true" placeholder="Title" ng-show="showfullbody"/>
+							<div id="description" contenteditable="true" placeholder="Take a note..." ng-click="hideAndshow()"/>
+							<div id="footer" ng-show="showfullbody">
+								<button id="donebotton" ng-click="savenote()">Done</button>
+							</div>
+						 </div>
+						<!-- /#Create Note Card -->
+		<div ng-repeat="x in allnotes" class="card">
+				<div id="title">{{x.title}}	</div>
+				<div id="description">{{x.description}}	</div>
+		</div>
+					</div>
+				</div>
+			</div>
+			<!-- /#page-content-wrapper -->
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$("#menu-toggle").click(function(e) {
+			e.preventDefault();
+			$("#wrapper").toggleClass("toggled");
+		});
+	</script>
+	<!-- /#wrapper -->

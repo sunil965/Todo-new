@@ -1,0 +1,21 @@
+<div class="login-page">
+	<div class="form">
+
+		<h3>Login Form Page</h3>
+		<form class="login-form" method="post" name="login">
+		
+			<input type="email" name="mail" id="mailid" placeholder="email_id" data-ng-model="email" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required/>
+			<span ng-show="login.mail.$touched && login.mail.$error.required" style="color: red">" Email_id required "</span>
+			<span ng-show="login.mail.$touched && login.mail.$error.pattern" style="color: red">"Invalid Email Id"</span>
+			
+			<input type="password" name="pwd" id="pwd" placeholder="password" data-ng-model="password" maxlength="15" required/>
+			<span ng-show="login.pwd.$touched && login.pwd.$error.required" style="color: red">" Password required!! "</span>
+	
+			<button type="submit" data-ng-click="userlogin()" ng-disabled="login.$invalid">login</button>
+			
+			<p class="message">
+				Not registered? <a ui-sref="register">Create an account</a>
+			</p>
+		</form>
+	</div>
+</div>

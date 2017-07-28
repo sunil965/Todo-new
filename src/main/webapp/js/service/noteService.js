@@ -1,0 +1,38 @@
+myApp.service('noteservice', function($http){
+	
+	console.log("in noteservice");
+	
+	this.create = function(notedata) {
+		return $http({
+			url : "rest/create",
+			method : "post",
+			data : notedata,
+			headers:{'AccessToken': localStorage.getItem("accesstoken")}
+		})
+	}
+	
+	
+	this.findAllNotes = function() {
+		return $http({
+			url : "rest/getAllNotes",
+			method : "get",
+			headers:{'AccessToken': localStorage.getItem("accesstoken")}
+		})
+	}
+	
+	
+	this.verifyRefreshToken=function(){
+		return $http({
+			url:"generateNewAccessToken",
+			method : "post",
+		    headers:{'AccessToken': localStorage.getItem("accesstoken")}
+		})
+	}
+	
+	this.exit=function(){
+		$http({
+			url:"rest/logout",
+		    headers:{'AccessToken': localStorage.getItem("accesstoken")}
+		})
+	}
+})
