@@ -54,9 +54,6 @@ public class NotesController {
 			note.setUser(user);
 			note.setDate(new Date());
 			service.saveNoteInfo(note);
-			
-			List<Note> note1 = service.getAllNote(user.getId());
-			myresponse.setList(note1);
 			myresponse.setStatus(1);
 			myresponse.setMessage("Note Created Sucessfully");
 			return new ResponseEntity<Response>(myresponse,HttpStatus.OK);
@@ -93,9 +90,11 @@ public class NotesController {
 	 * @param note {@link Note}
 	 * @return {@link ResponseEntity<String>}
 	 */
-	@RequestMapping("/rest/editNote")
+	@RequestMapping(value="/rest/editNote", method = RequestMethod.POST)
 	public ResponseEntity<Response> updateNoteDetails(@RequestBody Note note) {
+		System.out.println("@@@"+note.toString()+"@@@");
 		try {
+			note.setDate(new Date());
 			service.updateNote(note);
 			myresponse.setStatus(1);
 			myresponse.setMessage("Note Updated Sucessfully");
@@ -117,8 +116,6 @@ public class NotesController {
 	@RequestMapping("/rest/delete/{id}")
 	public ResponseEntity<Response> deleteNote(@PathVariable("id") int id) {
 		try {
-			List<Note> note1 = service.getAllNote(id);
-			myresponse.setList(note1);
 			service.deleteNote(id);
 			myresponse.setStatus(1);
 			myresponse.setMessage("Note Deleted");
@@ -145,11 +142,10 @@ public class NotesController {
 		int uid = user.getId();
 
 		List<Note> note = service.getAllNote(uid);
-		if (note != null) 
-		{
+		if (note != null) {
 			return new ResponseEntity<List<Note>>(note, HttpStatus.OK);
 		}
-		return new ResponseEntity<List<Note>>(note, HttpStatus.OK);
+		return new ResponseEntity<List<Note>>(note, HttpStatus.NOT_FOUND);
 	}
 /*
 	 ************* GET LIST OF ARCHIVE NOTES ***************

@@ -1,1 +1,12 @@
-Popup Model
+
+	<div id="title" divdata contenteditable="true" ng-model="$ctrl.title1"
+		placeholder="Title" ng-bind="$ctrl.titledata"/>
+	<div id="description" divdata contenteditable="true" ng-model="$ctrl.desc1"
+		placeholder="Take a note..." ng-bind="$ctrl.discriptiondata" />
+	<div>
+		<div id="footer">
+			<img src="image/remindericon.svg" alt="Reminder"> <img
+				src="image/color.png" alt="Reminder">
+			<button id="donebotton" ng-click="$ctrl.updateNote($ctrl.noteId)">Update</button>
+		</div>
+	</div>

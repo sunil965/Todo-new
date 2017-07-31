@@ -96,11 +96,11 @@
 														<!-- <div  class="col-lg-1" ></div> -->
 							<div  class="col-lg-4" >
 							  <div id="gridList">
-							  	<div ng-click="openPopUp()">
-							     <div id="noteTitle" ng-bind-html="x.title"></div>
+							  	<div ng-click="openPopUp(x)">
+							     <div id="title" ng-bind-html="x.title"></div>
 							     <div id="notesDescription" ng-bind-html="x.description" style="word-break: break-word;padding-right: 10px;"></div>
 							    </div>
-								 <div><button ng-click="deleteNote(x.id)">Delete</button></div>
+								 <div id="footer"><button ng-click="deleteNote(x.id)">Delete</button></div>
 							  </div>
 							</div>
 						   								<!-- <div  class="col-lg-1" ></div> -->

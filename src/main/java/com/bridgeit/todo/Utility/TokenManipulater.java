@@ -37,7 +37,7 @@ public class TokenManipulater {
 	public Token generateNewAccessToken(Token token) {
 		String accesstoken = UUID.randomUUID().toString().replaceAll("-", "");
 		token.setAccesstoken(accesstoken);
-		token.setCreatedOn(new Date());
+		/*token.setCreatedOn(new Date());*/
 		return token;
 	}
 

@@ -1,29 +1,30 @@
 package com.bridgeit.todo.JSONResponse;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
-import com.bridgeit.todo.model.Note;
 import com.bridgeit.todo.model.Token;
+import com.bridgeit.todo.model.User;
 
 @Component
-public class UserResponse extends Response
-{
-	List<Note> list;
+public class UserResponse extends Response {
 	Token token;
-	
-	public List<Note> getList() {
-		return list;
+
+	User user;
+
+	public User getUser() {
+		return user;
 	}
-	public void setList(List<Note> list) {
-		this.list = list;
+
+	public void setUser(User user) {
+		this.user = user;
 	}
+
 	public Token getToken() {
 		return token;
 	}
+
 	public void setToken(Token token) {
 		this.token = token;
 	}
-	
+
 }

@@ -37,12 +37,20 @@ myApp.service('noteservice', function($http){
 	}
 	
 	this.deleteNote=function(id){
-		console.log("in deletenote service."+localStorage.getItem("accesstoken"));
 		return $http({
 						url:"rest/delete/"+id,
 						/*method:"post",*/
 						headers:{"AccessToken":localStorage.getItem("accesstoken")}
 				})
+	}
+	
+	this.update=function(data){
+		return $http({
+			url:"rest/editNote",
+			method : "post",
+			data : data,
+			headers:{'AccessToken': localStorage.getItem("accesstoken")}
+		})
 	}
 	
 })
