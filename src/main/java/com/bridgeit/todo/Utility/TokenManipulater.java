@@ -52,7 +52,7 @@ public class TokenManipulater {
 			long currentTime = new Date().getTime();
 			long difference = currentTime - generatedTime;
 			long differrenceInMinute = TimeUnit.MILLISECONDS.toMinutes(difference);
-			if (differrenceInMinute > 10) {
+			if (differrenceInMinute > 5) {
 				return false;
 			}	
 			else

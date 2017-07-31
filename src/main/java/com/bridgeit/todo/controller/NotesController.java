@@ -54,7 +54,9 @@ public class NotesController {
 			note.setUser(user);
 			note.setDate(new Date());
 			service.saveNoteInfo(note);
-			System.out.println("Note Created !!!!");
+			
+			List<Note> note1 = service.getAllNote(user.getId());
+			myresponse.setList(note1);
 			myresponse.setStatus(1);
 			myresponse.setMessage("Note Created Sucessfully");
 			return new ResponseEntity<Response>(myresponse,HttpStatus.OK);
@@ -115,6 +117,8 @@ public class NotesController {
 	@RequestMapping("/rest/delete/{id}")
 	public ResponseEntity<Response> deleteNote(@PathVariable("id") int id) {
 		try {
+			List<Note> note1 = service.getAllNote(id);
+			myresponse.setList(note1);
 			service.deleteNote(id);
 			myresponse.setStatus(1);
 			myresponse.setMessage("Note Deleted");
@@ -134,17 +138,18 @@ public class NotesController {
 	 * @return {@link ResponseEntity<List>}
 	 */
 	@RequestMapping(value = "/rest/getAllNotes")
-	public ResponseEntity<List<Note>> getAllNoteOfUser(HttpServletRequest request) {
-
+	public ResponseEntity<List<Note>> getAllNoteOfUser(HttpServletRequest request)
+	{
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("UserInSession");
 		int uid = user.getId();
 
 		List<Note> note = service.getAllNote(uid);
-		if (note != null) {
+		if (note != null) 
+		{
 			return new ResponseEntity<List<Note>>(note, HttpStatus.OK);
 		}
-		return new ResponseEntity<List<Note>>(note, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<List<Note>>(note, HttpStatus.OK);
 	}
 /*
 	 ************* GET LIST OF ARCHIVE NOTES ***************

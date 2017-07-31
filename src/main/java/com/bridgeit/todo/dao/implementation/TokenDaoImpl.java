@@ -16,7 +16,6 @@ public class TokenDaoImpl implements TokenDao {
 	SessionFactory factory;
 	
 	public void saveToken(Token token) {
-		System.out.println("Tokien is "+token);
 		Session session = factory.getCurrentSession();
 		session.save(token);
 	}

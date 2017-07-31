@@ -139,7 +139,7 @@ public class LoginController {
 	 * @param httpServletRequest
 	 * @return {@link ResponseEntity<Void>}
 	 */
-	@RequestMapping(value = "/rest/logout")
+	@RequestMapping(value = "/logout")
 	public ResponseEntity<Void> logout(HttpServletRequest httpServletRequest) 
 	{
 		String deletetoken = httpServletRequest.getHeader("AccessToken");

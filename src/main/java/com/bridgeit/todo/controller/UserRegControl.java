@@ -73,7 +73,7 @@ public class UserRegControl {
 			logger.debug("Registration Succesfull!");
 			userResponse.setStatus(1);
 			userResponse.setMessage("User Successfully Added....");
-			userResponse.setUser(user);
+//			userResponse.setUser(user);
 			return new ResponseEntity<Response>(userResponse, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -116,7 +116,7 @@ public class UserRegControl {
 			logger.debug("Update sucessful!");
 			userResponse.setStatus(1);
 			userResponse.setMessage("User Successfully Added....");
-			userResponse.setUser(user);
+//			userResponse.setUser(user);
 			return new ResponseEntity<Response>(userResponse, HttpStatus.OK);
 		} 
 		catch (Exception e) {
@@ -124,7 +124,6 @@ public class UserRegControl {
 			logger.debug("Registration Failed!");
 			e.printStackTrace();
 			errorResponse.setStatus(-1);
-			
 			errorResponse.setMessage("some internal DAtabase server error...");
 			return new ResponseEntity<Response>(errorResponse, HttpStatus.NOT_ACCEPTABLE);
 		}

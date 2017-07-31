@@ -1,4 +1,5 @@
-
+ <!---------------- TOP NAVIGATION BAR -------------->
+ 
 <nav id="topnav" class="navbar navbar-inverse navbar-fixed-top"
 	role="navigation">
 	<div class="container-fluid" id="container-fluid">
@@ -11,19 +12,18 @@
 					class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="#menu-toggle" id="menu-toggle"><span
-				aria-hidden="true"><img src="image/menu.svg" alt="Menu"></span></a>
+				aria-hidden="true"><img src="image/icons8-Menu_20.png" alt="Menu" style="margin-top: 4px"></span></a>
 		</div>
 		<div>
 			<a class="navbar-brand" href="#"
-				style="margin-left: 10px; margin-top: 4px;"><font size="5px"
-				; color="black">Google Keep</font></a>
+				style="margin-left: 10px; margin-top: 4px;"><font size="5px"; color="black">Fundoo Notes</font></a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="#"><img src="image/refresh.svg" alt="Refresh"></a></li>
 				<li><a href="#"><img src="image/list.svg" alt="List"></a></li>
 				<li><a href="#"><span aria-hidden="true"></span> Help</a></li>
-				<li ng-click="logout()"><img src="image/logout.png" alt="Logout"></li>
+				<li><a href="" ng-click="logout()"><img src="image/logout.png" alt="Logout"></a></li>
 			</ul>
 			<form class="navbar-form navbar-right" action="#" method="GET">
 				<div class="input-group">
@@ -42,7 +42,8 @@
 </nav>
 <div id="wrapper" class="toggled">
 	<div class="container-fluid">
-		<!-- Sidebar -->
+	
+<!---------------- SIDEBAR -------------->
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><br></li>
@@ -57,31 +58,58 @@
 				<li><a href="#"><span aria-hidden="true"><img src="image/icons8-Trash Can-20.png" alt="notes"></span> Trash</a></li>
 			</ul>
 		</div>
-		<!-- /#sidebar-wrapper -->
-
+		
+		
+		<!------------------- /#sidebar-wrapper -------------->
 		<!-- Page Content -->
 		<div id="page-content-wrapper">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-lg-12" id="notediv" >
 
-						<!-- Create Note Card-->
+						<!------------------- Create Note Card----------------->
 						 <div class="card">
-							<div id="title" contenteditable="true" placeholder="Title" ng-show="showfullbody"/>
-							<div id="description" contenteditable="true" placeholder="Take a note..." ng-click="hideAndshow()"/>
-							<div id="footer" ng-show="showfullbody">
+							<div id="title" divdata contenteditable="true" ng-model="title" placeholder="Title" ng-show="showfullbody"/>
+							<div id="description" divdata contenteditable="true" ng-model="desc" placeholder="Take a note..." ng-click="hideAndshow()"/>
+							<div ng-show="showfullbody">
+								<div id="footer">
+								<img src="image/remindericon.svg" alt="Reminder">
+								<img src="image/color.png" alt="Reminder">
 								<button id="donebotton" ng-click="savenote()">Done</button>
+								</div>
+								
 							</div>
 						 </div>
-						<!-- /#Create Note Card -->
-		<div ng-repeat="x in allnotes" class="card">
-				<div id="title">{{x.title}}	</div>
-				<div id="description">{{x.description}}	</div>
-		</div>
+						<!------------------- /#Create Note Card ----------------->
+						
+						
+                       <!-- - DISPLAY LIST CARDS - -->
+						<!--  <div ng-repeat="x in allnotes" class="card">
+								<div id="title" ng-bind-html="x.title">	</div>
+								<div id="description" ng-bind-html="x.description">	</div>
+								<div><button ng-click="deleteNote(x.id)">Delete</button></div>
+						 </div>	  -->
+						 
+						 
+						 <!--- DISPLAY GRID CARDS --->
+					 <div  ng-repeat="x in allnotes" style="margin-top: 20px;">
+														<!-- <div  class="col-lg-1" ></div> -->
+							<div  class="col-lg-4" >
+							  <div id="gridList">
+							  	<div ng-click="openPopUp()">
+							     <div id="noteTitle" ng-bind-html="x.title"></div>
+							     <div id="notesDescription" ng-bind-html="x.description" style="word-break: break-word;padding-right: 10px;"></div>
+							    </div>
+								 <div><button ng-click="deleteNote(x.id)">Delete</button></div>
+							  </div>
+							</div>
+						   								<!-- <div  class="col-lg-1" ></div> -->
+						 </div>   
+						  <!--- DISPLAY GRID CARDS --->
 					</div>
 				</div>
 			</div>
-			<!-- /#page-content-wrapper -->
+<!----------------------- /#page-content-wrapper -------------------->
 		</div>
 	</div>
 
