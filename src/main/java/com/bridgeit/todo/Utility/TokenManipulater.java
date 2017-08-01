@@ -52,7 +52,7 @@ public class TokenManipulater {
 			long currentTime = new Date().getTime();
 			long difference = currentTime - generatedTime;
 			long differrenceInMinute = TimeUnit.MILLISECONDS.toMinutes(difference);
-			if (differrenceInMinute > 5) {
+			if (differrenceInMinute > 15) {
 				return false;
 			}	
 			else
@@ -73,7 +73,7 @@ public class TokenManipulater {
 		long difference = currentTime - generatedTime;
 		long differrenceInMinute = TimeUnit.MILLISECONDS.toMinutes(difference);
 		
-		if (differrenceInMinute < 20) {
+		if (differrenceInMinute < 30) {
 			Token newToken = generateNewAccessToken(retuturned);
 			tokenService.updateAccessToken(newToken);
 			return newToken;

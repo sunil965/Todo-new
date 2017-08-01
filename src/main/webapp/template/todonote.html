@@ -4,26 +4,41 @@
 	role="navigation">
 	<div class="container-fluid" id="container-fluid">
 		<div class="navbar-header" style="margin-left: 15">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-				aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span> 
+				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#menu-toggle" id="menu-toggle"><span
-				aria-hidden="true"><img src="image/icons8-Menu_20.png" alt="Menu" style="margin-top: 4px"></span></a>
+			<a class="navbar-brand" href="#menu-toggle" id="menu-toggle">
+			   <span aria-hidden="true"><img src="image/icons8-Menu_20.png" alt="Menu" style="margin-top: 4px"></span></a>
 		</div>
 		<div>
-			<a class="navbar-brand" href="#"
+			<a class="navbar-brand" href="http://localhost:8011/ToDo/#!/notes"
 				style="margin-left: 10px; margin-top: 4px;"><font size="5px"; color="black">Fundoo Notes</font></a>
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#"><img src="image/refresh.svg" alt="Refresh"></a></li>
-				<li><a href="#"><img src="image/list.svg" alt="List"></a></li>
-				<li><a href="#"><span aria-hidden="true"></span> Help</a></li>
-				<li><a href="" ng-click="logout()"><img src="image/logout.png" alt="Logout"></a></li>
+				<li><a href="http://localhost:8011/ToDo/#!/notes"><img src="image/refresh.svg" alt="Refresh"></a></li>
+				<li><a href=""><img src="image/list.svg" alt="List"></a></li>
+				<li>
+					<div class="dropdown btn-group">
+						<img alt="Profile" src="image/usericon.png" id="navprofile" data-toggle="dropdown">
+						<div class="dropdown-menu" id="profilpopup">
+							<div>
+								<img alt="list" src="image/usericon.png" id="profile-popup-image">
+							</div>
+							<div id="profile-popup-data">
+								<h4><font color="black">{{name}}</font></h4>
+								<h6>{{email}}</h6>
+								<a href="#">Google+ Profile–Privacy</a>
+								<br>
+								<a href="" ng-click="logout()"><img src="image/logout.png" alt="Logout">
+							</div>
+						</div>
+					</div>
+			    </li>
+				<!-- <li><a href="" ng-click="logout()"><img src="image/logout.png" alt="Logout"></a></li> -->
 			</ul>
 			<form class="navbar-form navbar-right" action="#" method="GET">
 				<div class="input-group">
@@ -51,7 +66,7 @@
 						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>Profile
 				</a></li>
 				<li class="divider"></li>
-				<li><a href="#"><span aria-hidden="true"><img src="image/noteicon.png" alt="notes"></span> Notes</a></li>
+				<li><a href="http://localhost:8011/ToDo/#!/notes"><span aria-hidden="true"><img src="image/noteicon.png" alt="notes"></span> Notes</a></li>
 				<li><a href="#"><span aria-hidden="true"><img src="image/remindericon.svg" alt="notes"></span> Reminders</a></li>
 				<li class="divider"></li>
 				<li><a href="#"><span aria-hidden="true"><img src="image/archive.svg" alt="notes"></span> Archive</a></li>
@@ -68,13 +83,18 @@
 					<div class="col-lg-12" id="notediv" >
 
 						<!------------------- Create Note Card----------------->
-						 <div class="card">
+						 <div class="card" tabindex="0" ng-blur="hideNoteCreate()">
 							<div id="title" divdata contenteditable="true" ng-model="title" placeholder="Title" ng-show="showfullbody"/>
-							<div id="description" divdata contenteditable="true" ng-model="desc" placeholder="Take a note..." ng-click="hideAndshow()"/>
+							<div id="description" divdata contenteditable="true" ng-model="desc" placeholder="Take a note..." 
+								 ng-click="hideAndshow()"/>
 							<div ng-show="showfullbody">
 								<div id="footer">
-								<img src="image/remindericon.svg" alt="Reminder">
-								<img src="image/color.png" alt="Reminder">
+								<span id="footerImages"><img src="image/remindericon.svg" alt="Reminder"></span>
+								<span id="footerImages"><img src="image/collabrate.svg" alt="Collabrate"></span>
+								<span id="footerImages"><img src="image/color.png" alt="Color"></span>
+								<span id="footerImages"><img src="image/archive.svg" alt="Archive"></span>
+								<span id="footerImages"><img src="image/image.svg" alt="Add Image"></span>
+								<span id="footerImages"><img src="image/list.png" alt="More"></span>
 								<button id="donebotton" ng-click="savenote()">Done</button>
 								</div>
 								
@@ -97,10 +117,24 @@
 							<div  class="col-lg-4" >
 							  <div id="gridList">
 							  	<div ng-click="openPopUp(x)">
-							     <div id="title" ng-bind-html="x.title"></div>
-							     <div id="notesDescription" ng-bind-html="x.description" style="word-break: break-word;padding-right: 10px;"></div>
+							      <div id="gridtitle" ng-bind-html="x.title"></div>
+							      <div id="griddescription" ng-bind-html="x.description" style="word-break: break-word;padding-right: 10px;"></div>
 							    </div>
-								 <div id="footer"><button ng-click="deleteNote(x.id)">Delete</button></div>
+								  <div id="gridfooter">
+								  		<span id="footerImages"><img src="image/remindericon.svg" alt="Reminder"></span>
+										<span id="footerImages"><img src="image/collabrate.svg" alt="Collabrate"></span>
+										<span id="footerImages"><img src="image/color.png" alt="Color"></span>
+										<span id="footerImages"><img src="image/archive.svg" alt="Archive"></span>
+										<span id="footerImages"><img src="image/image.svg" alt="Add Image"></span>
+										<span id="footerImages" class="dropdown btn-group">
+											<img src="image/list.png" alt="More" data-toggle="dropdown">
+											<ul class="dropdown-menu">
+												<li><a href="" ng-click="deleteNote(x.id)" style="padding-left: 16px">Delete</a></li>
+												<li><a href="" style="padding-left: 16px">Add label</a></li>
+												<li><a href="" style="padding-left: 16px">Make a copy</a></li>
+											</ul>
+									        </span>	
+								  </div>
 							  </div>
 							</div>
 						   								<!-- <div  class="col-lg-1" ></div> -->

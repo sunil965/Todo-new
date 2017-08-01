@@ -5,6 +5,10 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					$scope.hideAndshow = function() {
 						$scope.showfullbody = true;
 					}
+					
+					$scope.hideNoteCreate = function(){
+						$scope.showfullbody = false;
+					}
 
 //					$scope.allnotes = [];
 					/**
@@ -39,8 +43,6 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 									} 
 									$scope.getAllNotes();
 								});
-						/*$('#title').html("");
-						$('#description').html("");*/
 						$scope.title = "";
 						$scope.desc = "";
 					}
@@ -50,8 +52,13 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					$scope.getAllNotes = function() {
 						var allnotes = noteservice.findAllNotes();
 						allnotes.then(function(response) {
+							
+							$scope.name=response.data[0].user.name;
+							$scope.email=response.data[0].user.email;
+							
 							if (response.data.status == -4) {
-								var checkRefreshToken = noteservice.verifyRefreshToken();
+								$scope.logout();
+								/*var checkRefreshToken = noteservice.verifyRefreshToken();
 								checkRefreshToken.then(function(res) {
 											if (res.data.status == 1) {
 														localStorage.setItem("accesstoken",	res.data.token.accesstoken),
@@ -62,7 +69,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 												console.log("Refresh token expired please login again...");
 												$state.go('login');
 											}
-										});
+										});*/
 							}
 							$scope.allnotes = response.data.reverse();
 						});
@@ -104,7 +111,6 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					/** ****************** Open Model Note Logic. ******************* */
 					
 					$scope.openPopUp = function(x){
-						console.log("open popup",x.title," ",x.description);
 						var modalInstance = $uibModal.open({
 					       	templateUrl: "template/popupdiv.html",
 					       	controller: function($uibModalInstance) {
@@ -115,17 +121,16 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					       		this.notedate=x.date;
 					       		this.noteuser=x.user;
 					       		
-					       		console.log(this.titledata,"  ",this.discriptiondata);
-					       		
 					       		this.updateNote=function(id){
-					       			console.log("note id is :: ",id);
-					       			console.log("title is :: ",this.title1);
-					       			console.log("title is :: ",this.desc1);
-					       			$uibModalInstance.dismiss('Done');
+					       			/*console.log("note id is :: ",id);
+					       			console.log("title is :: ",this.titledata);
+					       			console.log("title is :: ",this.discriptiondata);*/
+					       			$uibModalInstance.dismiss('Update');
+					       			
 					       			var updateobj={};
 					       			updateobj.id = this.noteId;
-					       			updateobj.title = this.title1;
-					       			updateobj.description = this.desc1;
+					       			updateobj.title = this.titledata;
+					       			updateobj.description = this.discriptiondata;
 					       			updateobj.user=this.noteuser;
 					       			
 					       			var httpObject = noteservice.update(updateobj);
