@@ -20,7 +20,8 @@
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="http://localhost:8011/ToDo/#!/notes"><img src="image/refresh.svg" alt="Refresh"></a></li>
-				<li><a href=""><img src="image/list.svg" alt="List"></a></li>
+				<li><a href="" ng-show="listbtn" ng-click="showinlist()"><img src="image/list.svg" alt="List"></a></li>
+				<li><a href="" ng-show="gridbtn" ng-click="showingrid()"><img src="image/grid.svg" alt="Grid"></a></li>
 				<li>
 					<div class="dropdown btn-group">
 						<img alt="Profile" src="image/usericon.png" id="navprofile" data-toggle="dropdown">
@@ -31,24 +32,25 @@
 							<div id="profile-popup-data">
 								<h4><font color="black">{{name}}</font></h4>
 								<h6>{{email}}</h6>
-								<a href="#">Google+ Profile–Privacy</a>
+								<a href="">Google+ Profile–Privacy</a>
 								<br>
-								<a href="" ng-click="logout()"><img src="image/logout.png" alt="Logout">
+								<a href="" ng-click="logout()"><img src="image/logout.png" alt="Logout"></a>
 							</div>
 						</div>
 					</div>
 			    </li>
 				<!-- <li><a href="" ng-click="logout()"><img src="image/logout.png" alt="Logout"></a></li> -->
 			</ul>
-			<form class="navbar-form navbar-right" action="#" method="GET">
+			<form class="navbar-form navbar-right" action="" method="GET">
 				<div class="input-group">
-					<div class="input-group-btn" id="submit">
+					<!-- <div class="input-group-btn" id="submit">
 						<button type="submit" class="btn btn-success">
 							<img alt="search" src="image/searchicon.png">
-							<!-- <span class="glyphicon glyphicon-search"></span> -->
+							<span class="glyphicon glyphicon-search"></span>
 						</button>
-					</div>
-					<input type="text" class="form-control" placeholder="Search..."	id="query" name="search" value="">
+					</div> -->
+					
+					<input type="text" class="form-control" placeholder="Search..."	id="query" name="search" value="" ng-model="searchnote">
 				</div>
 			</form>
 		</div>
@@ -62,15 +64,28 @@
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><br></li>
-				<li class="sidebar-brand"><a href="#" class="navbar-brand">
-						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>Profile
-				</a></li>
 				<li class="divider"></li>
-				<li><a href="http://localhost:8011/ToDo/#!/notes"><span aria-hidden="true"><img src="image/noteicon.png" alt="notes"></span> Notes</a></li>
-				<li><a href="#"><span aria-hidden="true"><img src="image/remindericon.svg" alt="notes"></span> Reminders</a></li>
+				<div id="sidebarcontent">
+					<li>
+					   <a href="http://localhost:8011/ToDo/#!/notes">
+					      <span aria-hidden="true">
+					           <img src="image/noteicon.png" alt="notes">
+					      </span> Notes
+					   </a>
+					</li>
+				</div>
+				<div id="sidebarcontent">
+				<li><a href=""><span aria-hidden="true"><img src="image/remindericon.svg" alt="notes"></span> Reminders</a></li>
+				</div>
+				<div id="sidebarcontent">
 				<li class="divider"></li>
-				<li><a href="#"><span aria-hidden="true"><img src="image/archive.svg" alt="notes"></span> Archive</a></li>
-				<li><a href="#"><span aria-hidden="true"><img src="image/icons8-Trash Can-20.png" alt="notes"></span> Trash</a></li>
+				</div>
+				<div id="sidebarcontent">
+				<li><a href=""><span aria-hidden="true"><img src="image/archive.svg" alt="notes"></span> Archive</a></li>
+				</div>
+				<div id="sidebarcontent">
+				<li><a href=""><span aria-hidden="true"><img src="image/icons8-Trash Can-20.png" alt="notes"></span> Trash</a></li>
+				</div>
 			</ul>
 		</div>
 		
@@ -89,36 +104,58 @@
 								 ng-click="hideAndshow()"/>
 							<div ng-show="showfullbody">
 								<div id="footer">
-								<span id="footerImages"><img src="image/remindericon.svg" alt="Reminder"></span>
-								<span id="footerImages"><img src="image/collabrate.svg" alt="Collabrate"></span>
-								<span id="footerImages"><img src="image/color.png" alt="Color"></span>
-								<span id="footerImages"><img src="image/archive.svg" alt="Archive"></span>
-								<span id="footerImages"><img src="image/image.svg" alt="Add Image"></span>
-								<span id="footerImages"><img src="image/list.png" alt="More"></span>
-								<button id="donebotton" ng-click="savenote()">Done</button>
+									<span id="footerImages"><img src="image/remindericon.svg" alt="Reminder"></span>
+									<span id="footerImages"><img src="image/collabrate.svg" alt="Collabrate"></span>
+									<span id="footerImages"><img src="image/color.png" alt="Color"></span>
+									<span id="footerImages"><img src="image/archive.svg" alt="Archive"></span>
+									<span id="footerImages"><img src="image/image.svg" alt="Add Image"></span>
+									<span id="footerImages"><img src="image/list.png" alt="More"></span>
+									<button id="donebotton" ng-click="savenote()">Done</button>
 								</div>
-								
 							</div>
 						 </div>
 						<!------------------- /#Create Note Card ----------------->
 						
 						
                        <!-- - DISPLAY LIST CARDS - -->
-						<!--  <div ng-repeat="x in allnotes" class="card">
-								<div id="title" ng-bind-html="x.title">	</div>
-								<div id="description" ng-bind-html="x.description">	</div>
-								<div><button ng-click="deleteNote(x.id)">Delete</button></div>
+                       
+						<!--  <div ng-repeat="x in allnotes | filter:searchnote" style="margin-top: 20px;">
+						 	<div  class="col-lg-12" id="hoverthis">
+						 		<div id="viewList" ng-show="showlist">
+							 		<div ng-click="openPopUp(x)">
+										<div id="title" ng-bind-html="x.title"></div>
+										<div id="description" ng-bind-html="x.description" style="word-break: break-word; padding-right:10px;"></div>
+									</div>
+									<div id="gridfooter">
+								  		<span id="footerImages"><img src="image/remindericon.svg" alt="Reminder"></span>
+										<span id="footerImages"><img src="image/collabrate.svg" alt="Collabrate"></span>
+										<span id="footerImages"><img src="image/color.png" alt="Color"></span>
+										<span id="footerImages"><img src="image/archive.svg" alt="Archive"></span>
+										<span id="footerImages"><img src="image/image.svg" alt="Add Image"></span>
+										<span id="footerImages" class="dropdown btn-group">
+											<img src="image/list.png" alt="More" data-toggle="dropdown">
+											<ul class="dropdown-menu">
+												<li><a href="" ng-click="deleteNote(x.id)" style="padding-left: 16px">Delete</a></li>
+												<li><a href="" style="padding-left: 16px">Add label</a></li>
+												<li><a href="" style="padding-left: 16px">Make a copy</a></li>
+											</ul>
+									    </span>	
+								  </div>
+								</div>
+							</div>
 						 </div>	  -->
 						 
 						 
 						 <!--- DISPLAY GRID CARDS --->
-					 <div  ng-repeat="x in allnotes" style="margin-top: 20px;">
+					 <div  ng-repeat="x in allnotes | filter:searchnote" style="margin-top: 20px;">
 														<!-- <div  class="col-lg-1" ></div> -->
-							<div  class="col-lg-4" >
+							<!-- <div  class="col-lg-4" id="hoverthis"> -->
+							<div  ng-class="spacecol2"></div>
+							<div  ng-class="changeView" id="hoverthis">
 							  <div id="gridList">
-							  	<div ng-click="openPopUp(x)">
+							  	<div ng-click="openPopUp(x)" style="min-height: 110px;">
 							      <div id="gridtitle" ng-bind-html="x.title"></div>
-							      <div id="griddescription" ng-bind-html="x.description" style="word-break: break-word;padding-right: 10px;"></div>
+							      <div id="griddescription" ng-bind-html="x.description" style="word-break: break-word; padding-right:10px;"></div>
 							    </div>
 								  <div id="gridfooter">
 								  		<span id="footerImages"><img src="image/remindericon.svg" alt="Reminder"></span>
@@ -133,7 +170,7 @@
 												<li><a href="" style="padding-left: 16px">Add label</a></li>
 												<li><a href="" style="padding-left: 16px">Make a copy</a></li>
 											</ul>
-									        </span>	
+									    </span>	
 								  </div>
 							  </div>
 							</div>

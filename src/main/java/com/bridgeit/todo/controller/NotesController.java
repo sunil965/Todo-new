@@ -92,7 +92,6 @@ public class NotesController {
 	 */
 	@RequestMapping(value="/rest/editNote", method = RequestMethod.POST)
 	public ResponseEntity<Response> updateNoteDetails(@RequestBody Note note) {
-		System.out.println("@@@"+note.toString()+"@@@");
 		try {
 			note.setDate(new Date());
 			service.updateNote(note);
