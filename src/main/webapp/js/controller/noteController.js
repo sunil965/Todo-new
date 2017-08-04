@@ -72,7 +72,19 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 						$scope.title = "";
 						$scope.desc = "";
 					}
+					
+					
 
+					/** *************** Get All Notes Logic. **************** */
+					
+					$Sscope.notecolor=function(id, color){
+						
+					}
+					
+					
+					
+					
+					
 					/** *************** Get All Notes Logic. **************** */
 
 					$scope.getAllNotes = function() {

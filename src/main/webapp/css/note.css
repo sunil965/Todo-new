@@ -89,7 +89,8 @@ body {
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
 		rgba(0, 0, 0, 0.19);
 }
-#gridfooter{
+
+#gridfooter {
 	margin-left: -32px;
 }
 
@@ -313,19 +314,21 @@ body {
 	margin-top: 20px;
 }
 
-/* #footerImages {
-	margin-top: -17px;
-	float:left;
-    display: none;
-} */
 #hoverthis:hover  #footerImages {
 	display: block;
 }
 
-/* #colordiv{
-	 display: none;
+.colordiv {
+	display: none;
 }
 
-#colorimage:hover #colordiv{
-	diplay:block;
-} */
+.color:hover .colordiv {
+	background-color: white;
+	width: 100px;
+	position: absolute;
+	margin-top:-52px;
+	display: block;
+	padding-bottom: 8px;
+	padding-left: 4px;
+	box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
