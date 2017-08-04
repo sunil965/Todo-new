@@ -13,9 +13,6 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					$scope.showinlist = function(){
 						$scope.listbtn=false;
 						$scope.gridbtn=true;
-						/*$scope.showlist=true;
-						$scope.showgrid=false;*/
-						
 						$scope.spacecol2="col-lg-2";
 						$scope.changeView="col-lg-8";
 						localStorage.setItem("view", "list");
@@ -24,8 +21,6 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					$scope.showingrid = function(){
 						$scope.listbtn=true;
 						$scope.gridbtn=false;
-						/*$scope.showlist=false;
-						$scope.showgrid=true;*/
 						$scope.spacecol2="";
 						$scope.changeView="col-lg-4 col-sm-4 col-md-4 col-xs-12";
 						localStorage.setItem("view", "grid");
@@ -77,8 +72,28 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 
 					/** *************** Get All Notes Logic. **************** */
 					
-					$Sscope.notecolor=function(id, color){
-						
+					$scope.notecolor=function(note, color){
+						note.color=color;
+						var httpObject = noteservice.update(note);
+						httpObject.then(function(response){
+		       				if(response.data.status == -4){
+		       					var checkRefreshToken = noteservice.verifyRefreshToken();
+								checkRefreshToken.then(function(res) {
+											if (res.data.status == 1) {
+														localStorage.setItem("accesstoken",	res.data.token.accesstoken),
+														noteservice.update(updateobj).then(function(responseagain)
+														{
+															$scope.allnotes = response.data.reverse();
+														});
+											} else 
+											{
+												console.log("Refresh token expired please login again...");
+												$state.go('login');
+											}
+										});
+		       				}
+		       				$scope.getAllNotes();
+		       			});
 					}
 					
 					
@@ -91,9 +106,6 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 						
 						var allnotes = noteservice.findAllNotes();
 						allnotes.then(function(response) {
-							
-							/*$scope.name=response.data[0].user.name;
-							$scope.email=response.data[0].user.email;*/
 							
 							if (response.data.status == -4) {
 								console.log("Logout from Read operation method.");
@@ -114,6 +126,8 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 											}
 										});*/
 							}
+							$scope.name=response.data[0].user.name;
+							$scope.email=response.data[0].user.email;
 							$scope.allnotes = response.data.reverse();
 //							$scope.showinlist();
 						});
@@ -162,6 +176,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					       		this.noteId=x.id;
 					       		this.notedate=x.date;
 					       		this.noteuser=x.user;
+					       		this.notecolor=x.color;
 					       		
 					       		this.updateNote=function(id){
 					       			$uibModalInstance.dismiss('Update');
@@ -171,6 +186,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					       			updateobj.title = this.titledata;
 					       			updateobj.description = this.discriptiondata;
 					       			updateobj.user=this.noteuser;
+					       			updateobj.color=this.notecolor;
 					       			
 					       			var httpObject = noteservice.update(updateobj);
 					       			httpObject.then(function(response){

@@ -104,12 +104,24 @@
 								 ng-click="hideAndshow()"/>
 							<div ng-show="showfullbody">
 								<div id="footer">
-									<span id="footerImages"><img src="image/remindericon.svg" alt="Reminder"></span>
-									<span id="footerImages"><img src="image/collabrate.svg" alt="Collabrate"></span>
-									<span id="footerImages"><img src="image/color.png" alt="Color"></span>
-									<span id="footerImages"><img src="image/archive.svg" alt="Archive"></span>
-									<span id="footerImages"><img src="image/image.svg" alt="Add Image"></span>
-									<span id="footerImages"><img src="image/list.png" alt="More"></span>
+									<span id="create-footer-Images"><img src="image/remindericon.svg" alt="Reminder"></span>
+									<span id="create-footer-Images"><img src="image/collabrate.svg" alt="Collabrate"></span>
+									<span id="create-footer-Images" class="color">
+										<div class="colordiv" float="right">
+													<img ng-click="notecolor(x,'rgb(250, 250, 250)')" src="image/white.png" alt="White" >
+													<img ng-click="notecolor(x,'rgb(255, 135, 128)')" src="image/red.png" alt="Red">
+													<img ng-click="notecolor(x,'rgb(255, 209, 128)')" src="image/orange.png" alt="Orange">
+													<img ng-click="notecolor(x,'rgb(255, 255, 141)')" src="image/yellow.png" alt="Yellow">
+													<img ng-click="notecolor(x,'rgb(207, 216, 220)')" src="image/gray.png" alt="Gray">
+													<img ng-click="notecolor(x,'rgb(128, 216, 255)')" src="image/blue.png" alt="Blue">
+													<img ng-click="notecolor(x,'rgb(167, 255, 235)')" src="image/teal.png" alt="Teal">
+													<img ng-click="notecolor(x,'rgb(204, 255, 144)')" src="image/green.png" alt="Green">
+											</div>
+									<img src="image/color.png" alt="Color">
+									</span>
+									<span id="create-footer-Images"><img src="image/archive.svg" alt="Archive"></span>
+									<span id="create-footer-Images"><img src="image/image.svg" alt="Add Image"></span>
+									<span id="create-footer-Images"><img src="image/list.png" alt="More"></span>
 									<button id="donebotton" ng-click="savenote()">Done</button>
 								</div>
 							</div>
@@ -153,7 +165,7 @@
 							<div  ng-class="spacecol2"></div>
 							<div  ng-class="changeView" id="hoverthis">
 							
-							  <div id="gridList" ng-style="{notecolor:x.color}">
+							  <div id="gridList" ng-style="{'background-color':x.color}">
 							  	<div ng-click="openPopUp(x)" style="min-height: 110px;">
 							      <div id="gridtitle" ng-bind-html="x.title"></div>
 							      <div id="griddescription" ng-bind-html="x.description" style="word-break: break-word; padding-right:10px;"></div>
@@ -163,14 +175,14 @@
 										<span id="footerImages"><img src="image/collabrate.svg" alt="Collabrate"></span>
 										<span id="footerImages" class="color">
 											<div class="colordiv">
-													<img ng-click="notecolor(x.id,'rgb(250, 250, 250)')" src="image/white.png" alt="White" >
-													<img ng-click="notecolor(x.id,'rgb(255, 209, 128)')" src="image/red.png" alt="Red">
-													<img ng-click="notecolor(x.id,'rgb(255, 255, 141)')" src="image/orange.png" alt="Orange">
-													<img ng-click="notecolor(x.id,'rgb(207, 216, 220)')" src="image/yellow.png" alt="Yellow">
-													<img ng-click="notecolor(x.id,'rgb(128, 216, 255)')" src="image/gray.png" alt="Gray">
-													<img ng-click="notecolor(x.id,'rgb(167, 255, 235)')" src="image/blue.png" alt="Blue">
-													<img ng-click="notecolor(x.id,'rgb(204, 255, 144)')" src="image/teal.png" alt="Teal">
-													<img ng-click="notecolor(x.id,'rgb(250, 250, 250)')" src="image/green.png" alt="Green">
+													<img ng-click="notecolor(x,'rgb(250, 250, 250)')" src="image/white.png" alt="White" >
+													<img ng-click="notecolor(x,'rgb(255, 135, 128)')" src="image/red.png" alt="Red">
+													<img ng-click="notecolor(x,'rgb(255, 209, 128)')" src="image/orange.png" alt="Orange">
+													<img ng-click="notecolor(x,'rgb(255, 255, 141)')" src="image/yellow.png" alt="Yellow">
+													<img ng-click="notecolor(x,'rgb(207, 216, 220)')" src="image/gray.png" alt="Gray">
+													<img ng-click="notecolor(x,'rgb(128, 216, 255)')" src="image/blue.png" alt="Blue">
+													<img ng-click="notecolor(x,'rgb(167, 255, 235)')" src="image/teal.png" alt="Teal">
+													<img ng-click="notecolor(x,'rgb(204, 255, 144)')" src="image/green.png" alt="Green">
 											</div>
 										<img src="image/color.png" alt="Colors">
 										</span>

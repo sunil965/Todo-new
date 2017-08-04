@@ -1,15 +1,16 @@
-
+<div ng-style="{'background-color':$ctrl.notecolor}">
 	<div id="title" divdata contenteditable="true" ng-model="$ctrl.titledata"	placeholder="Title" ng-bind-html="$ctrl.titledata"/>
 	<div id="description" divdata contenteditable="true" ng-model="$ctrl.discriptiondata"	placeholder="Take a note..." ng-bind-html="$ctrl.discriptiondata" />
 	<div>
 		<div id="footer">
-			<span id="footerImages">
+			<span id="popup-Images">
 				<img src="image/remindericon.svg" alt="Reminder"></span>
-			    <span id="footerImages"><img src="image/collabrate.svg" alt="Collabrate"></span>
-				<span id="footerImages"><img src="image/color.png" alt="Color"></span>
-				<span id="footerImages"><img src="image/archive.svg" alt="Archive"></span>
-				<span id="footerImages"><img src="image/image.svg" alt="Add Image"></span>
-				<span id="footerImages"><img src="image/list.png" alt="More"></span>
+			    <span id="popup-footer-Images"><img src="image/collabrate.svg" alt="Collabrate"></span>
+				<span id="popup-footer-Images"><img src="image/color.png" alt="Color"></span>
+				<span id="popup-footer-Images"><img src="image/archive.svg" alt="Archive"></span>
+				<span id="popup-footer-Images"><img src="image/image.svg" alt="Add Image"></span>
+				<span id="popup-footer-Images"><img src="image/list.png" alt="More"></span>
 			<button id="donebotton" ng-click="$ctrl.updateNote($ctrl.noteId)">Update</button>
 		</div>
 	</div>
+</div>

@@ -31,6 +31,9 @@ public class Note {
 	@Column(name = "Date")
 	private Date date;
 	
+	@Column(name = "Color")
+	private String color;
+	
 	/*private String archive;
 	private String pin;*/
 
@@ -78,11 +81,18 @@ public class Note {
 		this.user = user;
 	}
 
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
 	@Override
 	public String toString() {
-		return "Note [id=" + id + ", title=" + title + ", description=" + description + ", date=" + date + ", user="
-				+ user + "]";
+		return "Note [id=" + id + ", title=" + title + ", description=" + description + ", date=" + date + ", color="
+				+ color + ", user=" + user + "]";
 	}
 	
-
 }
