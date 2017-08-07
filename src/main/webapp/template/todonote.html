@@ -75,16 +75,16 @@
 					</li>
 				</div>
 				<div id="sidebarcontent">
-				<li><a href=""><span aria-hidden="true"><img src="image/remindericon.svg" alt="notes"></span> Reminders</a></li>
+					<li><a href=""><span aria-hidden="true"><img src="image/remindericon.svg" alt="notes"></span> Reminders</a></li>
 				</div>
 				<div id="sidebarcontent">
-				<li class="divider"></li>
+					<li class="divider"></li>
 				</div>
 				<div id="sidebarcontent">
-				<li><a href=""><span aria-hidden="true"><img src="image/archive.svg" alt="notes"></span> Archive</a></li>
+					<li><a href=""><span aria-hidden="true"><img src="image/archive.svg" alt="notes"></span> Archive</a></li>
 				</div>
 				<div id="sidebarcontent">
-				<li><a href=""><span aria-hidden="true"><img src="image/icons8-Trash Can-20.png" alt="notes"></span> Trash</a></li>
+					<li><a href=""><span aria-hidden="true"><img src="image/icons8-Trash Can-20.png" alt="notes"></span> Trash</a></li>
 				</div>
 			</ul>
 		</div>
@@ -128,40 +128,8 @@
 						 </div>
 						<!------------------- /#Create Note Card ----------------->
 						
-						
-                       <!-- - DISPLAY LIST CARDS - -->
-                       
-						<!--  <div ng-repeat="x in allnotes | filter:searchnote" style="margin-top: 20px;">
-						 	<div  class="col-lg-12" id="hoverthis">
-						 		<div id="viewList" ng-show="showlist">
-							 		<div ng-click="openPopUp(x)">
-										<div id="title" ng-bind-html="x.title"></div>
-										<div id="description" ng-bind-html="x.description" style="word-break: break-word; padding-right:10px;"></div>
-									</div>
-									<div id="gridfooter">
-								  		<span id="footerImages"><img src="image/remindericon.svg" alt="Reminder"></span>
-										<span id="footerImages"><img src="image/collabrate.svg" alt="Collabrate"></span>
-										<span id="footerImages"><img src="image/color.png" alt="Color"></span>
-										<span id="footerImages"><img src="image/archive.svg" alt="Archive"></span>
-										<span id="footerImages"><img src="image/image.svg" alt="Add Image"></span>
-										<span id="footerImages" class="dropdown btn-group">
-											<img src="image/list.png" alt="More" data-toggle="dropdown">
-											<ul class="dropdown-menu">
-												<li><a href="" ng-click="deleteNote(x.id)" style="padding-left: 16px">Delete</a></li>
-												<li><a href="" style="padding-left: 16px">Add label</a></li>
-												<li><a href="" style="padding-left: 16px">Make a copy</a></li>
-											</ul>
-									    </span>	
-								  </div>
-								</div>
-							</div>
-						 </div>	  -->
-						 
-						 
-						 <!--- DISPLAY GRID CARDS --->
+						 <!------------------ DISPLAY GRID CARDS ---------------->
 					 <div  ng-repeat="x in allnotes | filter:searchnote" style="margin-top: 20px;">
-														<!-- <div  class="col-lg-1" ></div> -->
-							<!-- <div  class="col-lg-4" id="hoverthis"> -->
 							<div  ng-class="spacecol2"></div>
 							<div  ng-class="changeView" id="hoverthis">
 							
@@ -199,9 +167,8 @@
 								  </div>
 							  </div>
 							</div>
-						   								<!-- <div  class="col-lg-1" ></div> -->
 						 </div>   
-						  <!--- DISPLAY GRID CARDS --->
+						  <!--- DISPLAY GRID CARDS ENDS --->
 					</div>
 				</div>
 			</div>
