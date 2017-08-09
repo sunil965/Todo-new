@@ -23,12 +23,12 @@ body {
 }
 
 .card {
-	width: 500px;
+	width: 65%;
 	background-color: white;
 	/* padding: 20px 25px 30px; */
 	margin: auto;
 	margin-top: 90px;
-	border-radius: 2px;
+	border-radius: 6px;
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
 		rgba(0, 0, 0, 0.19);
@@ -80,11 +80,15 @@ body {
 	width: 100%;
 	padding-left: 15px;
 	padding-top: 15px;
-	padding-bottom: 15px;
+	padding-bottom: 10px;
 	background-color: white;
 	margin: auto;
 	margin-top: 20px;
 	border-radius: 2px;
+	border-bottom-style: outset;
+}
+
+#hoverthis:hover #gridList {
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
 		rgba(0, 0, 0, 0.19);
@@ -142,10 +146,10 @@ body {
 	width: 0;
 	height: 100%;
 	background: #e8e8e8;
-	-webkit-transition: all 0.5s ease;
-	-moz-transition: all 0.5s ease;
-	-o-transition: all 0.5s ease;
-	transition: all 0.5s ease;
+	-webkit-transition: all 0.7s ease;
+	-moz-transition: all 0.7s ease;
+	-o-transition: all 0.7s ease;
+	transition: all 0.7s ease;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -326,12 +330,36 @@ body {
 	background-color: white;
 	width: 100px;
 	position: absolute;
-	margin-top:-52px;
+	margin-top: -52px;
 	display: block;
 	padding-bottom: 8px;
 	padding-left: 4px;
-	box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 1.2);
 }
-#popup-footer-Images, #create-footer-Images{
+
+#popup-footer-Images, #create-footer-Images {
 	margin-left: 18px;
+}
+
+#dropdown-menu {
+	width: 275px;
+	margin-left: -15px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#reminderdiv {
+	width: 95%;
+	/* border-top-style: outset; */
+	margin-top: 20px;
+	/* padding: 8px; */
+	border-top: 2px dotted;
+	border-top-color: #dfd6d6;
+}
+#close-reminder{
+	float: right;
+	display: none;
+}
+#hoverthis:hover #close-reminder {
+	display: block;
 }

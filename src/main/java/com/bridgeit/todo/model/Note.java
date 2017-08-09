@@ -34,6 +34,9 @@ public class Note {
 	@Column(name = "Color")
 	private String color;
 	
+	@Column(name = "Reminder")
+	private Date reminddate;
+	
 	/*private String archive;
 	private String pin;*/
 
@@ -89,10 +92,19 @@ public class Note {
 		this.color = color;
 	}
 
+	
+	public Date getReminddate() {
+		return reminddate;
+	}
+
+	public void setReminddate(Date reminddate) {
+		this.reminddate = reminddate;
+	}
+
 	@Override
 	public String toString() {
 		return "Note [id=" + id + ", title=" + title + ", description=" + description + ", date=" + date + ", color="
-				+ color + ", user=" + user + "]";
+				+ color + ", reminddate=" + reminddate + ", user=" + user + "]";
 	}
-	
+
 }

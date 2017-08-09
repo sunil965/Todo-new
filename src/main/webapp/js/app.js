@@ -1,5 +1,5 @@
 
-var myApp = angular.module('todo', ['ui.router','ngSanitize','ui.bootstrap']).config(function ($stateProvider, $urlRouterProvider)
+var myApp = angular.module('todo', ['ui.router','ngSanitize','ui.bootstrap','tooltips']).config(function ($stateProvider, $urlRouterProvider)
 	{
 		$stateProvider
 		.state("login",

@@ -1,6 +1,10 @@
 myApp.controller('notesController',	function($scope, $state, noteservice, $uibModal) {
 
 					console.log("inside the notes controller");
+					
+					$scope.refresh=function($window){
+						$state.reload()
+					}
 
 					$scope.hideAndshow = function() {
 						$scope.showfullbody = true;
@@ -22,7 +26,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 						$scope.listbtn=true;
 						$scope.gridbtn=false;
 						$scope.spacecol2="";
-						$scope.changeView="col-lg-4 col-sm-4 col-md-4 col-xs-12";
+						$scope.changeView="col-lg-4 col-sm-9 col-md-4 col-xs-12";
 						localStorage.setItem("view", "grid");
 					}
 					
@@ -40,6 +44,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 						var notedata = {};
 						notedata.title = $scope.title;
 						notedata.description = $scope.desc;
+						notedata.color=$scope.colorOnCreate;
 
 						var httpObject = noteservice.create(notedata);
 						httpObject.then(function(response) {
@@ -66,11 +71,12 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 								});
 						$scope.title = "";
 						$scope.desc = "";
+						$scope.colorOnCreate="";
 					}
 					
 					
 
-					/** *************** Get All Notes Logic. **************** */
+				/** *************** Update Color Notes Logic. **************** */
 					
 					$scope.notecolor=function(note, color){
 						note.color=color;
@@ -96,9 +102,73 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 		       			});
 					}
 					
+				/** *************** Update/Set Reminder Notes Logic. **************** */
+					
+					$scope.setreminder=function(note, string){
+						var remindAt = new Date();
+						if(string=='today'){
+							note.reminddate=remindAt.setHours(20,00,00);
+						}
+						else if(string =='tomorrow'){
+							var tomorrow = new Date();
+				            tomorrow.setDate(tomorrow.getDate() + 1);
+				            tomorrow.setHours(8,00,00);
+				            note.reminddate=tomorrow;
+						}
+						else{
+							var nextweek = new Date();
+							nextweek.setDate(nextweek.getDate() + 7);
+							nextweek.setHours(8,00,00);
+							note.reminddate=nextweek;
+						}
+						var httpObject = noteservice.update(note);
+						httpObject.then(function(response){
+		       				if(response.data.status == -4){
+		       					var checkRefreshToken = noteservice.verifyRefreshToken();
+								checkRefreshToken.then(function(res) {
+											if (res.data.status == 1) {
+														localStorage.setItem("accesstoken",	res.data.token.accesstoken),
+														noteservice.update(updateobj).then(function(responseagain)
+														{
+															$scope.allnotes = response.data.reverse();
+														});
+											} else 
+											{
+												console.log("Refresh token expired please login again...");
+												$state.go('login');
+											}
+										});
+		       				}
+		       				$scope.getAllNotes();
+		       			});
+					}
 					
 					
+					/** *************** Delete/Remove Reminder(By making it null). **************** */
 					
+					$scope.deleteReminder=function(note){
+						note.reminddate="";
+						var httpObject = noteservice.update(note);
+						httpObject.then(function(response){
+		       				if(response.data.status == -4){
+		       					var checkRefreshToken = noteservice.verifyRefreshToken();
+								checkRefreshToken.then(function(res) {
+											if (res.data.status == 1) {
+														localStorage.setItem("accesstoken",	res.data.token.accesstoken),
+														noteservice.update(updateobj).then(function(responseagain)
+														{
+															$scope.allnotes = response.data.reverse();
+														});
+											} else 
+											{
+												console.log("Refresh token expired please login again...");
+												$state.go('login');
+											}
+										});
+		       				}
+		       				$scope.getAllNotes();
+		       			});
+					}
 					
 					/** *************** Get All Notes Logic. **************** */
 
@@ -126,6 +196,8 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 											}
 										});*/
 							}
+							$scope.reminder = response.data.reminddate;
+							console.log($scope.reminder = response.data[0].reminddate +" reminder from db");
 							$scope.name=response.data[0].user.name;
 							$scope.email=response.data[0].user.email;
 							$scope.allnotes = response.data.reverse();
