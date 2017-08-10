@@ -1,0 +1,33 @@
+<div class="row" style="background-color: red">archive<br><br></div>
+
+<div class="row">
+
+	<div class="col-lg-12" id="notediv" >
+
+						 <!------------------ Trash CARDS ---------------->
+						 
+		<div testpackery ng-repeat="x in allnotes | filter:searchnote" style="margin-top: 20px;">
+			<div  ng-class="spacecol2"></div>
+				<div  ng-class="changeView" id="hoverthis">
+		     	   <div id="gridList" ng-style="{'background-color':x.color}" ng-if="x.trash==true">
+				   <div ng-click="openPopUp(x)" style="min-height: 110px; word-break: break-word; padding-right:10px;">
+		          	 	<div id="gridtitle" ng-bind-html="x.title"></div>
+				  	 	<div id="griddescription" ng-bind-html="x.description" style="word-break: break-word; padding-right:10px;"></div>
+					</div>
+					<div id="gridfooter">
+						<span id="footerImages" class="dropdown btn-group">
+								<img src="image/list.png" alt="More" data-toggle="dropdown" title="List view" title-direction="bottom" title="More" title-direction="bottom">
+									<ul class="dropdown-menu">
+										<li><a href="" ng-click="deleteNote(x.id)" style="padding-left: 16px">Delete Forever</a></li>
+										<li><a href="" ng-click="doUnTrash(x)"style="padding-left: 16px">Restore</a></li>
+									</ul>
+						</span>	
+					</div>
+								
+				</div>
+						  
+			</div>
+		 </div>   
+				  <!--- DISPLAY CARDS ENDS --->
+	</div>
+</div>

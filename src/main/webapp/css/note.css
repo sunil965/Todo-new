@@ -356,10 +356,12 @@ body {
 	border-top: 2px dotted;
 	border-top-color: #dfd6d6;
 }
-#close-reminder{
+
+#close-reminder {
 	float: right;
 	display: none;
 }
+
 #hoverthis:hover #close-reminder {
 	display: block;
 }

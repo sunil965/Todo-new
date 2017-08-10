@@ -37,8 +37,13 @@ public class Note {
 	@Column(name = "Reminder")
 	private Date reminddate;
 	
-	/*private String archive;
-	private String pin;*/
+	@Column(name = "Archive")
+	private boolean archive;
+	
+	@Column(name = "Trash")
+	private boolean trash;
+	
+	/*private String pin;*/
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "User_ID")
@@ -99,6 +104,22 @@ public class Note {
 
 	public void setReminddate(Date reminddate) {
 		this.reminddate = reminddate;
+	}
+
+	public boolean isArchive() {
+		return archive;
+	}
+
+	public void setArchive(boolean archive) {
+		this.archive = archive;
+	}
+
+	public boolean isTrash() {
+		return trash;
+	}
+
+	public void setTrash(boolean trash) {
+		this.trash = trash;
 	}
 
 	@Override

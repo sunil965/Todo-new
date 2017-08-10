@@ -9,14 +9,17 @@
 
 
 
-<script type="text/javascript"	src="bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript"	src="bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-<script type="text/javascript"	src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-tooltips/dist/angular-tooltips.js"></script>
+<!-- <script type="text/javascript" src="bower_components/draggabilly/dist/draggabilly.pkgd.js"></script>
+<script type="text/javascript" src="bower_components/packery/dist/packery.pkgd.js"></script>
+<script type="text/javascript" src="bower_components/packery-angular/dist/packery-angular.js"></script> -->
 
 </head>
 
@@ -36,5 +39,7 @@
 <script src="js/service/noteService.js"></script>
 <script src="js/controller/regController.js" charset="utf-8"></script>
 <script src="js/service/regService.js"></script>
+<script src="js/controller/archiveController.js"></script>
+<script src="js/controller/trashController.js"></script>
 
 </html>

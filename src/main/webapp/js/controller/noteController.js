@@ -1,6 +1,10 @@
 myApp.controller('notesController',	function($scope, $state, noteservice, $uibModal) {
 
 					console.log("inside the notes controller");
+					$scope.createnote=true;
+					$scope.homepage=true;
+					$scope.archivepage=false;
+					$scope.trashpage=false;
 					
 					$scope.refresh=function($window){
 						$state.reload()
@@ -26,7 +30,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 						$scope.listbtn=true;
 						$scope.gridbtn=false;
 						$scope.spacecol2="";
-						$scope.changeView="col-lg-4 col-sm-9 col-md-4 col-xs-12";
+						$scope.changeView="col-lg-4 col-sm-9 col-md-4 col-xs-12 item";
 						localStorage.setItem("view", "grid");
 					}
 					
@@ -167,7 +171,18 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 										});
 		       				}
 		       				$scope.getAllNotes();
-		       			});
+		       			});/*		$scope.archive=function(note){
+						var value=note.archive;
+						if(value==null || value=='false'){
+							note.archive='true';
+							$scope.reload();
+						}
+						else if(value==null || value=='true'){
+							note.archive='false';
+							$scope.reload();
+						}
+						
+					}*/
 					}
 					
 					/** *************** Get All Notes Logic. **************** */
@@ -197,11 +212,9 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 										});*/
 							}
 							$scope.reminder = response.data.reminddate;
-							console.log($scope.reminder = response.data[0].reminddate +" reminder from db");
 							$scope.name=response.data[0].user.name;
 							$scope.email=response.data[0].user.email;
 							$scope.allnotes = response.data.reverse();
-//							$scope.showinlist();
 						});
 					}
 
@@ -288,6 +301,123 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 						});
 						
 					}
+					
+					/** ****************** Archive Logic. ******************* */
+					
+					$scope.archive=function(note){
+						var value=note.archive;
+						if(value == false){
+							note.archive=true;
+						}
+						var httpObject = noteservice.update(note);
+						httpObject.then(function(response){
+		       				if(response.data.status == -4){
+		       					var checkRefreshToken = noteservice.verifyRefreshToken();
+								checkRefreshToken.then(function(res) {
+											if (res.data.status == 1) {
+														localStorage.setItem("accesstoken",	res.data.token.accesstoken),
+														noteservice.update(updateobj).then(function(responseagain)
+														{
+															$scope.allnotes = response.data.reverse();
+														});
+											} else 
+											{
+												console.log("Refresh token expired please login again...");
+												$state.go('login');
+											}
+										});
+		       				}
+		       				$scope.getAllNotes();
+		       			});
+					}
+					
+					/** ****************** Unarchive Logic. ******************* */
+					
+					$scope.unarchive=function(note){
+						var value=note.archive;
+						if(value == true){
+							note.archive=false;
+						}
+						var httpObject = noteservice.update(note);
+						httpObject.then(function(response){
+		       				if(response.data.status == -4){
+		       					var checkRefreshToken = noteservice.verifyRefreshToken();
+								checkRefreshToken.then(function(res) {
+											if (res.data.status == 1) {
+														localStorage.setItem("accesstoken",	res.data.token.accesstoken),
+														noteservice.update(updateobj).then(function(responseagain)
+														{
+															$scope.allnotes = response.data.reverse();
+														});
+											} else 
+											{
+												console.log("Refresh token expired please login again...");
+												$state.go('login');
+											}
+										});
+		       				}
+		       				$scope.getAllNotes();
+		       			});
+					}
+					
+					/** ****************** Trash Logic. ******************* */
+					
+					$scope.doTrash=function(note){
+						var value=note.trash;
+						if(value == false){
+							note.trash=true;
+						}
+						var httpObject = noteservice.update(note);
+						httpObject.then(function(response){
+		       				if(response.data.status == -4){
+		       					var checkRefreshToken = noteservice.verifyRefreshToken();
+								checkRefreshToken.then(function(res) {
+											if (res.data.status == 1) {
+														localStorage.setItem("accesstoken",	res.data.token.accesstoken),
+														noteservice.update(updateobj).then(function(responseagain)
+														{
+															$scope.allnotes = response.data.reverse();
+														});
+											} else 
+											{
+												console.log("Refresh token expired please login again...");
+												$state.go('login');
+											}
+										});
+		       				}
+		       				$scope.getAllNotes();
+		       			});
+					}
+					
+					/** ******************Recover Trash Logic. ******************* */
+					
+					$scope.doUnTrash=function(note){
+						var value=note.trash;
+						if(value == true){
+							note.trash=false;
+						}
+						var httpObject = noteservice.update(note);
+						httpObject.then(function(response){
+		       				if(response.data.status == -4){
+		       					var checkRefreshToken = noteservice.verifyRefreshToken();
+								checkRefreshToken.then(function(res) {
+											if (res.data.status == 1) {
+														localStorage.setItem("accesstoken",	res.data.token.accesstoken),
+														noteservice.update(updateobj).then(function(responseagain)
+														{
+															$scope.allnotes = response.data.reverse();
+														});
+											} else 
+											{
+												console.log("Refresh token expired please login again...");
+												$state.go('login');
+											}
+										});
+		       				}
+		       				$scope.getAllNotes();
+		       			});
+					}
+					
 					/** ****************** Initial Note Display Logic. ******************* */
 
 					$scope.getAllNotes();
