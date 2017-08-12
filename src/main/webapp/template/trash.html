@@ -6,7 +6,7 @@
 
 						 <!------------------ Trash CARDS ---------------->
 						 
-		<div testpackery ng-repeat="x in allnotes | filter:searchnote" style="margin-top: 20px;">
+		<div ng-repeat="x in allnotes | filter:searchnote" style="margin-top: 20px;">
 			<div  ng-class="spacecol2"></div>
 				<div  ng-class="changeView" id="hoverthis">
 		     	   <div id="gridList" ng-style="{'background-color':x.color}" ng-if="x.trash==true">

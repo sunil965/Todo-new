@@ -74,7 +74,7 @@
 					<li class="divider"></li>
 				</div>
 				<div id="sidebarcontent">
-					<li><a ui-sref="archive"><span aria-hidden="true"><img src="image/archive.svg" alt="notes"></span> Archive</a></li>
+					<li><a ui-sref="archive"><span aria-hidden="true" ng-click="changeTitle()"><img src="image/archive.svg" alt="notes"></span> Archive</a></li>
 				</div>
 				<div id="sidebarcontent">
 					<li><a ui-sref="trash"><span aria-hidden="true"><img src="image/icons8-Trash Can-20.png" alt="notes"></span> Trash</a></li>
@@ -88,7 +88,7 @@
 		<div id="page-content-wrapper">
 			<div class="container-fluid">
 			<div class="row">
-				<div class="col-lg-12" id="notediv" ng-show="createnote">
+				<div class="col-lg-12" id="notediv" ng-show="createnote" >
 						<!------------------- Create Note Card----------------->
 						<!-- tabindex="0" ng-blur="hideNoteCreate()" -->
 						 <div class="card" ng-model="colorOnCreate" ng-style="{'background-color':colorOnCreate}" > 
@@ -113,7 +113,6 @@
 									<img src="image/color.png" alt="Color">
 									</span>
 									<span id="create-footer-Images"><img src="image/archieve.png" alt="Archive"></span>
-									<span id="create-footer-Images"><img src="image/image.svg" alt="Add Image"></span>
 									<span id="create-footer-Images"><img src="image/list.png" alt="More"></span>
 									<button id="donebotton" ng-click="savenote()">Done</button>
 								</div>

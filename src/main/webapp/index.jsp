@@ -17,9 +17,10 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
 <script type="text/javascript" src="bower_components/angular-tooltips/dist/angular-tooltips.js"></script>
-<!-- <script type="text/javascript" src="bower_components/draggabilly/dist/draggabilly.pkgd.js"></script>
 <script type="text/javascript" src="bower_components/packery/dist/packery.pkgd.js"></script>
-<script type="text/javascript" src="bower_components/packery-angular/dist/packery-angular.js"></script> -->
+<script type="text/javascript" src="bower_components/packery-angular/dist/packery-angular.js"></script>
+<script type="text/javascript" src="bower_components/draggabilly/dist/draggabilly.pkgd.js"></script>
+
 
 </head>
 

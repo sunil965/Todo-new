@@ -1,0 +1,17 @@
+<!-- 	<div id="title"  contenteditable="true" ng-model="$ctrl.titledata" ng-bind-html="$ctrl.titledata"/>
+	<div id="description" contenteditable="true" ng-model="$ctrl.discriptiondata" ng-bind-html="$ctrl.discriptiondata" />
+	<div id="footer">
+			<button id="donebotton" ng-click="$ctrl.updateNote($ctrl.noteId)">Save</button>
+		</div>
+ -->
+<div id="collaborator">
+	<div id="collaborator-header">Collaborators</div>
+	<div id="collaborator-body" ng-bind-html="$ctrl.owneremail"+"(owner)"></div>
+	<div id="collaborator-body" contenteditable="true" ng-model="$ctrl.othersemail" placeholder="Person's email to share with"></div>
+</div>
+<div id="collaborator-footer">
+	<div style="height: 50px; background-color: gainsboro;">
+		<button style="margin: 12px;float: right;">Cancel</button>
+		<button style="margin: 12px;float: right;">Save</button>
+	</div>
+</div>

@@ -49,7 +49,7 @@ public class NotesController {
 		
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("UserInSession");
-
+		
 		try {
 			note.setUser(user);
 			note.setDate(new Date());
@@ -63,7 +63,7 @@ public class NotesController {
 			System.out.println("Note Creation failed !!!!");
 			myresponse.setStatus(-1);
 			myresponse.setMessage("Note Not Created");
-			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
+			return new ResponseEntity<Response>(myresponse, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -101,7 +101,7 @@ public class NotesController {
 		} catch (Exception e) {
 			myresponse.setStatus(-1);
 			myresponse.setMessage("Note Updatation Fails");
-			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
+			return new ResponseEntity<Response>(myresponse, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

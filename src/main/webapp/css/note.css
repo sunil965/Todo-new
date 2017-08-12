@@ -365,3 +365,15 @@ body {
 #hoverthis:hover #close-reminder {
 	display: block;
 }
+
+#collaborator-header {
+	margin: 15px;
+	font-size: 30px;
+	border-bottom: 1px solid;
+}
+#collaborator-body{
+	margin: 20px;
+}
+#collaborator-footer{
+	margin: 20px;
+}

@@ -54,8 +54,8 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 						httpObject.then(function(response) {
 									if (response.data.status == -4) {
 										/**
-										 * Generate New Access Token If
-										 * Refresh Token is Valid.
+										 * Generate New Access Token If Refresh
+										 * Token is Valid.
 										 */
 										var checkRefreshToken = noteservice.verifyRefreshToken();
 										checkRefreshToken.then(function(res) {
@@ -106,7 +106,10 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 		       			});
 					}
 					
-				/** *************** Update/Set Reminder Notes Logic. **************** */
+				/**
+				 * *************** Update/Set Reminder Notes Logic.
+				 * ****************
+				 */
 					
 					$scope.setreminder=function(note, string){
 						var remindAt = new Date();
@@ -148,7 +151,10 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					}
 					
 					
-					/** *************** Delete/Remove Reminder(By making it null). **************** */
+					/**
+					 * *************** Delete/Remove Reminder(By making it
+					 * null). ****************
+					 */
 					
 					$scope.deleteReminder=function(note){
 						note.reminddate="";
@@ -171,18 +177,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 										});
 		       				}
 		       				$scope.getAllNotes();
-		       			});/*		$scope.archive=function(note){
-						var value=note.archive;
-						if(value==null || value=='false'){
-							note.archive='true';
-							$scope.reload();
-						}
-						else if(value==null || value=='true'){
-							note.archive='false';
-							$scope.reload();
-						}
-						
-					}*/
+		       			});
 					}
 					
 					/** *************** Get All Notes Logic. **************** */
@@ -195,21 +190,21 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 							if (response.data.status == -4) {
 								console.log("Logout from Read operation method.");
 								$scope.logout();
-								/*var checkRefreshToken = noteservice.verify$scope.listbtn=true;
-							$scope.gridbtn=false;
-							$scope.showlist=false;
-							$scope.showgrid=true;RefreshToken();
-								checkRefreshToken.then(function(res) {
-											if (res.data.status == 1) {
-														localStorage.setItem("accesstoken",	res.data.token.accesstoken),
-														noteservice.findAllNotes().then(function(responseagain) {
-															$scope.allnotes = response.data.reverse();
-																		});
-											} else {
-												console.log("Refresh token expired please login again...");
-												$state.go('login');
-											}
-										});*/
+								/*
+								 * var checkRefreshToken =
+								 * noteservice.verify$scope.listbtn=true;
+								 * $scope.gridbtn=false; $scope.showlist=false;
+								 * $scope.showgrid=true;RefreshToken();
+								 * checkRefreshToken.then(function(res) { if
+								 * (res.data.status == 1) {
+								 * localStorage.setItem("accesstoken",
+								 * res.data.token.accesstoken),
+								 * noteservice.findAllNotes().then(function(responseagain) {
+								 * $scope.allnotes = response.data.reverse();
+								 * }); } else { console.log("Refresh token
+								 * expired please login again...");
+								 * $state.go('login'); } });
+								 */
 							}
 							$scope.reminder = response.data.reminddate;
 							$scope.name=response.data[0].user.name;
@@ -249,12 +244,15 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 						});
 					} 
 					
-					/** ****************** Open Model Note Logic. ******************* */
+					/** *********** Open Model Note Logic.**************** */
 					
-					$scope.openPopUp = function(x){
-						var modalInstance = $uibModal.open({
+					$scope.updatePopUp = function(x){
+						console.log("call to..",x.user.email);
+						var modalInstance = $uibModal.open(
+						{
 					       	templateUrl: "template/popupdiv.html",
-					       	controller: function($uibModalInstance) {
+					       	controller: function($uibModalInstance) 
+					       	{
 					       		var $ctrl = this;
 					       		this.titledata=x.title;
 					       		this.discriptiondata=x.description;
@@ -296,10 +294,24 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					       		}
 					       		
 					       	},
-					       	controllerAs: "$ctrl",
+					       	controllerAs: "$ctrl"
 					       	
 						});
 						
+					}
+					
+					/** ****************** Collaboration Logic. ******************* */
+					
+					$scope.collaboratePopUp = function(note){
+						
+						var callabrateModel = $uibModal.open({
+							templateUrl: "template/collaboratediv.html",
+					       	controller: function($uibModalInstance) {
+					       		var $ctrl = this;
+					       		this.owneremail=note.user.email;
+					       	},
+					       	controllerAs: "$ctrl"
+						});
 					}
 					
 					/** ****************** Archive Logic. ******************* */
@@ -389,7 +401,10 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 		       			});
 					}
 					
-					/** ******************Recover Trash Logic. ******************* */
+					/**
+					 * ******************Recover Trash Logic.
+					 * *******************
+					 */
 					
 					$scope.doUnTrash=function(note){
 						var value=note.trash;
@@ -418,7 +433,10 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 		       			});
 					}
 					
-					/** ****************** Initial Note Display Logic. ******************* */
+					/**
+					 * ****************** Initial Note Display Logic.
+					 * *******************
+					 */
 
 					$scope.getAllNotes();
 				});

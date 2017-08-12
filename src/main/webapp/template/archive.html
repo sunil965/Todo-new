@@ -6,7 +6,7 @@
 
 						 <!------------------ ARCHIVE CARDS ---------------->
 						 
-		<div testpackery ng-repeat="x in allnotes | filter:searchnote" style="margin-top: 20px;">
+		<div ng-repeat="x in allnotes | filter:searchnote" style="margin-top: 20px;">
 			<div  ng-class="spacecol2"></div>
 				<div  ng-class="changeView" id="hoverthis">
 		     	   <div id="gridList" ng-style="{'background-color':x.color}" ng-if="x.archive==true">
@@ -22,8 +22,6 @@
 									<li><a style="margin-top: 10px;" ng-click="setreminder(x, 'today')">Later Today <span style="float: right">8:00 PM</span></a></li>
 									<li><a style="margin-top: 10px;" ng-click="setreminder(x, 'tomorrow')">Tomorrow <span style="float: right">8:00 AM</span></a></li>
 									<li><a style="margin-top: 10px;" ng-click="setreminder(x, 'nextweek')">NextWeek <span style="float: right">Mon,8:00 AM</span></a></li>
-									<!-- <li><a style="margin-top: 10px;" >Pick Date & Time</a></li>
-									<li><a style="margin-top: 10px;">Pick Place</a></li> -->
 								</ul>								  			
 						</span>
 							  		
