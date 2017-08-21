@@ -232,7 +232,9 @@ body {
 		position: relative;
 		margin-right: 0;
 	}
-} */
+} 
+*/
+
 @media only screen and (max-width: 736px) {
 	#query {
 		width: 200px;

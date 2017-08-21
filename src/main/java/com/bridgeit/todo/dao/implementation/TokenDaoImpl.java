@@ -32,7 +32,6 @@ public class TokenDaoImpl implements TokenDao {
 		Query query = session.createQuery("from Token where accesstoken=:accesstoken");
 		query.setParameter("accesstoken", accesstoken);
 		Token token = (Token) query.uniqueResult();
-		System.out.println("Token Dao Impl Returns "+ token);
 		return token;
 		
 	}

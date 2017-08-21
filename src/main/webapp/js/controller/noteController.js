@@ -247,7 +247,6 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					/** *********** Open Model Note Logic.**************** */
 					
 					$scope.updatePopUp = function(x){
-						console.log("call to..",x.user.email);
 						var modalInstance = $uibModal.open(
 						{
 					       	templateUrl: "template/popupdiv.html",
@@ -308,11 +307,41 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 							templateUrl: "template/collaboratediv.html",
 					       	controller: function($uibModalInstance) {
 					       		var $ctrl = this;
-					       		this.owneremail=note.user.email;
+					       		this.ownerEmail=note.user.email;
+					       		var collaboratorid;
+					       		this.sharedEmailWith = function()	{
+					       			$uibModalInstance.dismiss();
+					       			
+					       			var collaboratorobject={};
+					       			collaboratorobject.noteid = note.id;
+						       		collaboratorobject.sharedwith = this.othersemail;
+						       		
+						       		console.log("collaboratorobject  "+  collaboratorobject);
+						       		console.log("save");
+							       	noteservice.saveCollab(collaboratorobject);
+							       	console.log("save end");
+					       			
+					       			/*var otherUser =	{"email":this.othersemail,};
+					       			noteservice.getOtherUser(otherUser).then(function(response)
+					       			{
+					       				collaboratoremail=response.data.user.email;
+					       				
+					       				var collaboratorobject={};
+					       				console.log("save note "+note.id);
+					       				
+							       		collaboratorobject.note = note.id;
+							       		collaboratorobject.shareduserid = otherUser;
+							       		
+							       		console.log("save");
+								       	noteservice.saveCollab(collaboratorobject);
+								       	console.log("save end");
+					       			});*/
+					       		}
 					       	},
 					       	controllerAs: "$ctrl"
 						});
 					}
+					
 					
 					/** ****************** Archive Logic. ******************* */
 					
@@ -433,10 +462,31 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 		       			});
 					}
 					
-					/**
-					 * ****************** Initial Note Display Logic.
-					 * *******************
-					 */
+					/*********** Share On Facebook Logic. **************/	
+					
+					$scope.facebookshare = function(note) 
+					{
+					       FB.init({
+					           appId: '493599474327815',
+					           status: true,
+					           xfbml: true,
+					           version     : 'v2.10', 
+					       }); 
+					    
+					       FB.ui({
+					               method: 'share_open_graph',
+					               action_type: 'og.shares',
+					               action_properties: JSON.stringify({
+					                   object: {
+					                       'og:title': note.title,
+					                       'og:description': note.description,
+					                   }
+					               })
+					           });
+					   }
+
+					
+					/*********** Initial Note Display Logic. **************/
 
 					$scope.getAllNotes();
 				});

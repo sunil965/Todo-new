@@ -8,10 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="User_Registration_Table")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

@@ -75,12 +75,12 @@ public class LoginController {
 
 		if (userresult != null)
 		{
+			System.out.println("Logged in "+userresult);
 			logger.debug("Logged in sucessfully!");
 			HttpSession httpsession = request.getSession();
 			httpsession.setAttribute("UserInSession", userresult);
 			
 			token.setUser(userresult);
-			System.out.println("Token from Login COntroller "+token);
 			
 			try 
 			{
@@ -99,7 +99,7 @@ public class LoginController {
 		else
 		{
 			myresponse.setStatus(-1);
-			myresponse.setMessage("Logged in Unsuccessfully");
+			myresponse.setMessage("Logged in Unsuccessfull");
 			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
 		}
 	}

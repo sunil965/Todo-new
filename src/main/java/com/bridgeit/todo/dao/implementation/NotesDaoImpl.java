@@ -1,15 +1,21 @@
 package com.bridgeit.todo.dao.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bridgeit.todo.dao.NotesDao;
+import com.bridgeit.todo.model.Collaborater;
 import com.bridgeit.todo.model.Note;
+import com.bridgeit.todo.model.User;
 
 @Repository
 public class NotesDaoImpl implements NotesDao{
@@ -22,12 +28,13 @@ public class NotesDaoImpl implements NotesDao{
 		session.save(note);
 	}
 
-	public List<Note> noteWithId(int id) {
+	public Note noteWithId(int id) {
 		Session session = factory.getCurrentSession();
-		@SuppressWarnings("unchecked")
-		Query<Note> query = session.createQuery("from Note where id = "+id);
-		List<Note> list = query.list();
-		return list;
+		Criteria criteria = session.createCriteria(Note.class);
+		criteria.add(Restrictions.eq("id", id));
+		
+		Note note=(Note) criteria.uniqueResult();
+		return note;
 	}
 
 	public void updateNote(Note note) {
@@ -45,9 +52,34 @@ public class NotesDaoImpl implements NotesDao{
 	@SuppressWarnings("unchecked")
 	public List<Note> allNotes(int id) {
 		Session session = factory.getCurrentSession();
-		Query<Note> query = session.createQuery("from Note where User_ID = "+id);
-		List<Note> list = query.list();
+		
+		Query<Note> query1 = session.createQuery("from Note where User_ID = "+id);
+		List<Note> list = query1.list();
+		
+		Query<Note> query2 = session.createQuery("select noteid from Collaborater where sharedwith = "+1);
+		List list2 = query2.list();
+		
+		
+		System.out.println("List2 user "+ list2);
+		
+		
+		/*Criteria criteria = session.createCriteria(Note.class);
+	    criteria.setFetchMode("Collaborater", FetchMode.JOIN).add(Restrictions.eq("id", 35));
+	    List list = criteria.list();*/
+		
+		ArrayList arrayList = new ArrayList();
+		arrayList.add(list);
+		arrayList.add(list2);
+		System.out.println("Full Data is"+arrayList);
+		
+		
 		return list;
+	}
+
+	
+	public void saveCollab(Collaborater collaborater) {
+		Session session = factory.getCurrentSession();
+		session.save(collaborater);
 	}
 
 }

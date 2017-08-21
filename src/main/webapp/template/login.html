@@ -12,7 +12,9 @@
 			<span ng-show="login.pwd.$touched && login.pwd.$error.required" style="color: red">" Password required!! "</span>
 	
 			<button type="submit" data-ng-click="userlogin()" ng-disabled="login.$invalid">login</button>
-			
+			<p class="message">
+				<a href="gmailconnection">Gmail Login</a>
+			</p>
 			<p class="message">
 				Not registered? <a ui-sref="register">Create an account</a>
 			</p>

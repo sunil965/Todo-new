@@ -1,7 +1,5 @@
 package com.bridgeit.todo.dao;
 
-import java.util.List;
-
 import com.bridgeit.todo.model.User;
 
 public interface UserDao {
@@ -12,6 +10,6 @@ public interface UserDao {
 
 	User loginWithTodo(String email, String password);
 
-	List<User> getUserbyId(int id);
+	User getUserbyId(String email);
 
 }

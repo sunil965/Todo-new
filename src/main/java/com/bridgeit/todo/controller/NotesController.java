@@ -2,6 +2,7 @@ package com.bridgeit.todo.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,17 +10,22 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.todo.JSONResponse.Response;
 import com.bridgeit.todo.JSONResponse.UserResponse;
+import com.bridgeit.todo.model.Collaborater;
 import com.bridgeit.todo.model.Note;
 import com.bridgeit.todo.model.User;
 import com.bridgeit.todo.service.NotesService;
+import com.bridgeit.todo.service.UserServices;
 
 /**
  * This controller performs functionality of CURD for Notes.
@@ -31,6 +37,10 @@ public class NotesController {
 
 	@Autowired
 	NotesService service;
+	
+	@Autowired
+	UserServices userservice;
+	
 	@Autowired
 	UserResponse myresponse;
 
@@ -75,12 +85,12 @@ public class NotesController {
 	 * @return {@link ResponseEntity<List>}
 	 */
 	@RequestMapping(value = "/rest/getNote/{id}")
-	public ResponseEntity<List<Note>> getNoteDetails(@PathVariable("id") int id) {
-		List<Note> note = service.getNote(id);
+	public ResponseEntity<Note> getNoteDetails(@PathVariable("id") int id) {
+		Note note = service.getNote(id);
 		if (note != null) {
-			return new ResponseEntity<List<Note>>(note, HttpStatus.OK);
+			return new ResponseEntity<Note>(note, HttpStatus.OK);
 		}
-		return new ResponseEntity<List<Note>>(note, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Note>(note, HttpStatus.NOT_FOUND);
 	}
 
 	/* ************* UPDATE NOTE ****************/
@@ -146,12 +156,38 @@ public class NotesController {
 		}
 		return new ResponseEntity<List<Note>>(note, HttpStatus.NOT_FOUND);
 	}
-/*
-	 ************* GET LIST OF ARCHIVE NOTES ***************
 
-	public ResponseEntity<List> listOfArchived() {
-		boolean check = note.isArchive();
-		List<Note> note = service.getAllArchivedNote(check);
-		return new ResponseEntity<List>(HttpStatus.OK);
-	}*/
+	 /************** CREATE COLLABORATION ****************/
+
+@PostMapping(value="createCollab")
+
+	public ResponseEntity<Response> createCollaboration(@RequestBody Map<String, Object> loginMap) {
+		System.out.println(loginMap.get("noteid")+" "+loginMap.get("sharedwith"));
+		
+		int id = (Integer) loginMap.get("noteid");
+		Note note = service.getNote(id);
+		
+		String otheruser = (String) loginMap.get("sharedwith");
+		User seconduser = userservice.getUserById(otheruser);
+		
+		Collaborater collaborater = new Collaborater();
+		collaborater.setNoteid(note);
+		collaborater.setOwner(note.getUser());
+		collaborater.setSharedwith(seconduser.getId());
+		
+		try {
+			service.saveSharedNote(collaborater);
+			myresponse.setStatus(1);
+			myresponse.setMessage("Collaboration Created Sucessfully");
+			return new ResponseEntity<Response>(myresponse,HttpStatus.OK);
+		} 
+		catch (Exception e) {
+			System.out.println("Collaboration Creation failed !!!!");
+
+			e.printStackTrace();
+			myresponse.setStatus(-1);
+			myresponse.setMessage("Collaboration Not Created");
+			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
+		}
+	}
 }

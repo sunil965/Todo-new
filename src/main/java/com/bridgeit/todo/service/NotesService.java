@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgeit.todo.dao.NotesDao;
+import com.bridgeit.todo.model.Collaborater;
 import com.bridgeit.todo.model.Note;
 
 @Service
@@ -21,7 +22,7 @@ public class NotesService {
 	}
 
 	@Transactional(readOnly=true)
-	public List<Note> getNote(int id) {
+	public Note getNote(int id) {
 		return dao.noteWithId(id);
 	}
 
@@ -40,6 +41,10 @@ public class NotesService {
 
 	public List<Note> getAllArchivedNote(boolean check) {
 		return null;
+	}
+
+	public void saveSharedNote(Collaborater collaborater) {
+		dao.saveCollab(collaborater);
 	}
 	
 	

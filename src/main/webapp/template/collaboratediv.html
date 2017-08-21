@@ -6,12 +6,12 @@
  -->
 <div id="collaborator">
 	<div id="collaborator-header">Collaborators</div>
-	<div id="collaborator-body" ng-bind-html="$ctrl.owneremail"+"(owner)"></div>
-	<div id="collaborator-body" contenteditable="true" ng-model="$ctrl.othersemail" placeholder="Person's email to share with"></div>
+	<div id="collaborator-body" ng-bind-html="$ctrl.ownerEmail"+"(owner)"></div>
+	<div id="collaborator-body" divdata contenteditable="true" ng-model="$ctrl.othersemail" placeholder="Person's email to share with"></div>
 </div>
 <div id="collaborator-footer">
 	<div style="height: 50px; background-color: gainsboro;">
-		<button style="margin: 12px;float: right;">Cancel</button>
-		<button style="margin: 12px;float: right;">Save</button>
+		<!-- <button style="margin: 12px;float: right;">Cancel</button> -->
+		<button style="margin: 12px;float: right;" ng-click="$ctrl.sharedEmailWith()"">Share</button>
 	</div>
 </div>

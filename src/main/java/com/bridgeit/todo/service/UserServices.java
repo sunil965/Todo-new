@@ -1,7 +1,5 @@
 package com.bridgeit.todo.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +22,8 @@ public class UserServices {
 		dao.updateUser(user);
 	}
 
-	public List<User> getUserById(int id) {
-		return dao.getUserbyId(id);
+	public User getUserById(String email) {
+		return dao.getUserbyId(email);
 	}
 	
 	public User loginWithTodo(String email, String password) {

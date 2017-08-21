@@ -1,12 +1,9 @@
 package com.bridgeit.todo.dao.implementation;
 
-import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,11 +26,13 @@ public class UserDaoImplement implements UserDao {
 			session.update(user);
 	}
 
-	public List<User> getUserbyId(int id) {
+	public User getUserbyId(String email) {
 		Session session = sessionFactory.getCurrentSession();
-		Query<User> query1 = session.createQuery("from User where id=" + id);
-		List<User> list = query1.list();
-		return list;
+		Criteria criteria = session.createCriteria(User.class);
+		criteria.add(Restrictions.eq("email", email));
+		
+		User user=(User) criteria.uniqueResult();
+		return user;
 	}
 
 	public User loginWithTodo(String email, String password) {

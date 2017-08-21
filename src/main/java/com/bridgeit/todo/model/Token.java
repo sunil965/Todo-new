@@ -11,9 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
-
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 @Table
 public class Token implements Serializable{

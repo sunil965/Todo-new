@@ -30,6 +30,8 @@ public class UserRegControl {
 	UserRegValidate validator;
 	@Autowired
 	UserServices service;
+	@Autowired
+	UserResponse myresponse;
 
 	private final static Logger logger = Logger.getLogger("sunil");
 	private final static Logger logger1 = Logger.getRootLogger();
@@ -134,13 +136,24 @@ public class UserRegControl {
 	 * @param id {@link Integer}
 	 * @return {@link ResponseEntity<List>}}
 	 */
-	@RequestMapping(value = "/getUserDetailsById/{id}")
-	public ResponseEntity<List<User>> getUserDetailsById(@PathVariable("id") int id) {
-		List<User> u = service.getUserById(id);
+	@RequestMapping(value = "/getUserDetailsById", method=RequestMethod.POST)//@RequestMapping(value = "/getUserDetailsById/{email:.+}")
+	public ResponseEntity<Response> getUserDetailsById(@RequestBody Object obj) {
+		
+		String email = obj.toString();
+		String a=email.substring(email.indexOf("=")+1,email.length()-1);
+		
+		User u = service.getUserById(a);
 		if(u != null){
-			return new ResponseEntity<List<User>>(u, HttpStatus.OK);
+			System.out.println("User u is .. "+u);
+			myresponse.setStatus(1);
+			myresponse.setMessage("User Found");
+			myresponse.setUser(u);
+			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
 		}
-		return new ResponseEntity<List<User>>(u, HttpStatus.NOT_FOUND);
+		System.out.println("User not found .. ");
+		myresponse.setStatus(-1);
+		myresponse.setMessage("User Not Found");
+		return new ResponseEntity<Response>(myresponse, HttpStatus.NOT_FOUND);
 	}
 	
 }
