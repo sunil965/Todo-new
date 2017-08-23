@@ -1,7 +1,6 @@
  <!---------------- TOP NAVIGATION BAR -------------->
  
-<nav id="topnav" class="navbar navbar-inverse navbar-fixed-top"
-	role="navigation">
+<nav id="topnav" class="navbar navbar-inverse navbar-fixed-top"	role="navigation" ng-style="navstyle">
 	<div class="container-fluid" id="container-fluid">
 		<div class="navbar-header" style="margin-left: 15">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -11,9 +10,9 @@
 				<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="#menu-toggle" id="menu-toggle">
-			   <span aria-hidden="true"><img src="image/icons8-Menu_20.png" alt="Menu" style="margin-top: 4px"></span></a>
+			   <span aria-hidden="true"><img src="image/menu.svg" alt="Menu" style="margin-top: 4px"></span></a>
 			<a class="navbar-brand" href="http://localhost:8011/ToDo/#!/notes"
-				style="margin-left: 10px; margin-top: 4px;"><font size="5px"; color="black">Fundoo Notes</font></a>
+				style="margin-left: 10px; margin-top: 4px;"><font ng-style="navfontstyle">{{apptitle}}</font></a>
 		</div>
 		
 		<div id="navbar" class="navbar-collapse collapse">
@@ -23,10 +22,10 @@
 				<li><a href="" ng-show="gridbtn" ng-click="showingrid()"><img src="image/grid.svg" alt="Grid" title="Grid view" title-direction="bottom"></a></li>
 				<li>
 					<div class="dropdown btn-group">
-						<img alt="Profile" src="image/usericon.png" id="navprofile" data-toggle="dropdown" title="Profile" title-direction="bottom">
+						<img alt="Profile" src="image/Sunil.JPG" id="navprofile" data-toggle="dropdown" title="Profile" title-direction="bottom">
 						<div class="dropdown-menu" id="profilpopup">
 							<div>
-								<img alt="list" src="image/usericon.png" id="profile-popup-image">
+								<img alt="list" src="image/Sunil.JPG" id="profile-popup-image">
 							</div>
 							<div id="profile-popup-data">
 								<h4><font color="black">{{name}}</font></h4>
@@ -47,7 +46,7 @@
 			</form>
 		</div>
 	</div>
-	<div class="container"></div>
+	<!-- <div class="container"></div> -->
 </nav>
 <div id="wrapper" class="toggled">
 	<div class="container-fluid">
@@ -123,6 +122,7 @@
 			
 			<div class="row">
 				<div class="col-lg-12">
+						<div ng-include="'template/pin.html'" ng-show="pinpage"></div>
 						<div ng-include="'template/home.html'" ng-show="homepage"></div>
 						<div ng-include="'template/archive.html'" ng-show="archivepage"></div>
 						<div ng-include="'template/trash.html'" ng-show="trashpage"> </div>

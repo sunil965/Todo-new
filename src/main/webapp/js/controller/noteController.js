@@ -1,8 +1,17 @@
 myApp.controller('notesController',	function($scope, $state, noteservice, $uibModal) {
 
 					console.log("inside the notes controller");
+					$scope.apptitle="Fundoo Notes";
+					$scope.navstyle={
+							"height": "60px",
+							"background-color": "#fb0",
+							"border-color": "#FFC107"
+					}
+					$scope.navfontstyle={"size" : "5px", "color" : "black","font-size":"20px"}
+					
 					$scope.createnote=true;
 					$scope.homepage=true;
+					$scope.pinpage=true;
 					$scope.archivepage=false;
 					$scope.trashpage=false;
 					
@@ -23,6 +32,14 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 						$scope.gridbtn=true;
 						$scope.spacecol2="col-lg-2";
 						$scope.changeView="col-lg-8";
+						$scope.onpin={ 	"margin-top": "50px",
+									    "margin-bottom" : "-19px",
+									    "margin-left": "157px",
+									    "color": "rgba(0,0,0,.54)",
+									    "font-family": "'Roboto',arial,sans-serif",
+									    "font-size": "14px",
+									    "font-weight": "bold"
+							}
 						localStorage.setItem("view", "list");
 					}
 					
@@ -30,7 +47,15 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 						$scope.listbtn=true;
 						$scope.gridbtn=false;
 						$scope.spacecol2="";
-						$scope.changeView="col-lg-4 col-sm-9 col-md-4 col-xs-12 item";
+						$scope.changeView="col-lg-4 col-sm-12 col-md-6 col-xs-12 item";
+						$scope.onpin={ 	"margin-top": "50px",
+									    "margin-bottom" : "-19px",
+									    "margin-left": "16px",
+									    "color": "rgba(0,0,0,.54)",
+									    "font-family": "'Roboto',arial,sans-serif",
+									    "font-size": "14px",
+									    "font-weight": "bold"
+							}
 						localStorage.setItem("view", "grid");
 					}
 					
@@ -106,10 +131,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 		       			});
 					}
 					
-				/**
-				 * *************** Update/Set Reminder Notes Logic.
-				 * ****************
-				 */
+				/** *************** Update/Set Reminder Notes Logic.***************** */
 					
 					$scope.setreminder=function(note, string){
 						var remindAt = new Date();
@@ -151,10 +173,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					}
 					
 					
-					/**
-					 * *************** Delete/Remove Reminder(By making it
-					 * null). ****************
-					 */
+					/** *************** Delete/Remove Reminder(By making it null). **************** */
 					
 					$scope.deleteReminder=function(note){
 						note.reminddate="";
@@ -259,6 +278,8 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					       		this.notedate=x.date;
 					       		this.noteuser=x.user;
 					       		this.notecolor=x.color;
+					       		this.notepin=x.pin;
+					       		this.notearchive=x.archive;
 					       		
 					       		this.updateNote=function(id){
 					       			$uibModalInstance.dismiss('Update');
@@ -269,6 +290,8 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					       			updateobj.description = this.discriptiondata;
 					       			updateobj.user=this.noteuser;
 					       			updateobj.color=this.notecolor;
+					       			updateobj.pin=this.notepin;
+					       			updateobj.archive=this.notearchive;
 					       			
 					       			var httpObject = noteservice.update(updateobj);
 					       			httpObject.then(function(response){
@@ -349,6 +372,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 						var value=note.archive;
 						if(value == false){
 							note.archive=true;
+							note.pin=false;
 						}
 						var httpObject = noteservice.update(note);
 						httpObject.then(function(response){
@@ -430,15 +454,73 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 		       			});
 					}
 					
-					/**
-					 * ******************Recover Trash Logic.
-					 * *******************
-					 */
+					/** ******************Recover Trash Logic. ******************* */
 					
 					$scope.doUnTrash=function(note){
 						var value=note.trash;
 						if(value == true){
 							note.trash=false;
+						}
+						var httpObject = noteservice.update(note);
+						httpObject.then(function(response){
+		       				if(response.data.status == -4){
+		       					var checkRefreshToken = noteservice.verifyRefreshToken();
+								checkRefreshToken.then(function(res) {
+											if (res.data.status == 1) {
+														localStorage.setItem("accesstoken",	res.data.token.accesstoken),
+														noteservice.update(updateobj).then(function(responseagain)
+														{
+															$scope.allnotes = response.data.reverse();
+														});
+											} else 
+											{
+												console.log("Refresh token expired please login again...");
+												$state.go('login');
+											}
+										});
+		       				}
+		       				$scope.getAllNotes();
+		       			});
+					}
+					
+					/** ****************** Pin Logic. ******************* */
+					
+					$scope.setpin=function(note){
+						console.log("Pin call");
+						var value=note.pin;
+						if(value == false){
+							note.pin=true;
+							note.archive=false;
+						}
+						var httpObject = noteservice.update(note);
+						httpObject.then(function(response){
+		       				if(response.data.status == -4){
+		       					var checkRefreshToken = noteservice.verifyRefreshToken();
+								checkRefreshToken.then(function(res) {
+											if (res.data.status == 1) {
+														localStorage.setItem("accesstoken",	res.data.token.accesstoken),
+														noteservice.update(updateobj).then(function(responseagain)
+														{
+															$scope.allnotes = response.data.reverse();
+														});
+											} else 
+											{
+												console.log("Refresh token expired please login again...");
+												$state.go('login');
+											}
+										});
+		       				}
+		       				$scope.getAllNotes();
+		       			});
+					}
+					
+					
+					/** ****************** Unpin Logic. ******************* */
+					
+					$scope.unpin=function(note){
+						var value=note.pin;
+						if(value == true){
+							note.pin=false;
 						}
 						var httpObject = noteservice.update(note);
 						httpObject.then(function(response){

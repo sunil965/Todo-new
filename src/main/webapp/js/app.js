@@ -44,8 +44,7 @@ myApp.directive('divdata', [ function() {
 		require : '?ngModel',
 		scope : {},
 		link : function(scope, element, attrs, ctrl) {
-			// view -> model (when div gets blur update the view value of the
-			// model)
+			// view -> model (when div gets blur update the view value of the model)
 			element.bind('blur', function() {
 				scope.$apply(function() {
 					ctrl.$setViewValue(element.html());

@@ -43,7 +43,8 @@ public class Note {
 	@Column(name = "Trash")
 	private boolean trash;
 	
-	/*private String pin;*/
+	@Column(name = "isPin")
+	private boolean pin;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "User_ID")
@@ -122,10 +123,20 @@ public class Note {
 		this.trash = trash;
 	}
 
+	public boolean isPin() {
+		return pin;
+	}
+
+	public void setPin(boolean pin) {
+		this.pin = pin;
+	}
+
 	@Override
 	public String toString() {
 		return "Note [id=" + id + ", title=" + title + ", description=" + description + ", date=" + date + ", color="
-				+ color + ", reminddate=" + reminddate + ", user=" + user + "]";
+				+ color + ", reminddate=" + reminddate + ", archive=" + archive + ", trash=" + trash + ", pin=" + pin
+				+ ", user=" + user + "]";
 	}
 
+	
 }

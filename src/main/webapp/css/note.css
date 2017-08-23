@@ -16,11 +16,11 @@ body {
 	margin-top: 6px;
 }
 
-#topnav {
+/* #topnav {
 	height: 60px;
 	background-color: #fb0;
 	border-color: #FFC107;
-}
+} */
 
 .card {
 	width: 65%;
@@ -116,8 +116,12 @@ body {
 }
 
 #notediv {
-	width: 65%;
-	margin-left: 247px;
+	width: 68%;
+	margin-left: 230px;
+}
+#pinnotediv{
+	width: 68%;
+	margin-left: 230px;
 }
 
 #container-fluid {
@@ -378,4 +382,19 @@ body {
 }
 #collaborator-footer{
 	margin: 20px;
+}
+
+#pin-image {
+	float: right; 
+	display: none;
+}
+
+#hoverthis:hover #pin-image {
+	display: block;
+}
+
+#clockimg{
+	    width: 15px;
+    margin-bottom: 2px;
+    margin-left: 24px;
 }

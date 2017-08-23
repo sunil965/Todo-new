@@ -1,4 +1,4 @@
-package com.bridgeit.todo.dao;
+package com.bridgeit.todo.dao.interface;
 
 import java.util.List;
 
