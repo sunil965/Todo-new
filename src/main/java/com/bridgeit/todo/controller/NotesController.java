@@ -24,11 +24,12 @@ import com.bridgeit.todo.JSONResponse.UserResponse;
 import com.bridgeit.todo.model.Collaborater;
 import com.bridgeit.todo.model.Note;
 import com.bridgeit.todo.model.User;
+import com.bridgeit.todo.model.WebScrap;
 import com.bridgeit.todo.service.NotesService;
 import com.bridgeit.todo.service.UserServices;
 
 /**
- * This controller performs functionality of CURD for Notes.
+ * This controller performs functionality of CURD for Notes and WebScraper.
  * @author Sunil Kumar
  *
  */
@@ -60,10 +61,23 @@ public class NotesController {
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("UserInSession");
 		
+		WebScrap isScraper = null;
+		isScraper = service.createScrapping(note.getDescription());
+		
 		try {
 			note.setUser(user);
 			note.setDate(new Date());
-			service.saveNoteInfo(note);
+			int noteid = service.saveNoteInfo(note);
+			
+			note.setId(noteid);
+			System.out.println("model id is::"+note);
+			if (isScraper != null) {
+				isScraper.setNoteid(noteid);
+				
+				System.out.println("Screaper is ::"+isScraper);
+				
+				service.createScraper(isScraper);
+			}
 			myresponse.setStatus(1);
 			myresponse.setMessage("Note Created Sucessfully");
 			return new ResponseEntity<Response>(myresponse,HttpStatus.OK);
@@ -144,35 +158,54 @@ public class NotesController {
 	 * @return {@link ResponseEntity<List>}
 	 */
 	@RequestMapping(value = "/rest/getAllNotes")
-	public ResponseEntity<List<Note>> getAllNoteOfUser(HttpServletRequest request)
-	{
+	public ResponseEntity<List<Note>> getAllNoteOfUser(HttpServletRequest request) {
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("UserInSession");
 		int uid = user.getId();
 
 		List<Note> note = service.getAllNote(uid);
+		note = addScraperInNote(note); // Retuned note after adding scrappers.
 		if (note != null) {
 			return new ResponseEntity<List<Note>>(note, HttpStatus.OK);
 		}
 		return new ResponseEntity<List<Note>>(note, HttpStatus.NOT_FOUND);
 	}
+					// Add Scrapers To Their Respective Note And Return To getAllNoteOfUser().
+	 private List addScraperInNote(List notes) {
+		 for (int i = 0; i < notes.size(); i++) {
+				Note todoNotes =  (Note) notes.get(i);
+				List<WebScrap> scrapers = getAllScraper(todoNotes.getId());
+				todoNotes.setScrapers(scrapers);
+			}
+		return notes;
+	}
+	 				// Get Scrapers From Database Table WebScrap And Return To addScraperInNote().
+	private List<WebScrap> getAllScraper(int noteid) {
+		try {
+			return service.getScraperById(noteid);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
-	 /************** CREATE COLLABORATION ****************/
+	/************** CREATE COLLABORATION ****************/
 
-@PostMapping(value="createCollab")
-
+	@PostMapping(value="createCollab")
 	public ResponseEntity<Response> createCollaboration(@RequestBody Map<String, Object> loginMap) {
 		System.out.println(loginMap.get("noteid")+" "+loginMap.get("sharedwith"));
 		
 		int id = (Integer) loginMap.get("noteid");
 		Note note = service.getNote(id);
 		
+		User firstuser = userservice.getUserById(note.getUser().getEmail());
+		
 		String otheruser = (String) loginMap.get("sharedwith");
 		User seconduser = userservice.getUserById(otheruser);
 		
 		Collaborater collaborater = new Collaborater();
 		collaborater.setNoteid(note);
-		collaborater.setOwner(note.getUser());
+		collaborater.setOwner(firstuser.getId());
 		collaborater.setSharedwith(seconduser.getId());
 		
 		try {

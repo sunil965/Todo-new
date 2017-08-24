@@ -1,10 +1,10 @@
 package com.bridgeit.todo.dao.implementation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.bridgeit.todo.dao.NotesDao;
 import com.bridgeit.todo.model.Collaborater;
 import com.bridgeit.todo.model.Note;
-import com.bridgeit.todo.model.User;
+import com.bridgeit.todo.model.WebScrap;
 
 @Repository
 public class NotesDaoImpl implements NotesDao{
@@ -23,9 +23,10 @@ public class NotesDaoImpl implements NotesDao{
 	@Autowired
 	SessionFactory factory;
 	
-	public void saveNote(Note note) {
+	public int saveNote(Note note) {
 		Session session = factory.getCurrentSession();
-		session.save(note);
+		Serializable sid = session.save(note);
+		return (Integer) sid;
 	}
 
 	public Note noteWithId(int id) {
@@ -80,6 +81,19 @@ public class NotesDaoImpl implements NotesDao{
 	public void saveCollab(Collaborater collaborater) {
 		Session session = factory.getCurrentSession();
 		session.save(collaborater);
+	}
+
+	public void saveSrapInDb(WebScrap scraper) {
+		Session session = factory.getCurrentSession();
+		session.save(scraper);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<WebScrap> allScraper(int noteid) {
+		Session session = factory.getCurrentSession();
+		Query<WebScrap> query1 = session.createQuery("from WebScrap where noteid = "+noteid);
+		List<WebScrap> list = query1.list();
+		return list;
 	}
 
 }

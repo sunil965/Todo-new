@@ -41,6 +41,7 @@
 				<value>com.bridgeit.todo.model.Note</value>
 				<value>com.bridgeit.todo.model.Token</value>
 				<value>com.bridgeit.todo.model.Collaborater</value>
+				<value>com.bridgeit.todo.model.WebScrap</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

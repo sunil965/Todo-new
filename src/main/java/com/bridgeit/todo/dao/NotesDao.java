@@ -1,13 +1,14 @@
-package com.bridgeit.todo.dao.interface;
+package com.bridgeit.todo.dao;
 
 import java.util.List;
 
 import com.bridgeit.todo.model.Collaborater;
 import com.bridgeit.todo.model.Note;
+import com.bridgeit.todo.model.WebScrap;
 
 public interface NotesDao {
 
-	void saveNote(Note note);
+	int saveNote(Note note);
 
 	Note noteWithId(int id);
 
@@ -18,5 +19,9 @@ public interface NotesDao {
 	List<Note> allNotes(int id);
 
 	void saveCollab(Collaborater collaborater);
+
+	void saveSrapInDb(WebScrap scraper);
+
+	List<WebScrap> allScraper(int noteid);
 
 }

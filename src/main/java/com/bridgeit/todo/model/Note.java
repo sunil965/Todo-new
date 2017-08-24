@@ -1,6 +1,8 @@
 package com.bridgeit.todo.model;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,12 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "Notes_Table")
-public class Note {
+public class Note implements Serializable{
 
 	@Id
 	@GenericGenerator(name = "generate", strategy = "increment")
@@ -49,7 +52,13 @@ public class Note {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "User_ID")
 	private User user;
-
+	
+	/*@Transient
+	List<Collaborater> collaborater;*/
+	
+	@Transient
+	List<WebScrap> scrapers;
+	
 	public int getId() {
 		return id;
 	}
@@ -131,12 +140,19 @@ public class Note {
 		this.pin = pin;
 	}
 
+	public List<WebScrap> getScrapers() {
+		return scrapers;
+	}
+
+	public void setScrapers(List<WebScrap> scrapers) {
+		this.scrapers = scrapers;
+	}
+
 	@Override
 	public String toString() {
 		return "Note [id=" + id + ", title=" + title + ", description=" + description + ", date=" + date + ", color="
 				+ color + ", reminddate=" + reminddate + ", archive=" + archive + ", trash=" + trash + ", pin=" + pin
-				+ ", user=" + user + "]";
+				+ ", user=" + user + ", scrapers=" + scrapers + "]";
 	}
 
-	
 }

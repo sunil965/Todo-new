@@ -225,6 +225,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 								 * $state.go('login'); } });
 								 */
 							}
+							console.log("Response with scrap "+response.data)
 							$scope.reminder = response.data.reminddate;
 							$scope.name=response.data[0].user.name;
 							$scope.email=response.data[0].user.email;

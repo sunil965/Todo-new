@@ -16,9 +16,7 @@ public class Collaborater {
 	@GeneratedValue(generator = "generate")
 	private int id;
 
-	@ManyToOne(optional = false)
-	@JoinColumn
-	private User owner;
+	private int owner;
 
 	@ManyToOne(optional = false)
 	@JoinColumn
@@ -33,14 +31,15 @@ public class Collaborater {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public User getOwner() {
+	
+	public int getOwner() {
 		return owner;
 	}
 
-	public void setOwner(User owner) {
+	public void setOwner(int owner) {
 		this.owner = owner;
 	}
+
 
 	public Note getNoteid() {
 		return noteid;
