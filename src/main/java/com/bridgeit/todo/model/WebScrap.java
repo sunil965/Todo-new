@@ -5,8 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -14,6 +12,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name="WebScrap")
 public class WebScrap implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GenericGenerator(name = "generate", strategy = "increment")
@@ -26,8 +26,10 @@ public class WebScrap implements Serializable{
 	
 	private String imageurl;
 	
-	/*@ManyToOne(optional = false)*/
-	@JoinColumn
+	private String weburl;
+	
+	/*@ManyToOne(optional = false)
+	@JoinColumn*/
 	private int noteid;
 	
 	public int getId() {
@@ -60,10 +62,14 @@ public class WebScrap implements Serializable{
 	public void setNoteid(int noteid) {
 		this.noteid = noteid;
 	}
-	@Override
+	public String getWeburl() {
+		return weburl;
+	}
+	public void setWeburl(String weburl) {
+		this.weburl = weburl;
+	}
 	public String toString() {
 		return "WebScrap [id=" + id + ", scraptitle=" + scraptitle + ", scraphost=" + scraphost + ", imageurl="
-				+ imageurl + ", noteid=" + noteid + "]";
+				+ imageurl + ", weburl=" + weburl + ", noteid=" + noteid + "]";
 	}
-	
 }

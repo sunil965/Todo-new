@@ -57,13 +57,11 @@ public class NotesService {
 	public WebScrap createScrapping(String description) {
 		WebScrap scraper = null;
 		try {
-			if (UrlValidate.isValidateUrl(description) != null) {
+			if (description != null) {
 				
 				String url = UrlValidate.isValidateUrl(description);
 				URI uri = new URI(url);
 				String hostName = uri.getHost();
-				System.out.println("Url is:::"+hostName);
-				
 				
 				String title = null;
 				String imgUrl = null;
@@ -77,7 +75,7 @@ public class NotesService {
 					title = document.text();
 				}
 
-				metaOgImage = document.select("meta[property=og:image]");
+//				metaOgImage = document.select("meta[property=og:image]");
 				if (metaOgImage != null) {
 					imgUrl = metaOgImage.attr("content");
 				}
@@ -86,10 +84,7 @@ public class NotesService {
 				scraper.setScraptitle(title);
 				scraper.setImageurl(imgUrl);
 				scraper.setScraphost(hostName);
-
-				System.out.println("Title::" + title);
-				System.out.println("Image:" + imgUrl);
-
+				scraper.setWeburl(url);
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();

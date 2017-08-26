@@ -336,10 +336,10 @@ body {
 }
 
 #reminderdiv {
-	width: 95%;
-	/* border-top-style: outset; */
+	width: 97%;
+	margin-bottom: -16px;
 	margin-top: 20px;
-	/* padding: 8px; */
+	padding: 8px;
 	border-top: 2px dotted;
 	border-top-color: #dfd6d6;
 }
@@ -383,10 +383,14 @@ body {
 }
 
 #scraperdiv {
+	height: 57px;
+	margin-bottom: -10px;
+	background-color: rgba(250, 250, 250, 0.8);
 	margin-top: 15px;
-	margin-right: 18px;
-	border-top: #d9d4d4;
-	border-top: 1px solid rgba(0,0,0,0.12);
+	margin-left: -11px;
+    margin-right: 1px;
+	/* border-top: #d9d4d4; */
+	border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 #scraperTitleDiv {

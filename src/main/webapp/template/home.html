@@ -74,24 +74,22 @@
 					
 					<div id="reminderdiv" ng-if="x.reminddate!=undefined">
 						<img alt="clock" src="image/clock.png" id="clockimg">
-						{{x.reminddate | date:"MMM d,h:mm:ss a"}} <span
-							id="close-reminder" ng-click="deleteReminder(x)"><a
-							href="" title="Delete reminder" title-direction="bottom">&#10062;</a></span>
+						{{x.reminddate | date:"MMM d,h:mm:ss a"}}
+						<span id="close-reminder" ng-click="deleteReminder(x)">
+							<a	href="" title="Delete reminder" title-direction="bottom">&#10062;</a>
+						</span>
 					</div>
 					
 					<div id="scraperdiv" ng-repeat="y in x.scrapers">
-						<div style="float: left;width: 58px;margin-left: -15px;">
+						<div style="float: left;width: 60px; margin-left: -2px;">
 							<img ng-src="{{y.imageurl}}" height="56px" width="100%">
 						</div>
-						<div style="margin-top: 5px; margin-left: 55px;">
-							<div id="scraperTitleDiv">{{y.scraptitle}}</div>
-							<div class="scraperhostName">{{y.scraphost}}</div></a>
-						</div>
-						<!-- <div
-								style="margin-top: 3px; float: right; padding-right: 7px; 
-									border: 1px solid transparent;">
-								<a target="_blank" href="{{y.mainUrl}}" ><img src="imgs/redirectUrl.svg"></a>
-							</div> -->
+						<a target="_blank" href="{{y.weburl}}">
+							<div style="margin-top: 5px; margin-left: 60px;">
+								<div id="scraperTitleDiv">{{y.scraptitle}}</div>
+								<div class="scraperhostName">{{y.scraphost}}</div>
+							</div>
+						</a>
 					</div>
 					
 				</div>

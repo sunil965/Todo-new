@@ -19,5 +19,12 @@
 				Not registered? <a ui-sref="register">Create an account</a>
 			</p>
 		</form>
+		<form action="connect/facebook" method="POST">
+			<input type="hidden" name="scope" value="user_posts" />
+			<div class="formInfo">
+				<p> Click the button to connect Facebook account.</p>
+			</div>
+			<p><button type="submit">Connect to Facebook</button></p>
+		</form>
 	</div>
 </div>

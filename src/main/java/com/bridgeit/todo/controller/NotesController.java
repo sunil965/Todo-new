@@ -61,8 +61,7 @@ public class NotesController {
 		HttpSession httpSession = request.getSession();
 		User user = (User) httpSession.getAttribute("UserInSession");
 		
-		WebScrap isScraper = null;
-		isScraper = service.createScrapping(note.getDescription());
+		WebScrap isScraper = service.createScrapping(note.getDescription());
 		
 		try {
 			note.setUser(user);
@@ -70,12 +69,8 @@ public class NotesController {
 			int noteid = service.saveNoteInfo(note);
 			
 			note.setId(noteid);
-			System.out.println("model id is::"+note);
 			if (isScraper != null) {
 				isScraper.setNoteid(noteid);
-				
-				System.out.println("Screaper is ::"+isScraper);
-				
 				service.createScraper(isScraper);
 			}
 			myresponse.setStatus(1);

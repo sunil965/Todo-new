@@ -1,4 +1,5 @@
-var myApp = angular.module('todo',[ 'ui.router', 'ngSanitize', 'ui.bootstrap', 'tooltips' ]).config(
+var myApp = angular.module('todo',
+		[ 'ui.router', 'ngSanitize', 'ui.bootstrap', 'tooltips' ]).config(
 		function($stateProvider, $urlRouterProvider) {
 			$stateProvider.state("login", {
 				url : "/login",
@@ -29,22 +30,20 @@ var myApp = angular.module('todo',[ 'ui.router', 'ngSanitize', 'ui.bootstrap', '
 				templateUrl : "template/todonote.html",
 				controller : "trashController"
 			})
-
+			// window.location = "home";
 			$urlRouterProvider.otherwise('/login');
 
 		});
 
-/*
- * ******************** This direvctive is used to make contents of div
- * editable.**************
- */
+	/** ******* This direvctive is used to make contents of div editable.****** */
 
 myApp.directive('divdata', [ function() {
 	return {
 		require : '?ngModel',
 		scope : {},
 		link : function(scope, element, attrs, ctrl) {
-			// view -> model (when div gets blur update the view value of the model)
+			// view -> model (when div gets blur update the view value of the
+			// model)
 			element.bind('blur', function() {
 				scope.$apply(function() {
 					ctrl.$setViewValue(element.html());
@@ -72,18 +71,18 @@ myApp.directive('divdata', [ function() {
 
 /* **********This direvctive is used drag & drop of div.*********** */
 
-myApp.directive('testpackery', ['$rootScope','$timeout',function($rootScope, $timeout) 
-		{
+myApp.directive('testpackery', [
+		'$rootScope',
+		'$timeout',
+		function($rootScope, $timeout) {
 			return {
 				restrict : 'A',
-				link : function(scope, element, attrs) 
-				{
-					if ($rootScope.packery === undefined || $rootScope.packery === null) 
-					{
+				link : function(scope, element, attrs) {
+					if ($rootScope.packery === undefined
+							|| $rootScope.packery === null) {
 						scope.element = element;
 						$rootScope.packery = new Packery(
-								element[0].parentElement, 
-								{
+								element[0].parentElement, {
 									isResizeBound : true,
 									// rowHeight: 230,
 									// columnWidth: 230,
@@ -101,19 +100,17 @@ myApp.directive('testpackery', ['$rootScope','$timeout',function($rootScope, $ti
 							}, 200);
 						});
 
-//						 var orderItems = function() {
-//						 var itemElems = $rootScope.packery.getItemElements();
-//						 $(itemElems).each(function(i, itemElem) {
-//						 $(itemElem).text(i + 1);
-//						 });
-//						 };
-//
-//						 $rootScope.packery.on('layoutComplete', orderItems);
-//						 $rootScope.packery.on('dragItemPositioned',orderItems);
+						// var orderItems = function() {
+						// var itemElems = $rootScope.packery.getItemElements();
+						// $(itemElems).each(function(i, itemElem) {
+						// $(itemElem).text(i + 1);
+						// });
+						// };
+						//
+						// $rootScope.packery.on('layoutComplete', orderItems);
+						// $rootScope.packery.on('dragItemPositioned',orderItems);
 
-					} 
-					else 
-					{
+					} else {
 						var draggable2 = new Draggabilly(element[0]);
 						$rootScope.packery.bindDraggabillyEvents(draggable2);
 
@@ -125,8 +122,7 @@ myApp.directive('testpackery', ['$rootScope','$timeout',function($rootScope, $ti
 						});
 
 					}
-					$timeout(function()
-					{
+					$timeout(function() {
 						$rootScope.packery.reloadItems();
 						$rootScope.packery.layout();
 					}, 100);
