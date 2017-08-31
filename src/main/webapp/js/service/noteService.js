@@ -13,6 +13,16 @@ myApp.service('noteservice', function($http) {
 		})
 	}
 
+	this.findCurrentUser = function() {
+		return $http({
+			url : "rest/getLoginUser",
+			method : "get",
+			headers : {
+				'AccessToken' : localStorage.getItem("accesstoken")
+			}
+		})
+	}
+
 	this.findAllNotes = function() {
 		return $http({
 			url : "rest/getAllNotes",
@@ -22,7 +32,7 @@ myApp.service('noteservice', function($http) {
 			}
 		})
 	}
-
+	
 	this.verifyRefreshToken = function() {
 		return $http({
 			url : "generateNewAccessToken",

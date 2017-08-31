@@ -5,11 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
+//@RequestMapping("/")
 public class HomeController {
-	 @RequestMapping("/home")
+	 @RequestMapping("/facebookcontroller")
 	    public String helloFacebook(Model model) {
 		 System.out.println("Hello");
+		 
 	      /*  if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
 	            return "redirect:/connect/facebook";
 	            return "redirect:/#!/login";
@@ -17,7 +18,7 @@ public class HomeController {
 	        model.addAttribute("facebookProfile", facebook.userOperations().getUserProfile());
 	        PagedList<Post> feed = facebook.feedOperations().getFeed();
 	        model.addAttribute("feed", feed);*/
-		 	return "redirect:/#!/login";
+		 return "redirect:/connect/facebook";
 	        //return "redirect:/#!/notes";
 	        
 	    }

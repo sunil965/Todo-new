@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -35,6 +36,17 @@ public class User implements Serializable {
 	@Column(name="Password")
 	private String password;
 	
+	@Lob
+	@Column(name="image", columnDefinition="mediumblob")
+	private String profileImage;
+	
+	
+	public String getProfileImage() {
+		return profileImage;
+	}
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
 	public User() {
 		
 	}
@@ -68,12 +80,13 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", contact=" + contact + ", password="
-				+ password + "]";
+				+ password + ", profileImage=" + profileImage + "]";
 	}
+	
+	
 	
 	
 	

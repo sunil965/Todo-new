@@ -46,10 +46,6 @@ public class NotesService {
 		return dao.allNotes(id);
 	}
 
-	/*public List<Note> getAllArchivedNote(boolean check) {
-		return null;
-	}*/
-
 	public void saveSharedNote(Collaborater collaborater) {
 		dao.saveCollab(collaborater);
 	}

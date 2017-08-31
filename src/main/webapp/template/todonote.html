@@ -22,16 +22,18 @@
 				<li><a href="" ng-show="gridbtn" ng-click="showingrid()"><img src="image/grid.svg" alt="Grid" title="Grid view" title-direction="bottom"></a></li>
 				<li>
 					<div class="dropdown btn-group">
-						<img alt="Profile" src="image/Sunil.JPG" id="navprofile" data-toggle="dropdown" title="Profile" title-direction="bottom">
+						<img alt="Profile" ng-src="{{profilepicSrc}}" id="navprofile" data-toggle="dropdown" title="Profile" title-direction="bottom">
 						<div class="dropdown-menu" id="profilpopup">
 							<div>
-								<img alt="list" src="image/Sunil.JPG" id="profile-popup-image">
+								<img alt="list" ng-src="{{profilepicSrc}}" id="profile-popup-image" ng-click="uploadImage()">
 							</div>
 							<div id="profile-popup-data">
 								<h4><font color="black">{{name}}</font></h4>
 								<h6>{{email}}</h6>
 								<a href="">Google+ Profile–Privacy</a>
 								<br>
+								<input type="file" ng-file-select="onFileSelect($files)" ng-model="profilepicSrc" 
+										id="profileImg" style="display:none">
 								<button ng-click="logout()">Logout</button>
 						<!-- 		<a href="" ng-click="logout()"><img src="image/logout.png" alt="Logout"></a> -->
 							</div>
@@ -89,7 +91,8 @@
 				<div  id="notediv" ng-show="createnote" ><!-- class="col-lg-12" -->
 						<!------------------- Create Note Card----------------->
 						<!-- tabindex="0" ng-blur="hideNoteCreate()" -->
-						 <div class="card" ng-model="colorOnCreate" ng-style="{'background-color':colorOnCreate}" > 
+						 <div class="card" ng-model="colorOnCreate" ng-style="{'background-color':colorOnCreate}" >
+						 	<div id="image"><img ng-src="{{imageSrc}}" style=" max-width: 574px;"/></div> 
 							<div id="title" divdata contenteditable="true" ng-model="title" placeholder="Title" ng-show="showfullbody"/>
 							<div id="description" divdata contenteditable="true" ng-model="desc" placeholder="Take a note..." 
 								 ng-click="hideAndshow()"/>
@@ -108,10 +111,15 @@
 													<img ng-click="colorOnCreate='rgb(167, 255, 235)'" src="image/teal.png" alt="Teal">
 													<img ng-click="colorOnCreate='rgb(204, 255, 144)'" src="image/green.png" alt="Green">
 											</div>
-									<img src="image/color.png" alt="Color">
+										<img src="image/color.png" alt="Color">
 									</span>
 									<span id="create-footer-Images"><img src="image/archieve.png" alt="Archive"></span>
 									<span id="create-footer-Images"><img src="image/list.png" alt="More"></span>
+									<span id="create-footer-Images" ng-click="addImage()"><img src="image/image.svg" alt="More"></span>
+									
+									<input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc" 
+										id="addImg" style="display:none">
+										
 									<button id="donebotton" ng-click="savenote()">Done</button>
 								</div>
 							</div>

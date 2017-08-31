@@ -15,7 +15,7 @@ public class UserRegValidate implements Validator{
 	 private Matcher matcher; 
 	 
 	 private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";  
-	 private static final String STRING_PATTERN = "[a-zA-Z]+";  
+	 private static final String STRING_PATTERN = "[a-zA-Z]+"; //-- "^([a-zA-Z' ]+)$"  
 	 private static final String MOBILE_PATTERN = "[0-9]{10}";
 	 private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
 

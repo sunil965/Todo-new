@@ -57,7 +57,7 @@ public class NotesDaoImpl implements NotesDao{
 		Query<Note> query1 = session.createQuery("from Note where User_ID = "+id);
 		List<Note> list = query1.list();
 		
-		Query<Note> query2 = session.createQuery("select noteid from Collaborater where sharedwith = "+1);
+		Query<Note> query2 = session.createQuery("select noteid from Collaborater where sharedwith = "+id);
 		List list2 = query2.list();
 		
 		

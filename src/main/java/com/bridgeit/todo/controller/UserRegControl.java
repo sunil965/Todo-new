@@ -2,6 +2,9 @@ package com.bridgeit.todo.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,7 +54,9 @@ public class UserRegControl {
 
 		validator.validate(user, result);
 		System.out.println(result.hasErrors());
-
+		System.out.println("Modal class Image is::::"+user);
+		
+		
 		if (result.hasErrors()) {
 			logger1.debug("Registration Failed!");
 			logger.debug("Registration Failed!");
@@ -68,7 +72,7 @@ public class UserRegControl {
 		String pass = user.getPassword();
 		String encPass = Encryptor.getDigest(pass);
 		user.setPassword(encPass);
-
+		
 		try {
 			service.saveUserDetails(user);
 			logger1.debug("Registration Succesfull!");
@@ -95,7 +99,7 @@ public class UserRegControl {
 	 * @return {@link ResponseEntity<Response>}
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/update", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE,
+	@RequestMapping(value = "/rest/update", method = RequestMethod.PUT, produces = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Response> updateUser(@RequestBody User user, BindingResult result) throws Exception {
 
@@ -153,7 +157,24 @@ public class UserRegControl {
 		System.out.println("User not found .. ");
 		myresponse.setStatus(-1);
 		myresponse.setMessage("User Not Found");
-		return new ResponseEntity<Response>(myresponse, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
 	}
 	
+	@RequestMapping(value = "/rest/getLoginUser", method=RequestMethod.GET)
+	public ResponseEntity<Response> getLoginUser(HttpServletRequest request) {
+		HttpSession httpSession = request.getSession();
+		User u = (User) httpSession.getAttribute("UserInSession");
+		if(u != null){
+			myresponse.setStatus(1);
+			myresponse.setMessage("User Found");
+			myresponse.setToken(null);
+			myresponse.setUser(u);
+			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
+		}
+		else{
+			myresponse.setStatus(-1);
+			myresponse.setMessage("User Not Found");
+			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
+		}
+	}
 }

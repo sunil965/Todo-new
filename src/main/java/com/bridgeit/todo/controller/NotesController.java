@@ -10,13 +10,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.todo.JSONResponse.Response;
@@ -152,6 +150,7 @@ public class NotesController {
 	 * @param id {@link Integer}
 	 * @return {@link ResponseEntity<List>}
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/rest/getAllNotes")
 	public ResponseEntity<List<Note>> getAllNoteOfUser(HttpServletRequest request) {
 		HttpSession httpSession = request.getSession();
@@ -166,7 +165,8 @@ public class NotesController {
 		return new ResponseEntity<List<Note>>(note, HttpStatus.NOT_FOUND);
 	}
 					// Add Scrapers To Their Respective Note And Return To getAllNoteOfUser().
-	 private List addScraperInNote(List notes) {
+	 @SuppressWarnings("rawtypes")
+	private List addScraperInNote(List notes) {
 		 for (int i = 0; i < notes.size(); i++) {
 				Note todoNotes =  (Note) notes.get(i);
 				List<WebScrap> scrapers = getAllScraper(todoNotes.getId());

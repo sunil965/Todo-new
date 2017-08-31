@@ -8,14 +8,14 @@
 			
 				<div id="gridList" ng-style="{'background-color':x.color}" ng-if="x.archive==false && x.trash==false && x.pin==false">
 				
-					<div id="pin-image" ng-click="setpin(x)"><img alt="pin" src="image/pin.svg" style="margin-right: 13px;" title="Pin" title-direction="bottom"></div>
+					<div id="gridimage" ng-if="x.picture" style="margin-left: -15px;margin-top: -15px;">
+						<img ng-src="{{x.picture}}" style="width: 100%;">
+					</div>
 					
 					<div ng-click="updatePopUp(x)" style="min-height: 110px; word-break: break-word; padding-right: 10px;">
-						
+						<div id="pin-image" ng-click="setpin(x)"><img alt="pin" src="image/pin.svg" style="margin-right: 13px;" title="Pin" title-direction="bottom"></div>
 						<div id="gridtitle" ng-bind-html="x.title"></div>
-						
 						<div id="griddescription" ng-bind-html="x.description" style="word-break: break-word; padding-right: 10px;"></div>
-						
 					</div>
 					
 					<div id="gridfooter">
@@ -67,7 +67,10 @@
 							title-direction="bottom">
 							<ul class="dropdown-menu" style="margin-top: 5px;">
 								<li><a href="" ng-click="doTrash(x)" style="padding-left: 16px">Delete</a></li>
-								<!-- <li><a href="" style="padding-left: 16px">Make a copy</a></li> -->
+								<!-- <li><a href="" style="padding-left:16px" ng-click="addImage()">Add Image</a>
+									<input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrcInCard" 
+										id="addImg" style="display:none">
+								</li> -->
 							</ul>
 						</span>
 					</div>

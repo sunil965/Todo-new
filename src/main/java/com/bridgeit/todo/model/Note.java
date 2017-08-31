@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -53,9 +54,18 @@ public class Note implements Serializable{
 	@JoinColumn(name = "User_ID")
 	private User user;
 	
-	/*@Transient
-	List<Collaborater> collaborater;*/
+	@Lob
+	@Column(name="Image", columnDefinition="mediumblob")
+	private String picture;
 	
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
 	@Transient
 	List<WebScrap> scrapers;
 	
