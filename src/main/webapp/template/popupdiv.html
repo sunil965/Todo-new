@@ -1,7 +1,7 @@
 <div ng-style="{'background-color':$ctrl.notecolor}">
 
-	<div id="gridimage" ng-if="ctrl.notepic">
-						<img ng-src="$ctrl.notepic">
+	<div id="gridimage" ng-if="$ctrl.notepic">
+						<img ng-src="{{$ctrl.notepic}}" style="width: 100%;">
 	</div>
 	<div id="title" divdata contenteditable="true" ng-model="$ctrl.titledata"	placeholder="Title" ng-bind-html="$ctrl.titledata"/>
 	<div id="description" divdata contenteditable="true" ng-model="$ctrl.discriptiondata"	placeholder="Take a note..." ng-bind-html="$ctrl.discriptiondata" />

@@ -68,6 +68,18 @@
 								  	{{x.reminddate | date:"MMM d,h:mm:ss a"}}
 									<span id="close-reminder" ng-click="deleteReminder(x)"><a href="" title="Delete reminder" title-direction="bottom">&#10062;</a></span>
 								 </div>
+								 
+								 <div id="scraperdiv" ng-repeat="y in x.scrapers">
+									<div style="float: left;width: 60px; margin-left: -2px;">
+										<img ng-src="{{y.imageurl}}" height="56px" width="100%">
+									</div>
+									<a target="_blank" href="{{y.weburl}}">
+									<div style="margin-top: 5px; margin-left: 60px;">
+										<div id="scraperTitleDiv">{{y.scraptitle}}</div>
+										<div class="scraperhostName">{{y.scraphost}}</div>
+									</div>
+									</a>
+								</div>
 				</div>
 						  
 			</div>

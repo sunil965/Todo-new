@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12" id="notediv">
-	<div ng-style="onpin">Other</div>
+	<div d="pindiv" ng-style="onpin">Other</div>
 		<!------------------ DISPLAY CARDS ---------------->
 		<div testpackery ng-repeat="x in allnotes | filter:searchnote"	style="margin-top: 20px;">
 			<div ng-class="spacecol2"></div>
@@ -13,7 +13,8 @@
 					</div>
 					
 					<div ng-click="updatePopUp(x)" style="min-height: 110px; word-break: break-word; padding-right: 10px;">
-						<div id="pin-image" ng-click="setpin(x)"><img alt="pin" src="image/pin.svg" style="margin-right: 13px;" title="Pin" title-direction="bottom"></div>
+						<div id="pin-image" ng-click="setpin(x)">
+							<img alt="pin" src="image/pin.svg" title="Pin" title-direction="bottom" style=" margin-top: 10px;"></div>
 						<div id="gridtitle" ng-bind-html="x.title"></div>
 						<div id="griddescription" ng-bind-html="x.description" style="word-break: break-word; padding-right: 10px;"></div>
 					</div>

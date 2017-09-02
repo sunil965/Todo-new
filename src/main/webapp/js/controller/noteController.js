@@ -2,8 +2,6 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 
 					console.log("inside the notes controller");
 					
-					var user=null;
-					
 					$scope.apptitle = "Fundoo Notes";
 					$scope.navstyle = {
 						"height" : "60px",
@@ -119,7 +117,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 						$scope.title = "";
 						$scope.desc = "";
 						$scope.colorOnCreate = "";
-						$scope.imageSrc = "element.image || '//:0'";
+						$scope.imageSrc = ""; // element.image || '//:0'
 					}
 
 					/** ***** Update Color Notes Logic.********** */
@@ -208,8 +206,9 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					}
 
 					/** ******** Get Logged-in user. ********* */
+					var updateuserinfo=null;
 					$scope.getCurrentUser = function() {
-						user = noteservice.findCurrentUser();
+						var user = noteservice.findCurrentUser();
 						user.then(function(response) {
 									if (response.data.status == -4) {
 										var checkRefreshToken = noteservice.verifyRefreshToken();
@@ -226,10 +225,12 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 													}
 												});
 									}
+									updateuserinfo=response.data.user;
 									$scope.name = response.data.user.name;
 									$scope.email = response.data.user.email;
 								});
 					}
+					console.log("updateuserinfo :: ", updateuserinfo);
 
 					/** ********* Get All Notes Logic. ********** */
 
