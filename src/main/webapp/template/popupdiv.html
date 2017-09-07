@@ -1,17 +1,51 @@
-<div ng-style="{'background-color':$ctrl.notecolor}">
-
+<div ng-model="$ctrl.notecolor" ng-style="{'background-color':$ctrl.notecolor}">
 	<div id="gridimage" ng-if="$ctrl.notepic">
 						<img ng-src="{{$ctrl.notepic}}" style="width: 100%;">
 	</div>
-	<div id="title" divdata contenteditable="true" ng-model="$ctrl.titledata"	placeholder="Title" ng-bind-html="$ctrl.titledata"/>
+	<div id="title" divdata contenteditable="true" ng-model="$ctrl.titledata" placeholder="Title" ng-bind-html="$ctrl.titledata"/>
 	<div id="description" divdata contenteditable="true" ng-model="$ctrl.discriptiondata"	placeholder="Take a note..." ng-bind-html="$ctrl.discriptiondata" />
+	
+	<div id="popscraperdiv" ng-repeat="y in $ctrl.scrapers">
+						<div style="float: left;width: 60px; margin-left: -2px;">
+							<img ng-src="{{y.imageurl}}" height="56px" width="100%">
+						</div>
+						<a target="_blank" href="{{y.weburl}}">
+							<div style="margin-top: 5px; margin-left: 60px;">
+								<div id="scraperTitleDiv">{{y.scraptitle}}</div>
+								<div class="scraperhostName">{{y.scraphost}}</div>
+							</div>
+						</a>
+	</div>
+	
 	<div>
 		<div id="footer">
 			<span id="popup-Images">
-				<img src="image/remind.svg" alt="Reminder"></span>
+				<img src="image/remind.svg" alt="Reminder" data-toggle="dropdown" title="Reminder" title-direction="bottom">
+					<ul class="dropdown-menu" id="dropdown-menu">
+								<li><span style="margin: 100px;">Reminder</span></li>
+								<li><a style="margin-top: 10px;" ng-click="setreminder($ctrl, 'today')">Later Today 
+									<span style="float: right">8:00 PM</span></a></li>
+								<li><a style="margin-top: 10px;" ng-click="setreminder($ctrl, 'tomorrow')">Tomorrow 
+									<span style="float: right">8:00 AM</span></a></li>
+								<li><a style="margin-top: 10px;" ng-click="setreminder($ctrl, 'nextweek')">NextWeek 
+									<span style="float: right">Mon,8:00 AM</span></a></li>
+							</ul>
+			</span>
 			    <span id="popup-footer-Images"><img src="image/collabrate.svg" alt="Collabrate"></span>
-				<span id="popup-footer-Images"><img src="image/color.png" alt="Color"></span>
-				<span id="popup-footer-Images"><img src="image/archieve.png" alt="Archive"></span>
+				<span id="popup-footer-Images" class="color">
+					<div class="colordiv" style="margin-top: -70px;margin-left: 80px;">
+								<img ng-click="$ctrl.notecolor = 'rgb(250, 250, 250)'" src="image/white.png" alt="White"> 
+								<img ng-click="$ctrl.notecolor = 'rgb(255, 135, 128)'" src="image/red.png" alt="Red"> 
+								<img ng-click="$ctrl.notecolor = 'rgb(255, 209, 128)'" src="image/orange.png" alt="Orange">
+								<img ng-click="$ctrl.notecolor = 'rgb(255, 255, 141)'" src="image/yellow.png" alt="Yellow"> 
+								<img ng-click="$ctrl.notecolor = 'rgb(207, 216, 220)'" src="image/gray.png" alt="Gray"> 
+								<img ng-click="$ctrl.notecolor = 'rgb(128, 216, 255)'" src="image/blue.png" alt="Blue"> 
+								<img ng-click="$ctrl.notecolor = 'rgb(167, 255, 235)'" src="image/teal.png" alt="Teal"> 
+								<img ng-click="$ctrl.notecolor = 'rgb(204, 255, 144)'" src="image/green.png" alt="Green">
+							</div> 
+					<img src="image/color.png" alt="Color" title="Change color" title-direction="bottom">
+				</span>
+				<span id="popup-footer-Images"><img src="image/archieve.png" alt="Archive" ></span>
 				<span id="popup-footer-Images"><img src="image/image.svg" alt="Add Image"></span>
 				<span id="popup-footer-Images"><img src="image/list.png" alt="More"></span>
 			<button id="donebotton" ng-click="$ctrl.updateNote($ctrl.noteId)">Update</button>

@@ -196,7 +196,16 @@ public class NotesController {
 		User firstuser = userservice.getUserById(note.getUser().getEmail());
 		
 		String otheruser = (String) loginMap.get("sharedwith");
-		User seconduser = userservice.getUserById(otheruser);
+		User seconduser = null;
+		try {
+			seconduser = userservice.getUserById(otheruser);
+		} 
+		catch (Exception e1) {
+			e1.printStackTrace();
+			myresponse.setStatus(-1);
+			myresponse.setMessage("Collaboration Not Created");
+			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
+		}
 		
 		Collaborater collaborater = new Collaborater();
 		collaborater.setNoteid(note);
@@ -210,8 +219,6 @@ public class NotesController {
 			return new ResponseEntity<Response>(myresponse,HttpStatus.OK);
 		} 
 		catch (Exception e) {
-			System.out.println("Collaboration Creation failed !!!!");
-
 			e.printStackTrace();
 			myresponse.setStatus(-1);
 			myresponse.setMessage("Collaboration Not Created");

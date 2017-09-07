@@ -74,7 +74,10 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					
 					/** ********* Image Note Creation. ************* */
 					$scope.uploadImage = function() {
+						console.log("profilepiclk;ujiuhjily ");
 						document.getElementById("profileImg").click();
+						var profilepic = $scope.profilepicSrc;
+						console.log("profilepic ::",profilepic);
 					}
 					
 					/** ********* Image Note Creation. ************* */
@@ -316,6 +319,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 										this.notecolor = x.color;
 										this.notepin = x.pin;
 										this.notepic = x.picture;
+										this.scrapers = x.scrapers;
 
 										this.updateNote = function(id) {
 											$uibModalInstance.dismiss('Update');
@@ -383,12 +387,9 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 											collaboratorobject.noteid = note.id;
 											collaboratorobject.sharedwith = this.othersemail;
 
-											console.log("collaboratorobject  "
-													+ collaboratorobject);
-											console.log("save");
-											noteservice
-													.saveCollab(collaboratorobject);
-											console.log("save end");
+											/*console.log("collaboratorobject  "+ collaboratorobject);
+											console.log("save");*/
+											noteservice.saveCollab(collaboratorobject);
 
 											/*
 											 * var otherUser =

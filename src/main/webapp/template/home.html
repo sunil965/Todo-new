@@ -38,22 +38,14 @@
 
 						<span id="footerImages" class="color">
 							<div class="colordiv">
-								<img ng-click="notecolor(x,'rgb(250, 250, 250)')"
-									src="image/white.png" alt="White"> <img
-									ng-click="notecolor(x,'rgb(255, 135, 128)')"
-									src="image/red.png" alt="Red"> <img
-									ng-click="notecolor(x,'rgb(255, 209, 128)')"
-									src="image/orange.png" alt="Orange"> <img
-									ng-click="notecolor(x,'rgb(255, 255, 141)')"
-									src="image/yellow.png" alt="Yellow"> <img
-									ng-click="notecolor(x,'rgb(207, 216, 220)')"
-									src="image/gray.png" alt="Gray"> <img
-									ng-click="notecolor(x,'rgb(128, 216, 255)')"
-									src="image/blue.png" alt="Blue"> <img
-									ng-click="notecolor(x,'rgb(167, 255, 235)')"
-									src="image/teal.png" alt="Teal"> <img
-									ng-click="notecolor(x,'rgb(204, 255, 144)')"
-									src="image/green.png" alt="Green">
+								<img ng-click="notecolor(x,'rgb(250, 250, 250)')" src="image/white.png" alt="White"> 
+								<img ng-click="notecolor(x,'rgb(255, 135, 128)')" src="image/red.png" alt="Red"> 
+								<img ng-click="notecolor(x,'rgb(255, 209, 128)')" src="image/orange.png" alt="Orange">
+								<img ng-click="notecolor(x,'rgb(255, 255, 141)')" src="image/yellow.png" alt="Yellow"> 
+								<img ng-click="notecolor(x,'rgb(207, 216, 220)')" src="image/gray.png" alt="Gray"> 
+								<img ng-click="notecolor(x,'rgb(128, 216, 255)')" src="image/blue.png" alt="Blue"> 
+								<img ng-click="notecolor(x,'rgb(167, 255, 235)')" src="image/teal.png" alt="Teal"> 
+								<img ng-click="notecolor(x,'rgb(204, 255, 144)')" src="image/green.png" alt="Green">
 							</div> 
 							<img src="image/color.png" alt="Colors" title="Change color" title-direction="bottom">
 						</span> 
@@ -88,12 +80,12 @@
 						<div style="float: left;width: 60px; margin-left: -2px;">
 							<img ng-src="{{y.imageurl}}" height="56px" width="100%">
 						</div>
-						<a target="_blank" href="{{y.weburl}}">
 							<div style="margin-top: 5px; margin-left: 60px;">
+								<a target="_blank" href="{{y.weburl}}" style="text-decoration: none" title="Go to link" title-direction="bottom">
 								<div id="scraperTitleDiv">{{y.scraptitle}}</div>
+								</a>
 								<div class="scraperhostName">{{y.scraphost}}</div>
 							</div>
-						</a>
 					</div>
 					
 				</div>

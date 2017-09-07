@@ -12,17 +12,14 @@
 			<span ng-show="login.pwd.$touched && login.pwd.$error.required" style="color: red">" Password required!! "</span>
 	
 			<button type="submit" data-ng-click="userlogin()" ng-disabled="login.$invalid">login</button>
-			<p class="message">
-				<a href="gmailconnection">Gmail Login</a>
-			</p>
+			
 			<p class="message">
 				Not registered? <a ui-sref="register">Create an account</a>
 			</p>
 		</form>
-		<!-- <form action="/connect/facebook" method="POST">
-			<input type="hidden" name="scope" value="user_posts" />
-			<p><button type="submit">Facebook Login</button></p>
-		</form> -->
-		<a href="facebookcontroller">Facebook Login</a>
+		<p class="message">
+				<a href="gmailconnection">Gmail Login</a>
+			</p>
+		<a href="facebooklogin">Facebook Login</a>
 	</div>
 </div>

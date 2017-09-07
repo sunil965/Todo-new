@@ -18,26 +18,22 @@ import com.bridgeit.todo.model.User;
 
 @Component
 public class GmailLogin {
+	
 	public static final String App_Id = "1024956214628-kip3430tppne3bh7mgvrjt686frlfb1r.apps.googleusercontent.com";
 	public static final String Secret_Id = "Ob4wKrc05h7qVWL5vnkrobAP";
 	public static final String Redirect_URI = "http://localhost:8011/ToDo/gmail_login";
 	
-	
-	
 	public String getGoogleAuthURL(String unid){
 		
 		String googleLoginURL = "";
-		
 		try{
 			googleLoginURL = "https://accounts.google.com/o/oauth2/auth?client_id="+App_Id+"&redirect_uri="+URLEncoder.encode(Redirect_URI,"UTF-8")+
 					"&state="+unid+"&response_type=code&scope=profile email&approval_prompt=force&access_type=offline";
 			
 		}
 		catch (UnsupportedEncodingException e) {
-			
 			e.printStackTrace();
 		}
-		System.out.println("inside google authentication"+googleLoginURL);
 		return googleLoginURL;
 	}
 	

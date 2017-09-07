@@ -68,13 +68,13 @@ public class NotesDaoImpl implements NotesDao{
 	    criteria.setFetchMode("Collaborater", FetchMode.JOIN).add(Restrictions.eq("id", 35));
 	    List list = criteria.list();*/
 		
-		ArrayList arrayList = new ArrayList();
-		arrayList.add(list);
-		arrayList.add(list2);
-		System.out.println("Full Data is"+arrayList);
+		List<Note> allList = new ArrayList<Note>();
+		allList.addAll(list);
+		allList.addAll(list2);
+		System.out.println("Full Data is"+allList);
 		
 		
-		return list;
+		return allList;
 	}
 
 	
