@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -55,17 +56,31 @@ public class FbConnection {
 		ObjectMapper mapper = new ObjectMapper();
 		String token = null;
 		try {
-
-			token = mapper.readValue(fbToken, String.class);
-
+			token = mapper.readTree(fbToken).get("access_token").asText(); //readValue(fbToken, String.class);
 		}  catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println("facebook token is :" + token);
-		
 		client.close();
-
 		return token;
+	}
+
+	public JsonNode getProfile(String fbtoken) {
+		JsonNode data = null;
+		
+		String fbprofileurl = "https://graph.facebook.com/v2.9/me?access_token=" + fbtoken + "&fields=id,first_name,email,picture";
+		
+		ResteasyClient client = new ResteasyClientBuilder().build();
+		ResteasyWebTarget target = client.target(fbprofileurl);
+		Response response = target.request().accept(MediaType.APPLICATION_JSON).get();
+		String profile = response.readEntity(String.class);
+		ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+			data = mapper.readTree(profile);
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
 	}
 }

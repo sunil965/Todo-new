@@ -58,20 +58,11 @@ public class NotesDaoImpl implements NotesDao{
 		List<Note> list = query1.list();
 		
 		Query<Note> query2 = session.createQuery("select noteid from Collaborater where sharedwith = "+id);
-		List list2 = query2.list();
-		
-		
-		System.out.println("List2 user "+ list2);
-		
-		
-		/*Criteria criteria = session.createCriteria(Note.class);
-	    criteria.setFetchMode("Collaborater", FetchMode.JOIN).add(Restrictions.eq("id", 35));
-	    List list = criteria.list();*/
+		List<Note> list2 = query2.list();
 		
 		List<Note> allList = new ArrayList<Note>();
 		allList.addAll(list);
 		allList.addAll(list2);
-		System.out.println("Full Data is"+allList);
 		
 		
 		return allList;

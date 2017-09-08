@@ -373,8 +373,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 
 					$scope.collaboratePopUp = function(note) {
 
-						var callabrateModel = $uibModal
-								.open({
+						var callabrateModel = $uibModal.open({
 									templateUrl : "template/collaboratediv.html",
 									controller : function($uibModalInstance) {
 										var $ctrl = this;
@@ -387,29 +386,8 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 											collaboratorobject.noteid = note.id;
 											collaboratorobject.sharedwith = this.othersemail;
 
-											/*console.log("collaboratorobject  "+ collaboratorobject);
-											console.log("save");*/
 											noteservice.saveCollab(collaboratorobject);
 
-											/*
-											 * var otherUser =
-											 * {"email":this.othersemail,};
-											 * noteservice.getOtherUser(otherUser).then(function(response) {
-											 * collaboratoremail=response.data.user.email;
-											 * 
-											 * var collaboratorobject={};
-											 * console.log("save note
-											 * "+note.id);
-											 * 
-											 * collaboratorobject.note =
-											 * note.id;
-											 * collaboratorobject.shareduserid =
-											 * otherUser;
-											 * 
-											 * console.log("save");
-											 * noteservice.saveCollab(collaboratorobject);
-											 * console.log("save end"); });
-											 */
 										}
 									},
 									controllerAs : "$ctrl"

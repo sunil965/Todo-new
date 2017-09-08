@@ -43,5 +43,7 @@
 <script src="js/service/regService.js"></script>
 <script src="js/controller/archiveController.js"></script>
 <script src="js/controller/trashController.js"></script>
+<script src="js/controller/socialredirect.js"></script>
+
 
 </html>

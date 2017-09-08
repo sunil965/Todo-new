@@ -37,7 +37,7 @@ public class User implements Serializable {
 	private String password;
 	
 	@Lob
-	@Column(name="image", columnDefinition="mediumblob")
+	@Column(columnDefinition="mediumblob")
 	private String profileImage;
 	
 	

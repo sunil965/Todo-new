@@ -30,6 +30,12 @@ var myApp = angular.module('todo',
 				templateUrl : "template/todonote.html",
 				controller : "trashController"
 			})
+			
+			.state("redirect", {
+				url : "/redirect",
+				templateUrl : "template/blankredirect.html",
+				controller : "socialController"
+			})
 			// window.location = "home";
 			$urlRouterProvider.otherwise('/login');
 
