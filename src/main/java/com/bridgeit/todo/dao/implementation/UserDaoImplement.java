@@ -18,7 +18,7 @@ public class UserDaoImplement implements UserDao {
  
 	public void saveUser(User user) {
 		Session session = sessionFactory.getCurrentSession();
-			session.save(user);
+		session.save(user);
 	}
 
 	public void updateUser(User user) {

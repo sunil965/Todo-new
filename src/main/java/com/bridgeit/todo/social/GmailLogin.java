@@ -23,7 +23,7 @@ public class GmailLogin {
 	public static final String Secret_Id = "Ob4wKrc05h7qVWL5vnkrobAP";
 	public static final String Redirect_URI = "http://localhost:8011/ToDo/gmail_login";
 	
-	public String getGoogleAuthURL(String unid){
+	public String getGoogleAuthURL(String unid) {
 		
 		String googleLoginURL = "";
 		try{
@@ -41,9 +41,8 @@ public class GmailLogin {
 		
 		String accessTokenURL = "https://accounts.google.com/o/oauth2/token";
 		
-		ResteasyClient restCall = new ResteasyClientBuilder().build();
-		
-		ResteasyWebTarget target = restCall.target(accessTokenURL);
+		ResteasyClient restClient = new ResteasyClientBuilder().build();
+		ResteasyWebTarget target = restClient.target(accessTokenURL);
 		
 		Form f = new Form();
 		f.param("client_id", App_Id);
@@ -54,13 +53,13 @@ public class GmailLogin {
 		
 		Response response = target.request().accept(MediaType.APPLICATION_JSON).post(Entity.form(f) );
 		
-		Token accessToken = response.readEntity(Token.class);
+		String accessToken = response.readEntity(String.class);
 		
-		System.out.println("Token by google "+accessToken);
+		System.out.println("Token by google "+accessToken.toString());
 		
-		restCall.close();
+		restClient.close();
 		
-		return accessToken.getAccesstoken();
+		return accessToken;
 	}
 
 	/*public User getUserProfile(String accessToken)

@@ -28,7 +28,7 @@ public class NotesService {
 		return id;
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Note getNote(int id) {
 		return dao.noteWithId(id);
 	}
@@ -41,7 +41,7 @@ public class NotesService {
 		dao.delete(id);
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public List<Note> getAllNote(int id) {
 		return dao.allNotes(id);
 	}
@@ -53,34 +53,36 @@ public class NotesService {
 	public WebScrap createScrapping(String description) {
 		WebScrap scraper = null;
 		try {
-			if (description != null) {
-				
+			if (description != null)
+			{
 				String url = UrlValidate.isValidateUrl(description);
-				URI uri = new URI(url);
-				String hostName = uri.getHost();
-				
-				String title = null;
-				String imgUrl = null;
-				Document document = Jsoup.connect(url).get();
-				Elements metaOgTitle = document.select("meta[property=og:title]");
-				Elements metaOgImage = document.select("meta[property=og:image]");
-				
-				if (metaOgTitle != null) {
-					title = metaOgTitle.attr("content");
-				} else {
-					title = document.text();
-				}
+				if (url != null) {
+					URI uri = new URI(url);
+					String hostName = uri.getHost();
 
-//				metaOgImage = document.select("meta[property=og:image]");
-				if (metaOgImage != null) {
-					imgUrl = metaOgImage.attr("content");
-				}
+					String title = null;
+					String imgUrl = null;
+					Document document = Jsoup.connect(url).get();
+					Elements metaOgTitle = document.select("meta[property=og:title]");
+					Elements metaOgImage = document.select("meta[property=og:image]");
 
-				scraper = new WebScrap();
-				scraper.setScraptitle(title);
-				scraper.setImageurl(imgUrl);
-				scraper.setScraphost(hostName);
-				scraper.setWeburl(url);
+					if (metaOgTitle != null) {
+						title = metaOgTitle.attr("content");
+					} else {
+						title = document.text();
+					}
+
+					// metaOgImage = document.select("meta[property=og:image]");
+					if (metaOgImage != null) {
+						imgUrl = metaOgImage.attr("content");
+					}
+
+					scraper = new WebScrap();
+					scraper.setScraptitle(title);
+					scraper.setImageurl(imgUrl);
+					scraper.setScraphost(hostName);
+					scraper.setWeburl(url);
+				}
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -95,6 +97,5 @@ public class NotesService {
 	public List<WebScrap> getScraperById(int noteid) {
 		return dao.allScraper(noteid);
 	}
-	
-	
+
 }

@@ -45,10 +45,10 @@ public class FbConnection {
 		try {
 			fbaccesstokenUrl = "https://graph.facebook.com/oauth/access_token?" + "client_id="+ FbConnection.FB_APP_ID + "&redirect_uri="
 					+ URLEncoder.encode(FbConnection.REDIRECT_URI, "UTF-8") + "&client_secret=" + FB_APP_SECRET	+ "&code=" + code;
-		} catch (UnsupportedEncodingException e) {
+		} 
+		catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-
 		ResteasyClient client = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = client.target(fbaccesstokenUrl);
 		Response response = target.request().accept(MediaType.APPLICATION_JSON).get();

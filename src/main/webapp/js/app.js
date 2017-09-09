@@ -1,6 +1,8 @@
-var myApp = angular.module('todo',
-		[ 'ui.router', 'ngSanitize', 'ui.bootstrap', 'tooltips' ]).config(
-		function($stateProvider, $urlRouterProvider) {
+var myApp = angular.module('todo',[ 'ui.router', 'ngSanitize', 'ui.bootstrap', 'tooltips' ]).config(function($stateProvider, $urlRouterProvider)
+		{
+	
+	console.log("Inside app.js");
+	
 			$stateProvider.state("login", {
 				url : "/login",
 				templateUrl : "template/login.html",
@@ -41,9 +43,13 @@ var myApp = angular.module('todo',
 
 		});
 
-	/** ******* This direvctive is used to make contents of div editable.****** */
 
-myApp.directive('divdata', [ function() {
+
+
+/** ******* This direvctive is used to make contents of div editable.****** */
+
+myApp.directive('divdata', [ function()
+	{
 	return {
 		require : '?ngModel',
 		scope : {},
@@ -138,8 +144,10 @@ myApp.directive('testpackery', [
 		} ])
 		
 		
-	/*************** IMAGE FILE UPLOAD*****************/	
-   myApp.directive("ngFileSelect", function(fileReader, $timeout) {
+		
+/*************** IMAGE FILE UPLOAD*****************/
+		
+  myApp.directive("ngFileSelect", function(fileReader, $timeout) {
     return {
       scope: {
         ngModel: '='

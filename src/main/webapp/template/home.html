@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12" id="notediv">
-	<div d="pindiv" ng-style="onpin">Other</div>
+	<div id="pindiv" ng-style="onpin" ng-show="peendiv">Other</div>
 		<!------------------ DISPLAY CARDS ---------------->
 		<div testpackery ng-repeat="x in allnotes | filter:searchnote"	style="margin-top: 20px;">
 			<div ng-class="spacecol2"></div>
@@ -60,6 +60,7 @@
 							title-direction="bottom">
 							<ul class="dropdown-menu" style="margin-top: 5px;">
 								<li><a href="" ng-click="doTrash(x)" style="padding-left: 16px">Delete</a></li>
+								<li><a href="" ng-click="copyNote(x)" style="padding-left: 16px">Copy Note</a></li>
 								<!-- <li><a href="" style="padding-left:16px" ng-click="addImage()">Add Image</a>
 									<input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrcInCard" 
 										id="addImg" style="display:none">

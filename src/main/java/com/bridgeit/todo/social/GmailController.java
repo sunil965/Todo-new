@@ -36,7 +36,7 @@ public class GmailController {
 		request.getSession().setAttribute("STATE", unid);
 		String googleLoginURL = gmailLog.getGoogleAuthURL(unid);
 		response.sendRedirect(googleLoginURL);
-		return;
+//		return;
 	}
 	
 	@RequestMapping(value="gmail_login")
@@ -53,17 +53,17 @@ public class GmailController {
 		}
 		
 		String error = request.getParameter("error");
-	/*	if( error != null && error.trim().isEmpty() ) 
+		if( error != null && error.trim().isEmpty() ) 
 		{System.out.println("checking error ,,,");
 			response.sendRedirect("login");
 			return;
-		}*/
+		}
 		String authCode = request.getParameter("code");
 		String accessToken = gmailLog.getAccessToken(authCode);
 //		System.out.println("Token by google "+accessToken);
-		token.setAccesstoken(accessToken);
+//		token.setAccesstoken(accessToken);
 //		token.setUser(user);
-		tokenService.saveTokenDetail(token);
+//		tokenService.saveTokenDetail(token);
 		
 		
 		/*User profile= gmailLog.getUserProfile(accessToken);
@@ -73,9 +73,9 @@ public class GmailController {
 		token.setUser(user);
 		tokenService.saveTokenDetail(token);*/
 
-		response.setHeader("AccessToken", token.getAccesstoken());
+//		response.setHeader("AccessToken", token.getAccesstoken());
 		
-		response.sendRedirect("http://localhost:8011/ToDo/#!/notes");
+//		response.sendRedirect("http://localhost:8011/ToDo/#!/notes");
 	}
 
 	

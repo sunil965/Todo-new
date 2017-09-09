@@ -82,12 +82,10 @@ public class LoginController {
 			
 			token.setUser(userresult);
 			
-			try 
-			{
+			try {
 				tokservice.saveTokenDetail(token);
 			} 
-			catch (Exception e) 
-			{
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 			token.setUser(null);

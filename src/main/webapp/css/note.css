@@ -299,8 +299,9 @@ body {
 
 #profile-popup-data {
 	float: right;
-    margin-top:  -116px;
-    margin-right: 55px;
+    margin-top: -113px;
+    /* margin-right: 8px; */
+    /* margin-left: 143px; */
 }
 
 #sidebarcontent {

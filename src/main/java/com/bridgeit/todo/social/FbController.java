@@ -70,7 +70,8 @@ public class FbController {
 		
 		User userExist = userService.getUserById(fbUserData.get("email").asText());
 		
-		if(userExist == null){
+		if(userExist == null)
+		{
 			User addUser = new User();
 			addUser.setName(fbUserData.get("first_name").asText());
 			addUser.setEmail(fbUserData.get("email").asText());
@@ -79,10 +80,9 @@ public class FbController {
 			
 			Token token = manipulater.generateToken();
 			token.setUser(addUser);
-//			token.setAccesstoken(accesstoken);
 			
 			request.getSession().setAttribute("token",token);
-			
+			request.getSession().setAttribute("UserInSession",addUser);
 			
 			try {
 				tokservice.saveTokenDetail(token);
@@ -90,16 +90,21 @@ public class FbController {
 			catch (Exception e) {
 				e.printStackTrace();
 			}
-			/*token.setUser(null);
-			myresponse.setStatus(1);
-			myresponse.setMessage("Logged in Successfully");
-			myresponse.setToken(token);
-			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);*/
 			response.sendRedirect("http://localhost:8011/ToDo/#!/redirect?tokeninurl=token");
-			
 		}
 		
-		//return null;
+		Token token = manipulater.generateToken();
+		token.setUser(userExist);
+		
+		request.getSession().setAttribute("token",token);
+		request.getSession().setAttribute("UserInSession",userExist);
+		try {
+			tokservice.saveTokenDetail(token);
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		response.sendRedirect("http://localhost:8011/ToDo/#!/redirect?tokeninurl=token");
 	}
 	
 	
@@ -107,14 +112,11 @@ public class FbController {
 	@RequestMapping(value = "/getTokenByUrl", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Response> getTokenByUrl(HttpServletRequest request, HttpServletResponse response) {
-		/*//System.out.println(tokenMap);
-		String token=tokenMap.get("string");
-		System.out.println("jhgrhtfkgrjeytl :: "+token);*/
-		String data = request.getHeader("tt");
-		Token token = (Token) request.getSession().getAttribute(data);
-		System.out.println("token is::"+token);
-		
-		myresponse.setStatus(1);
+	
+		String tokenKey = request.getHeader("tt");
+		Token token = (Token) request.getSession().getAttribute(tokenKey);
+		System.out.println("Froom Session Token is:: "+token);
+		myresponse.setStatus(5);
 		myresponse.setMessage("Logged in Successfully");
 		myresponse.setToken(token);
 		return new ResponseEntity<Response>(myresponse, HttpStatus.OK);

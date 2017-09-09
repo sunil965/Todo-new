@@ -122,6 +122,38 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 						$scope.colorOnCreate = "";
 						$scope.imageSrc = ""; // element.image || '//:0'
 					}
+					
+
+					/**	 **********Copying Note Logic. ******* */
+					$scope.copyNote = function(note) {
+						var notedata = {};
+						notedata.title = note.title;
+						notedata.description = note.description;
+						notedata.color = note.color;
+						notedata.picture = note.picture;
+						
+						var httpObject = noteservice.create(notedata);
+						httpObject.then(function(response) {
+									if (response.data.status == -4) {
+										var checkRefreshToken = noteservice.verifyRefreshToken();
+										checkRefreshToken.then(function(res) {
+													if (res.data.status == 1) {
+														localStorage.setItem("accesstoken",	res.data.token.accesstoken);
+														console.log("check data.token on note creation "+ res);
+														noteservice.create(notedata).then(function(responseagain) {
+																			$scope.getAllNotes();
+																		});
+													} else {
+														console.log("Refresh token expired please login again...");
+														$state.go('login');
+													}
+												})
+									}
+									$scope.getAllNotes();
+								});
+					}
+					
+					
 
 					/** ***** Update Color Notes Logic.********** */
 
@@ -231,54 +263,65 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 									updateuserinfo=response.data.user;
 									$scope.name = response.data.user.name;
 									$scope.email = response.data.user.email;
+									$scope.profilepicSrc = response.data.user.profileImage;
 								});
 					}
-					console.log("updateuserinfo :: ", updateuserinfo);
 
 					/** ********* Get All Notes Logic. ********** */
 
 					$scope.getAllNotes = function() {
-
 						var allnotes = noteservice.findAllNotes();
 						allnotes.then(function(response) {
 									if (response.data.status == -4) {
 										console.log("Logout from Read operation method.");
 										$scope.logout();
 										/*
-										 * $scope.listbtn=true;
-										 * $scope.gridbtn=false;
-										 * $scope.showlist=false;
-										 * $scope.showgrid=true;
-										 * 
-										 * var checkRefreshToken =
-										 * noteservice.verifyRefreshToken();
+										 * var checkRefreshToken = noteservice.verifyRefreshToken();
 										 * checkRefreshToken.then(function(res) {
 										 * if (res.data.status == 1) {
-										 * localStorage.setItem("accesstoken",
-										 * res.data.token.accesstoken),
+										 * localStorage.setItem("accesstoken", res.data.token.accesstoken),
 										 * noteservice.findAllNotes().then(function(responseagain) {
-										 * $scope.allnotes =
-										 * response.data.reverse(); }); } else {
-										 * console.log("Refresh token expired
-										 * please login again...");
+										 * $scope.allnotes = response.data.reverse(); }); }
+										 * else {
+										 * console.log("Refresh token expired please login again...");
 										 * $state.go('login'); } });
 										 */
 									}
-									/*
-									 * console.log("Response with scrap
-									 * "+response.data) $scope.reminder =
-									 * response.data.reminddate;
-									 */
+									  /*console.log("Response with scrap "+response.data);
+									  $scope.reminder = response.data.reminddate;*/
+									 
 									$scope.allnotes = response.data.reverse();
+									$scope.showpeened($scope.allnotes);
 								});
 					}
+					
+					$scope.showpeened=function(noteslist){
+						 var pinnedtotal=0;
+						 
+						 for(var j=0;j<noteslist.length;j++)
+							{
+								if(noteslist[j].pin==true)
+								{
+									console.log("checking is pinned called");
+									pinnedtotal=pinnedtotal+1;
+								}
+								if(pinnedtotal>0){
+									$scope.peendiv=true;
+								}
+								else
+								{
+									$scope.peendiv=false;
+								}	
+							}	
+						 
+					 }
+					
 
 					/** ****************** Logout Logic. ******************* */
 
 					$scope.logout = function() {
 						var logoutresponse = noteservice.exit();
 						$state.go('login');
-						console.log("logout from controller done");
 					}
 
 					/** ****************** Delete Note Logic. ******************* */
@@ -306,8 +349,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					/** *********** Open Model Note Logic.**************** */
 
 					$scope.updatePopUp = function(x) {
-						var modalInstance = $uibModal
-								.open({
+						var modalInstance = $uibModal.open({
 									templateUrl : "template/popupdiv.html",
 									controller : function($uibModalInstance) {
 										var $ctrl = this;
@@ -340,24 +382,13 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 															var checkRefreshToken = noteservice.verifyRefreshToken();
 															checkRefreshToken.then(function(res) {
 																		if (res.data.status == 1) {
-																					localStorage
-																							.setItem(
-																									"accesstoken",
-																									res.data.token.accesstoken),
-																					noteservice
-																							.update(
-																									updateobj)
-																							.then(
-																									function(
-																											responseagain) {
-																										$scope.allnotes = response.data
-																												.reverse();
-																									});
+																				localStorage.setItem("accesstoken",	res.data.token.accesstoken),
+																				noteservice.update(updateobj).then(function(responseagain) {
+																									$scope.allnotes = response.data.reverse();
+																								});
 																		} else {
-																			console
-																					.log("Refresh token expired please login again...");
-																			$state
-																					.go('login');
+																			console.log("Refresh token expired please login again...");
+																			$state.go('login');
 																		}
 																	});
 														}
@@ -387,7 +418,6 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 											collaboratorobject.sharedwith = this.othersemail;
 
 											noteservice.saveCollab(collaboratorobject);
-
 										}
 									},
 									controllerAs : "$ctrl"
@@ -403,30 +433,17 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 							note.pin = false;
 						}
 						var httpObject = noteservice.update(note);
-						httpObject
-								.then(function(response) {
+						httpObject.then(function(response) {
 									if (response.data.status == -4) {
-										var checkRefreshToken = noteservice
-												.verifyRefreshToken();
-										checkRefreshToken
-												.then(function(res) {
+										var checkRefreshToken = noteservice.verifyRefreshToken();
+										checkRefreshToken.then(function(res) {
 													if (res.data.status == 1) {
-																localStorage
-																		.setItem(
-																				"accesstoken",
-																				res.data.token.accesstoken),
-																noteservice
-																		.update(
-																				updateobj)
-																		.then(
-																				function(
-																						responseagain) {
-																					$scope.allnotes = response.data
-																							.reverse();
+																localStorage.setItem("accesstoken",	res.data.token.accesstoken),
+																noteservice.update(updateobj).then(function(responseagain) {
+																					$scope.allnotes = response.data.reverse();
 																				});
 													} else {
-														console
-																.log("Refresh token expired please login again...");
+														console.log("Refresh token expired please login again...");
 														$state.go('login');
 													}
 												});
@@ -443,30 +460,17 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 							note.archive = false;
 						}
 						var httpObject = noteservice.update(note);
-						httpObject
-								.then(function(response) {
+						httpObject.then(function(response) {
 									if (response.data.status == -4) {
-										var checkRefreshToken = noteservice
-												.verifyRefreshToken();
-										checkRefreshToken
-												.then(function(res) {
+										var checkRefreshToken = noteservice.verifyRefreshToken();
+										checkRefreshToken.then(function(res) {
 													if (res.data.status == 1) {
-																localStorage
-																		.setItem(
-																				"accesstoken",
-																				res.data.token.accesstoken),
-																noteservice
-																		.update(
-																				updateobj)
-																		.then(
-																				function(
-																						responseagain) {
-																					$scope.allnotes = response.data
-																							.reverse();
+																localStorage.setItem("accesstoken",	res.data.token.accesstoken),
+																noteservice.update(updateobj).then(function(responseagain) {
+																					$scope.allnotes = response.data.reverse();
 																				});
 													} else {
-														console
-																.log("Refresh token expired please login again...");
+														console.log("Refresh token expired please login again...");
 														$state.go('login');
 													}
 												});
@@ -483,30 +487,17 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 							note.trash = true;
 						}
 						var httpObject = noteservice.update(note);
-						httpObject
-								.then(function(response) {
+						httpObject.then(function(response) {
 									if (response.data.status == -4) {
-										var checkRefreshToken = noteservice
-												.verifyRefreshToken();
-										checkRefreshToken
-												.then(function(res) {
+										var checkRefreshToken = noteservice.verifyRefreshToken();
+										checkRefreshToken.then(function(res) {
 													if (res.data.status == 1) {
-																localStorage
-																		.setItem(
-																				"accesstoken",
-																				res.data.token.accesstoken),
-																noteservice
-																		.update(
-																				updateobj)
-																		.then(
-																				function(
-																						responseagain) {
-																					$scope.allnotes = response.data
-																							.reverse();
+																localStorage.setItem("accesstoken",res.data.token.accesstoken),
+																noteservice.update(updateobj).then(function(responseagain) {
+																					$scope.allnotes = response.data.reverse();
 																				});
 													} else {
-														console
-																.log("Refresh token expired please login again...");
+														console.log("Refresh token expired please login again...");
 														$state.go('login');
 													}
 												});
@@ -523,29 +514,17 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 							note.trash = false;
 						}
 						var httpObject = noteservice.update(note);
-						httpObject
-								.then(function(response) {
+						httpObject.then(function(response) {
 									if (response.data.status == -4) {
-										var checkRefreshToken = noteservice
-												.verifyRefreshToken();
-										checkRefreshToken
-												.then(function(res) {
+										var checkRefreshToken = noteservice.verifyRefreshToken();
+										checkRefreshToken.then(function(res) {
 													if (res.data.status == 1) {
-																localStorage
-																		.setItem(
-																				"accesstoken",
-																				res.data.token.accesstoken),
-																noteservice
-																		.update(updateobj)
-																		.then(
-																				function(
-																						responseagain) {
-																					$scope.allnotes = response.data
-																							.reverse();
+																localStorage.setItem("accesstoken",res.data.token.accesstoken),
+																noteservice.update(updateobj).then(function(responseagain) {
+																				$scope.allnotes = response.data.reverse();
 																				});
 													} else {
-														console
-																.log("Refresh token expired please login again...");
+														console.log("Refresh token expired please login again...");
 														$state.go('login');
 													}
 												});
@@ -564,30 +543,17 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 							note.archive = false;
 						}
 						var httpObject = noteservice.update(note);
-						httpObject
-								.then(function(response) {
+						httpObject.then(function(response) {
 									if (response.data.status == -4) {
-										var checkRefreshToken = noteservice
-												.verifyRefreshToken();
-										checkRefreshToken
-												.then(function(res) {
+										var checkRefreshToken = noteservice.verifyRefreshToken();
+										checkRefreshToken.then(function(res) {
 													if (res.data.status == 1) {
-																localStorage
-																		.setItem(
-																				"accesstoken",
-																				res.data.token.accesstoken),
-																noteservice
-																		.update(
-																				updateobj)
-																		.then(
-																				function(
-																						responseagain) {
-																					$scope.allnotes = response.data
-																							.reverse();
+																localStorage.setItem("accesstoken",res.data.token.accesstoken),
+																noteservice.update(updateobj).then(function(responseagain) {
+																					$scope.allnotes = response.data.reverse();
 																				});
 													} else {
-														console
-																.log("Refresh token expired please login again...");
+														console.log("Refresh token expired please login again...");
 														$state.go('login');
 													}
 												});
@@ -604,30 +570,17 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 							note.pin = false;
 						}
 						var httpObject = noteservice.update(note);
-						httpObject
-								.then(function(response) {
+						httpObject.then(function(response) {
 									if (response.data.status == -4) {
-										var checkRefreshToken = noteservice
-												.verifyRefreshToken();
-										checkRefreshToken
-												.then(function(res) {
+										var checkRefreshToken = noteservice.verifyRefreshToken();
+										checkRefreshToken.then(function(res) {
 													if (res.data.status == 1) {
-																localStorage
-																		.setItem(
-																				"accesstoken",
-																				res.data.token.accesstoken),
-																noteservice
-																		.update(
-																				updateobj)
-																		.then(
-																				function(
-																						responseagain) {
-																					$scope.allnotes = response.data
-																							.reverse();
+																localStorage.setItem("accesstoken", res.data.token.accesstoken),
+																noteservice.update(updateobj).then(function(responseagain) {
+																					$scope.allnotes = response.data.reverse();
 																				});
 													} else {
-														console
-																.log("Refresh token expired please login again...");
+														console.log("Refresh token expired please login again...");
 														$state.go('login');
 													}
 												});
