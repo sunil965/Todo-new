@@ -1,5 +1,6 @@
 package com.bridgeit.todo.social;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -13,8 +14,9 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.springframework.stereotype.Component;
 
-import com.bridgeit.todo.model.Token;
-import com.bridgeit.todo.model.User;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class GmailLogin {
@@ -55,14 +57,18 @@ public class GmailLogin {
 		
 		String accessToken = response.readEntity(String.class);
 		
-		System.out.println("Token by google "+accessToken.toString());
-		
+		ObjectMapper mapper = new ObjectMapper();
+		String token = null;
+		try {
+			token = mapper.readTree(accessToken).get("access_token").asText(); //readValue(fbToken, String.class);
+		}  catch (IOException e) {
+			e.printStackTrace();
+		}
 		restClient.close();
-		
-		return accessToken;
+		return token;
 	}
 
-	/*public User getUserProfile(String accessToken)
+	public JsonNode getUserProfile(String accessToken)
 	{
 		String gmail_user_url= "https://www.googleapis.com/plus/v1/people/me";
 		
@@ -70,13 +76,22 @@ public class GmailLogin {
 	    
 		ResteasyClient restCall = new ResteasyClientBuilder().build();
 		ResteasyWebTarget target = restCall.target(gmail_user_url);
-		
 		String headerAuth="Bearer "+accessToken;
 		Response response = target.request().header("Authorization", headerAuth).accept(MediaType.APPLICATION_JSON).get();
 		
-		User profile = response.readEntity(User.class);
+		String profile = response.readEntity(String.class);
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode profiledata = null;
+		try {
+			profiledata=mapper.readTree(profile);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		restCall.close();
 		System.out.println("profile details"+profile);
-		return profile;
-	}*/
+		return profiledata;
+	}
+
 }

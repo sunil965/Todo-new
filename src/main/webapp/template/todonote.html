@@ -92,7 +92,7 @@
 						<!------------------- Create Note Card----------------->
 						<!-- tabindex="0" ng-blur="hideNoteCreate()" -->
 						 <div class="card" ng-model="colorOnCreate" ng-style="{'background-color':colorOnCreate}" >
-						 	<div id="image"><img ng-src="{{imageSrc}}" style=" max-width: 574px;"/></div> 
+						 	<div id="image" ng-if="imageSrc"><img ng-src="{{imageSrc}}" style=" max-width: 574px;"/></div> 
 							<div id="title" divdata contenteditable="true" ng-model="title" placeholder="Title" ng-show="showfullbody"/>
 							<div id="description" divdata contenteditable="true" ng-model="desc" placeholder="Take a note..." 
 								 ng-click="hideAndshow()"/>

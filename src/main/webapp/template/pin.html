@@ -3,10 +3,10 @@
 		<div id="pindiv" ng-style="onpin" ng-show="peendiv">Pinned</div>
 		
 		<!------------------ DISPLAY CARDS ---------------->
-		<div ng-repeat="x in allnotes | filter:searchnote"	style="margin-top: 20px;">
+		<div ng-repeat="x in allnotes | filter:searchnote"	style="margin-top: 20px;"ng-if="x.pin == true && x.archive==!true">
 			<div ng-class="spacecol2"></div>
 			<div ng-class="changeView" id="hoverthis">
-				<div id="gridList" ng-style="{'background-color':x.color}" ng-if="x.pin == true && x.archive==!true">
+				<div id="gridList" ng-style="{'background-color':x.color}" >
 				
 					<div id="gridimage" ng-if="x.picture" style="margin-left: -15px;margin-top: -15px;">
 						<img ng-src="{{x.picture}}" style="width: 100%;">
@@ -84,7 +84,7 @@
 					</div>
 					
 					<div id="scraperdiv" ng-repeat="y in x.scrapers">
-						<div style="float: left; width: 58px; margin-left:-15px;">
+						<div style="float: left; width: 58px;">
 							<img ng-src="{{y.imageurl}}" height="56px" width="100%">
 						</div>
 						<div style="margin-top: 5px; margin-left: 55px;">

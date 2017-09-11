@@ -2,11 +2,11 @@
 	<div class="col-lg-12" id="notediv">
 	<div id="pindiv" ng-style="onpin" ng-show="peendiv">Other</div>
 		<!------------------ DISPLAY CARDS ---------------->
-		<div testpackery ng-repeat="x in allnotes | filter:searchnote"	style="margin-top: 20px;">
+		<div testpackery ng-repeat="x in allnotes | filter:searchnote"	style="margin-top: 20px;"ng-if="x.archive==false && x.trash==false && x.pin==false">
 			<div ng-class="spacecol2"></div>
 			<div ng-class="changeView" id="hoverthis">
 			
-				<div id="gridList" ng-style="{'background-color':x.color}" ng-if="x.archive==false && x.trash==false && x.pin==false">
+				<div id="gridList" ng-style="{'background-color':x.color}" >
 				
 					<div id="gridimage" ng-if="x.picture" style="margin-left: -15px;margin-top: -15px;">
 						<img ng-src="{{x.picture}}" style="width: 100%;">
@@ -24,12 +24,9 @@
 						<img src=image/remind.svg alt="Reminder" data-toggle="dropdown"	title="Reminder" title-direction="bottom">
 							<ul class="dropdown-menu" id="dropdown-menu">
 								<li><span style="margin: 100px;">Reminder</span></li>
-								<li><a style="margin-top: 10px;" ng-click="setreminder(x, 'today')">Later Today 
-									<span style="float: right">8:00 PM</span></a></li>
-								<li><a style="margin-top: 10px;" ng-click="setreminder(x, 'tomorrow')">Tomorrow 
-									<span style="float: right">8:00 AM</span></a></li>
-								<li><a style="margin-top: 10px;" ng-click="setreminder(x, 'nextweek')">NextWeek 
-									<span style="float: right">Mon,8:00 AM</span></a></li>
+								<li><a style="margin-top: 10px;" ng-click="setreminder(x, 'today')">Later Today<span style="float: right">8:00 PM</span></a></li>
+								<li><a style="margin-top: 10px;" ng-click="setreminder(x, 'tomorrow')">Tomorrow<span style="float: right">8:00 AM</span></a></li>
+								<li><a style="margin-top: 10px;" ng-click="setreminder(x, 'nextweek')">NextWeek<span style="float: right">Mon,8:00 AM</span></a></li>
 							</ul>
 						</span> 
 						<span id="footerImages" ng-click="collaboratePopUp(x)">
@@ -78,10 +75,10 @@
 					</div>
 					
 					<div id="scraperdiv" ng-repeat="y in x.scrapers">
-						<div style="float: left;width: 60px; margin-left: -2px;">
+						<div style="float: left;width: 60px;">
 							<img ng-src="{{y.imageurl}}" height="56px" width="100%">
 						</div>
-							<div style="margin-top: 5px; margin-left: 60px;">
+							<div style="margin-top: 5px; margin-left: 65px;">
 								<a target="_blank" href="{{y.weburl}}" style="text-decoration: none" title="Go to link" title-direction="bottom">
 								<div id="scraperTitleDiv">{{y.scraptitle}}</div>
 								</a>

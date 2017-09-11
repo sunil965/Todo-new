@@ -10,24 +10,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bridgeit.todo.JSONResponse.UserResponse;
+import com.bridgeit.todo.Utility.TokenManipulater;
 import com.bridgeit.todo.model.Token;
 import com.bridgeit.todo.model.User;
 import com.bridgeit.todo.service.TokenService;
 import com.bridgeit.todo.service.UserServices;
+import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
 public class GmailController {
 	
 	@Autowired
 	private GmailLogin gmailLog;
-	
 	@Autowired
 	UserServices userService;
-	
 	@Autowired
-	TokenService tokenService;
+	TokenService tokservice;
+	@Autowired
+	UserResponse myresponse;
+	@Autowired
+	TokenManipulater manipulater;
 	
-	Token token = new Token();
 	
 	@RequestMapping(value="gmailconnection")
 	public void googleConnection(HttpServletRequest request, HttpServletResponse response) throws IOException 
@@ -35,13 +39,15 @@ public class GmailController {
 		String unid = UUID.randomUUID().toString();
 		request.getSession().setAttribute("STATE", unid);
 		String googleLoginURL = gmailLog.getGoogleAuthURL(unid);
-		response.sendRedirect(googleLoginURL);
-//		return;
+		try {
+			response.sendRedirect(googleLoginURL);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping(value="gmail_login")
 	public void redirectFromGoogle(HttpServletRequest request, HttpServletResponse response) throws IOException{
-		
 		
 		String sessionState = (String) request.getSession().getAttribute("STATE");
 		String googlestate = request.getParameter("state");
@@ -60,23 +66,48 @@ public class GmailController {
 		}
 		String authCode = request.getParameter("code");
 		String accessToken = gmailLog.getAccessToken(authCode);
-//		System.out.println("Token by google "+accessToken);
-//		token.setAccesstoken(accessToken);
-//		token.setUser(user);
-//		tokenService.saveTokenDetail(token);
 		
+		JsonNode profiledata= gmailLog.getUserProfile(accessToken);
+		System.out.println("checking emails value,,"+profiledata.get("emails").get(0).get("value").asText());
+		User userExist = userService.getUserById(profiledata.get("emails").get(0).get("value").asText());
 		
-		/*User profile= gmailLog.getUserProfile(accessToken);
-		User user = userService.getUserById(profile.getEmail());
+		if(userExist == null)
+		{
+			System.out.println("Creating User");
+			
+			User addUser = new User();
+			addUser.setName(profiledata.get("name").get("givenName").asText());
+			addUser.setEmail(profiledata.get("emails").get(0).get("value").asText());
+			addUser.setProfileImage(profiledata.get("image").get("url").asText());
+			userService.saveUserDetails(addUser);
+			
+			Token token = manipulater.generateToken();
+			token.setUser(addUser);
+			
+			request.getSession().setAttribute("token",token);
+			request.getSession().setAttribute("UserInSession",addUser);
+			
+			try {
+				tokservice.saveTokenDetail(token);
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			response.sendRedirect("http://localhost:8011/ToDo/#!/redirect?tokeninurl=token");
+		}
 		
-		token.setAccesstoken(accessToken);
-		token.setUser(user);
-		tokenService.saveTokenDetail(token);*/
-
-//		response.setHeader("AccessToken", token.getAccesstoken());
+		Token token = manipulater.generateToken();
+		token.setUser(userExist);
 		
-//		response.sendRedirect("http://localhost:8011/ToDo/#!/notes");
+		request.getSession().setAttribute("token",token);
+		request.getSession().setAttribute("UserInSession",userExist);
+		try {
+			tokservice.saveTokenDetail(token);
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		response.sendRedirect("http://localhost:8011/ToDo/#!/redirect?tokeninurl=token");
 	}
 
-	
 }

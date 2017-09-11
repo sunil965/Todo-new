@@ -6,7 +6,7 @@
 	<div id="description" divdata contenteditable="true" ng-model="$ctrl.discriptiondata"	placeholder="Take a note..." ng-bind-html="$ctrl.discriptiondata" />
 	
 	<div id="popscraperdiv" ng-repeat="y in $ctrl.scrapers">
-						<div style="float: left;width: 60px; margin-left: -2px;">
+						<div style="float: left;width: 60px;">
 							<img ng-src="{{y.imageurl}}" height="56px" width="100%">
 						</div>
 						<a target="_blank" href="{{y.weburl}}">
@@ -31,7 +31,7 @@
 									<span style="float: right">Mon,8:00 AM</span></a></li>
 							</ul>
 			</span>
-			    <span id="popup-footer-Images"><img src="image/collabrate.svg" alt="Collabrate"></span>
+			    <span id="popup-footer-Images" ng-click="collaboratePopUp(x)"><img src="image/collabrate.svg" alt="Collabrate"></span>
 				<span id="popup-footer-Images" class="color">
 					<div class="colordiv" style="margin-top: -70px;margin-left: 80px;">
 								<img ng-click="$ctrl.notecolor = 'rgb(250, 250, 250)'" src="image/white.png" alt="White"> 

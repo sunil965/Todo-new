@@ -362,6 +362,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 										this.notepin = x.pin;
 										this.notepic = x.picture;
 										this.scrapers = x.scrapers;
+										this.reminder = x.reminddate;
 
 										this.updateNote = function(id) {
 											$uibModalInstance.dismiss('Update');
@@ -375,6 +376,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 											updateobj.pin = this.notepin;
 											updateobj.archive = this.notearchive;
 											updateobj.picture = x.picture;
+											updateobj.reminddate = this.reminder;
 
 											var httpObject = noteservice.update(updateobj);
 											httpObject.then(function(response) {
