@@ -38,6 +38,12 @@ var myApp = angular.module('todo',[ 'ui.router', 'ngSanitize', 'ui.bootstrap', '
 				templateUrl : "template/blankredirect.html",
 				controller : "socialController"
 			})
+			
+			.state("emailverification", {
+				url : "/verifying",
+				templateUrl : "template/afterRegistration.html",
+//				controller : "socialController"
+			})
 			// window.location = "home";
 			$urlRouterProvider.otherwise('/login');
 

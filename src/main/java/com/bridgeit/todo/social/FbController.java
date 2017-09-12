@@ -87,7 +87,7 @@ public class FbController {
 			}
 			response.sendRedirect("http://localhost:8011/ToDo/#!/redirect?tokeninurl=token");
 		}
-		
+		else{
 		Token token = manipulater.generateToken();
 		token.setUser(userExist);
 		
@@ -100,6 +100,7 @@ public class FbController {
 			e.printStackTrace();
 		}
 		response.sendRedirect("http://localhost:8011/ToDo/#!/redirect?tokeninurl=token");
+		}
 	}
 	
 	

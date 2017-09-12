@@ -12,4 +12,6 @@ public interface UserDao {
 
 	User getUserbyId(String email);
 
+	void setAccountUser(String emialToVerify);
+
 }

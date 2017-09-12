@@ -30,4 +30,8 @@ public class UserServices {
 		return dao.loginWithTodo(email, password);
 	}
 
+	public void activateUser(String emialToVerify) {
+		dao.setAccountUser(emialToVerify);
+	}
+
 }

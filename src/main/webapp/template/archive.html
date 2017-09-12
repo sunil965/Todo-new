@@ -6,11 +6,11 @@
 
 						 <!------------------ ARCHIVE CARDS ---------------->
 						 
-		<div testpackery ng-repeat="x in allnotes | filter:searchnote" style="margin-top: 20px;">
+		<div testpackery ng-repeat="x in allnotes | filter:searchnote" style="margin-top: 20px;" ng-if="x.archive==true">
 			<div  ng-class="spacecol2"></div>
 				<div  ng-class="changeView" id="hoverthis">
 				
-		     	   <div id="gridList" ng-style="{'background-color':x.color}" ng-if="x.archive==true">
+		     	   <div id="gridList" ng-style="{'background-color':x.color}" >
 		     	   
 		     	   <div id="pin-image" ng-click="setpin(x)"><img alt="pin" src="image/pin.svg" style="margin-right: 13px;" title="Pin" title-direction="bottom"></div>
 		     	   

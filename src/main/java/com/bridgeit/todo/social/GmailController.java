@@ -95,19 +95,21 @@ public class GmailController {
 			}
 			response.sendRedirect("http://localhost:8011/ToDo/#!/redirect?tokeninurl=token");
 		}
+		else
+		{
+			Token token = manipulater.generateToken();
+			token.setUser(userExist);
 		
-		Token token = manipulater.generateToken();
-		token.setUser(userExist);
-		
-		request.getSession().setAttribute("token",token);
-		request.getSession().setAttribute("UserInSession",userExist);
-		try {
-			tokservice.saveTokenDetail(token);
-		} 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		response.sendRedirect("http://localhost:8011/ToDo/#!/redirect?tokeninurl=token");
+			request.getSession().setAttribute("token",token);
+			request.getSession().setAttribute("UserInSession",userExist);
+			try {
+				tokservice.saveTokenDetail(token);
+			} 
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			response.sendRedirect("http://localhost:8011/ToDo/#!/redirect?tokeninurl=token");
+		}	
 	}
 
 }

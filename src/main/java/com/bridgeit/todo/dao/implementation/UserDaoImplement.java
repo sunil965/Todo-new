@@ -1,5 +1,7 @@
 package com.bridgeit.todo.dao.implementation;
 
+import javax.persistence.Query;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -38,10 +40,21 @@ public class UserDaoImplement implements UserDao {
 	public User loginWithTodo(String email, String password) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(User.class);
-		criteria.add(Restrictions.conjunction()).add(Restrictions.eq("email", email)).add(Restrictions.eq("password", password));
+		criteria.add(Restrictions.conjunction())
+				.add(Restrictions.eq("email", email))
+				.add(Restrictions.eq("password", password))
+				.add(Restrictions.eq("isActive", true));
 		
 		User userresult=(User) criteria.uniqueResult();
 		
 		return userresult;
+	}
+
+	public void setAccountUser(String emialToVerify) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("update User set isActive = true where email=:emailid");
+		query.setParameter("emailid", emialToVerify);
+		query.executeUpdate();
+		System.out.println("Account Status Updated");
 	}
 }

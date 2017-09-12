@@ -6,10 +6,10 @@
 
 						 <!------------------ Trash CARDS ---------------->
 						 
-		<div testpackery ng-repeat="x in allnotes | filter:searchnote" style="margin-top: 20px;">
+		<div testpackery ng-repeat="x in allnotes | filter:searchnote" style="margin-top: 20px;" ng-if="x.trash==true">
 			<div  ng-class="spacecol2"></div>
 				<div  ng-class="changeView" id="hoverthis">
-		     	   <div id="gridList" ng-style="{'background-color':x.color}" ng-if="x.trash==true">
+		     	   <div id="gridList" ng-style="{'background-color':x.color}">
 				   <div ng-click="openalert()" style="min-height: 110px; word-break: break-word; padding-right:10px;">
 		          	 	<div id="gridtitle" ng-bind-html="x.title"></div>
 				  	 	<div id="griddescription" ng-bind-html="x.description" style="word-break: break-word; padding-right:10px;"></div>

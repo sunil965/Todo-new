@@ -1,8 +1,10 @@
 package com.bridgeit.todo.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -15,12 +17,14 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.todo.JSONResponse.ErrorResponse;
 import com.bridgeit.todo.JSONResponse.Response;
 import com.bridgeit.todo.JSONResponse.UserResponse;
 import com.bridgeit.todo.Utility.Encryptor;
+import com.bridgeit.todo.Utility.SendEmail;
 import com.bridgeit.todo.model.User;
 import com.bridgeit.todo.service.UserServices;
 import com.bridgeit.todo.validation.UserRegValidate;
@@ -34,6 +38,8 @@ public class UserRegControl {
 	UserServices service;
 	@Autowired
 	UserResponse myresponse;
+	@Autowired
+	SendEmail sendEmail;
 
 	private final static Logger logger = Logger.getLogger("sunil");
 	private final static Logger logger1 = Logger.getRootLogger();
@@ -50,7 +56,7 @@ public class UserRegControl {
 	 */
 	@RequestMapping(value = "/registration", method = RequestMethod.POST, produces = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE })
-	public ResponseEntity<Response> registerUser(@RequestBody User user, BindingResult result) throws Exception {
+	public ResponseEntity<Response> registerUser(@RequestBody User user, BindingResult result, HttpServletRequest request) throws Exception {
 
 		validator.validate(user, result);
 		System.out.println(result.hasErrors());
@@ -72,6 +78,9 @@ public class UserRegControl {
 		String pass = user.getPassword();
 		String encPass = Encryptor.getDigest(pass);
 		user.setPassword(encPass);
+		
+		request.getSession().setAttribute("emailkey", user.getEmail());
+		sendEmail.sendVerificationMail(user.getEmail(), "emailkey");
 		
 		try {
 			service.saveUserDetails(user);
@@ -175,6 +184,32 @@ public class UserRegControl {
 			myresponse.setStatus(-1);
 			myresponse.setMessage("User Not Found");
 			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value="/emailVerification")
+	public void verifyEmail(@RequestParam String email, HttpServletRequest request, HttpServletResponse response){
+		
+		System.out.println("In emailVerification where email is :"+email);
+		String emialToVerify = (String) request.getSession().getAttribute(email);
+		service.activateUser(emialToVerify);
+		try {
+			response.sendRedirect("http://localhost:8011/ToDo/#!/login");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="/resetPasswordApi")
+	public void resetPassword(@RequestParam String email, HttpServletRequest request, HttpServletResponse response){
+		
+		System.out.println("In emailVerification where email is :"+email);
+		String emialToVerify = (String) request.getSession().getAttribute(email);
+		service.activateUser(emialToVerify);
+		try {
+			response.sendRedirect("http://localhost:8011/ToDo/#!/login");
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
