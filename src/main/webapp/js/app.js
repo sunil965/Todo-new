@@ -8,6 +8,18 @@ var myApp = angular.module('todo',[ 'ui.router', 'ngSanitize', 'ui.bootstrap', '
 				templateUrl : "template/login.html",
 				controller : "loginCtrl"
 			})
+			
+			.state("resetpassword", {
+				url : "/resetpassword",
+				templateUrl : "template/askemail.html",
+				controller : "resetpasswordController"
+			})
+			
+			.state("newpassword", {
+				url : "/newpasswordpage",
+				templateUrl : "template/newpasswordpage.html",
+				controller : "resetpasswordController"
+			})
 
 			.state("register", {
 				url : "/register",
@@ -39,10 +51,9 @@ var myApp = angular.module('todo',[ 'ui.router', 'ngSanitize', 'ui.bootstrap', '
 				controller : "socialController"
 			})
 			
-			.state("emailverification", {
-				url : "/verifying",
+			.state("sendemail", {
+				url : "/mail_sent",
 				templateUrl : "template/afterRegistration.html",
-//				controller : "socialController"
 			})
 			// window.location = "home";
 			$urlRouterProvider.otherwise('/login');

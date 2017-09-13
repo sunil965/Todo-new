@@ -16,7 +16,7 @@ myApp.controller('regController', function($scope, $state, registerService) {
 		httpObj.then(function(response) {
 			if (response.status == 200) {
 				console.log(response.data);
-				$state.go('emailverification');
+				$state.go('sendemail');
 			} else {
 				console.log("/registration failed...")
 				$state.go('register')

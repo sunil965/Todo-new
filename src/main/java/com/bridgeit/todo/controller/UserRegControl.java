@@ -2,6 +2,7 @@ package com.bridgeit.todo.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -200,16 +201,52 @@ public class UserRegControl {
 		}
 	}
 	
+	
+	@RequestMapping(value="/sendResetPasswordUrl")
+	public ResponseEntity<Response> resetPasswordUrl(@RequestBody Map<String, String> emailMap, HttpServletRequest request, HttpServletResponse response){
+		
+		System.out.println("In sendResetPasswordUrl where email is :"+emailMap.get("getemail"));
+		request.getSession().setAttribute("resetpasswordemail", emailMap.get("getemail"));
+		sendEmail.resetPassword(emailMap.get("getemail"), "resetpasswordemail");
+		
+		myresponse.setStatus(101);
+		myresponse.setMessage("Every thing is ok..");
+		return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/resetPasswordApi")
 	public void resetPassword(@RequestParam String email, HttpServletRequest request, HttpServletResponse response){
 		
-		System.out.println("In emailVerification where email is :"+email);
-		String emialToVerify = (String) request.getSession().getAttribute(email);
-		service.activateUser(emialToVerify);
+		System.out.println("In resetPasswordApi where email is :"+email);
 		try {
-			response.sendRedirect("http://localhost:8011/ToDo/#!/login");
+			response.sendRedirect("http://localhost:8011/ToDo/#!/newpasswordpage");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value="/updatepassword")
+	public ResponseEntity<Response> updatePassword(@RequestBody Map<String, String> passwordMap, HttpServletRequest request, HttpServletResponse response){
+		String newpassword = passwordMap.get("password");
+		System.out.println("In updatepassword API where password is :"+newpassword);
+		
+		
+		
+		String updateonemail = (String) request.getSession().getAttribute("resetpasswordemail");
+		System.out.println("In updatepassword API where updateonemail is :"+updateonemail);
+		try {
+			String encPass = Encryptor.getDigest(newpassword);
+			service.saveUpdatePassword(updateonemail, encPass);
+			myresponse.setStatus(102);
+			myresponse.setMessage("Every thing is ok..");
+			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+			myresponse.setStatus(100);
+			myresponse.setMessage("Password Updation Failed..");
+			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
+		}
+		
 	}
 }

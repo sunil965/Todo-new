@@ -84,14 +84,8 @@ public class SendEmail {
 			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailTo));
 			message.setSubject("Testing Subject");
-			/*
-			 * message.setText("Dear Mail Crawler," +
-			 * "\n\n No spam to my email, please!"); message.
-			 * setContent("<a href='http://localhost:8011/ToDo/#!/emailVerification?email='>Click here to activate your account</a>"
-			 * ,"text/html" );
-			 */
-			message.setContent("Hello user," + "\n\n click on the below link to activate your Fundoo Notes account."
-					+ "\n\n <a href='http://localhost:8011/ToDo/emailVerification?email=" + emailkey
+			message.setContent("Hello user," + "\n\n click on the link to Reset your Fundoo Notes Password."
+					+ "\n\n <a href='http://localhost:8011/ToDo/resetPasswordApi?email=" + emailkey
 					+ "'>Fundoo Notes</a>", "text/html");
 
 			Transport.send(message);

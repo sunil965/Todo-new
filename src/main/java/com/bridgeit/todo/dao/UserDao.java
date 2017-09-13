@@ -14,4 +14,6 @@ public interface UserDao {
 
 	void setAccountUser(String emialToVerify);
 
+	void updatePassword(String updateonemail, String newpassword);
+
 }

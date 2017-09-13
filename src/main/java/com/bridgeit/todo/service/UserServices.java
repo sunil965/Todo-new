@@ -34,4 +34,8 @@ public class UserServices {
 		dao.setAccountUser(emialToVerify);
 	}
 
+	public void saveUpdatePassword(String updateonemail, String newpassword) {
+		dao.updatePassword(updateonemail, newpassword);
+	}
+
 }

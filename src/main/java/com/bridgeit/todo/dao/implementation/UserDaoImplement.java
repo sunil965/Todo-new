@@ -57,4 +57,13 @@ public class UserDaoImplement implements UserDao {
 		query.executeUpdate();
 		System.out.println("Account Status Updated");
 	}
+
+	public void updatePassword(String updateonemail, String newpassword) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("update User set password=:new where email=:emailid");
+		query.setParameter("new", newpassword);
+		query.setParameter("emailid", updateonemail);
+		query.executeUpdate();
+		System.out.println("Password Updated");
+	}
 }
