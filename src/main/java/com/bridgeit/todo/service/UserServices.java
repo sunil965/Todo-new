@@ -38,4 +38,8 @@ public class UserServices {
 		dao.updatePassword(updateonemail, newpassword);
 	}
 
+	public void changeDp(String emailid, String dpimage) {
+		dao.updateDpImage(emailid, dpimage);
+	}
+
 }

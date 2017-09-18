@@ -25,15 +25,15 @@
 						<img alt="Profile" ng-src="{{profilepicSrc}}" id="navprofile" data-toggle="dropdown" title="Profile" title-direction="bottom">
 						<div class="dropdown-menu" id="profilpopup">
 							<div>
-								<img alt="list" ng-src="{{profilepicSrc}}" id="profile-popup-image" ng-click="uploadImage()">
+								<img alt="list" ng-src="{{profilepicSrc}}" id="profile-popup-image" ng-click="profilepicchangepopup()">
 							</div>
+							<input type="file" ng-file-select="onFileSelect($files)" ng-model="profilepicSrc" id="profileImg" style="display:none">
 							<div id="profile-popup-data">
 								<h4><font color="black">{{name}}</font></h4>
 								<h6>{{email}}</h6>
-								<a href="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin">Google+ Profile–Privacy</a>
+								
 								<br>
-								<input type="file" ng-file-select="onFileSelect($files)" ng-model="profilepicSrc" 
-										id="profileImg" style="display:none">
+								
 								<button ng-click="logout()">Logout</button>
 						<!-- 		<a href="" ng-click="logout()"><img src="image/logout.png" alt="Logout"></a> -->
 							</div>
@@ -115,10 +115,9 @@
 									</span>
 									<!-- <span id="create-footer-Images"><img src="image/archieve.png" alt="Archive"></span>
 									<span id="create-footer-Images"><img src="image/list.png" alt="More"></span> -->
-									<span id="create-footer-Images" ng-click="addImage()"><img src="image/image.svg" alt="More"></span>
 									
-									<input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc" 
-										id="addImg" style="display:none">
+									<span id="create-footer-Images" ng-click="addImage()"><img src="image/image.svg" alt="More"></span>
+									<input type="file" ng-file-select="onFileSelect($files)" ng-model="imageSrc"id="addImg" style="display:none">
 										
 									<button id="donebotton" ng-click="savenote()">Done</button>
 								</div>

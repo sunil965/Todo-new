@@ -16,4 +16,6 @@ public interface UserDao {
 
 	void updatePassword(String updateonemail, String newpassword);
 
+	void updateDpImage(String emailid, String dpimage);
+
 }

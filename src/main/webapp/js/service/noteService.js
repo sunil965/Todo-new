@@ -89,6 +89,17 @@ myApp.service('noteservice', function($http) {
 			data : collaboratorobject,
 			
 		})
-		
+	}
+	
+	this.updateUser= function(user){
+		console.log("in service.js",user);
+		return $http({
+			url :'rest/setProfilePic',
+			method :"post",
+			data : user,
+			headers : {
+				'AccessToken' : localStorage.getItem("accesstoken")
+			}
+		})
 	}
 })

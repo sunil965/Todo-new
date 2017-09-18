@@ -172,13 +172,14 @@ public class UserRegControl {
 	
 	@RequestMapping(value = "/rest/getLoginUser", method=RequestMethod.GET)
 	public ResponseEntity<Response> getLoginUser(HttpServletRequest request) {
-		HttpSession httpSession = request.getSession();
-		User u = (User) httpSession.getAttribute("UserInSession");
-		if(u != null){
+		User userInSession = (User) request.getSession().getAttribute("UserInSession");
+		String emailofUserInSession = userInSession.getEmail();
+		User loginuser = service.getUserById(emailofUserInSession);
+		if(loginuser != null){
 			myresponse.setStatus(1);
 			myresponse.setMessage("User Found");
 			myresponse.setToken(null);
-			myresponse.setUser(u);
+			myresponse.setUser(loginuser);
 			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
 		}
 		else{
@@ -247,6 +248,15 @@ public class UserRegControl {
 			myresponse.setMessage("Password Updation Failed..");
 			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
 		}
+		
+	}
+	@RequestMapping(value="rest/setProfilePic")
+	public ResponseEntity<Response> setProfilePic(@RequestBody User user){
+		
+		String emailid = user.getEmail();
+		String dpimage = user.getProfileImage();
+		service.changeDp(emailid, dpimage);
+		return null;
 		
 	}
 }

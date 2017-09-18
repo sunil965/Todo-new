@@ -234,3 +234,4 @@ myApp.factory("fileReader", function($q, $log) {
     readAsDataUrl: readAsDataURL
   };
 });
+

@@ -46,7 +46,7 @@ public class User implements Serializable {
 		this.isActive = isActive;
 	}
 	@Lob
-	@Column(columnDefinition="mediumblob")
+	@Column(name="ProfileDP", columnDefinition="mediumblob")
 	private String profileImage;
 	
 	
@@ -92,7 +92,7 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", contact=" + contact + ", password="
-				+ password + ", isActive=" + isActive + ", profileImage=" + profileImage + "]";
+				+ password + ", isActive=" + isActive + "]";
 	}
 	
 }

@@ -73,13 +73,36 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					}
 					
 					/** ********* Image Note Creation. ************* */
-					$scope.uploadImage = function() {
+					/*$scope.uploadImage = function() {
 						console.log("profilepiclk;ujiuhjily ");
-						document.getElementById("profileImg").click();
+						document.getElementById("profileImgselect").click();
 						var profilepic = $scope.profilepicSrc;
 						console.log("profilepic ::",profilepic);
-					}
+					}*/
 					
+					$scope.profilepicchangepopup = function(){
+						var modalInstance = $uibModal.open({
+							templateUrl : "template/selectimage.html",
+							controller : function($uibModalInstance) {
+								var $ctrl = this;
+								this.uploadImage=function(){
+									console.log("file selector");
+									document.getElementById("profileImgselect").click();
+								}
+								this.saveprofilepic=function(){
+									$uibModalInstance.dismiss('Update');
+									$scope.profilepicSrc = this.selectedpic;
+									var updateUser = {};
+									updateUser.email = $scope.updateuserinfo.email;
+									updateUser.profileImage = this.selectedpic;
+									var httpObject = noteservice.updateUser(updateUser);
+									
+								}
+							},
+							controllerAs : "$ctrl"
+						});
+					}
+			
 					/** ********* Image Note Creation. ************* */
 					$scope.addImage = function() {
 						document.getElementById("addImg").click();
@@ -253,6 +276,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 																noteservice.findCurrentUser().then(function(responseuser) {
 																					$scope.name = responseuser.data.user.name;
 																					$scope.email = responseuser.data.user.email;
+																					$scope.profilepicSrc = response.data.user.profileImage;
 																				});
 													} else {
 														console.log("Refresh token expired please login again...");
@@ -260,7 +284,7 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 													}
 												});
 									}
-									updateuserinfo=response.data.user;
+									$scope.updateuserinfo=response.data.user;
 									$scope.name = response.data.user.name;
 									$scope.email = response.data.user.email;
 									$scope.profilepicSrc = response.data.user.profileImage;
@@ -298,18 +322,15 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					$scope.showpeened=function(noteslist){
 						 var pinnedtotal=0;
 						 
-						 for(var j=0;j<noteslist.length;j++)
-							{
-								if(noteslist[j].pin==true)
-								{
+						 for(var j=0;j<noteslist.length;j++) {
+								if(noteslist[j].pin==true)	{
 									console.log("checking is pinned called");
 									pinnedtotal=pinnedtotal+1;
 								}
 								if(pinnedtotal>0){
 									$scope.peendiv=true;
 								}
-								else
-								{
+								else {
 									$scope.peendiv=false;
 								}	
 							}	

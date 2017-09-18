@@ -66,4 +66,13 @@ public class UserDaoImplement implements UserDao {
 		query.executeUpdate();
 		System.out.println("Password Updated");
 	}
+
+	public void updateDpImage(String emailid, String dpimage) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("update User set profileImage=:image where email=:emailid");
+		query.setParameter("image", dpimage);
+		query.setParameter("emailid", emailid);
+		query.executeUpdate();
+		System.out.println("Image Updated");
+	}
 }
