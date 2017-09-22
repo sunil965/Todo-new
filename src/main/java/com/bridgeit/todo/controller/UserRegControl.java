@@ -255,7 +255,12 @@ public class UserRegControl {
 		
 		String emailid = user.getEmail();
 		String dpimage = user.getProfileImage();
-		service.changeDp(emailid, dpimage);
+		try {
+			service.changeDp(emailid, dpimage);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 		
 	}

@@ -62,7 +62,18 @@ public class Token implements Serializable{
 		this.createdOn = createdOn;
 	}
 	
-	@Override
+	public Token(int id, String accesstoken, String refreshtoken, Date createdOn, User user) {
+		super();
+		this.id = id;
+		this.accesstoken = accesstoken;
+		this.refreshtoken = refreshtoken;
+		this.createdOn = createdOn;
+		this.user = user;
+	}
+
+	public Token() {
+		// TODO Auto-generated constructor stub
+	}
 	public String toString() {
 		return "Token [id=" + id + ", accesstoken=" + accesstoken + ", refreshtoken=" + refreshtoken + ", createdOn="
 				+ createdOn + ", user=" + user + "]";

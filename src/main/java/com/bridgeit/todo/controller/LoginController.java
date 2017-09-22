@@ -20,10 +20,14 @@ import com.bridgeit.todo.JSONResponse.Response;
 import com.bridgeit.todo.JSONResponse.UserResponse;
 import com.bridgeit.todo.Utility.Encryptor;
 import com.bridgeit.todo.Utility.TokenManipulater;
+import com.bridgeit.todo.Utility.Redis.TokenRepository;
 import com.bridgeit.todo.model.Token;
 import com.bridgeit.todo.model.User;
+import com.bridgeit.todo.service.RedisService;
 import com.bridgeit.todo.service.TokenService;
 import com.bridgeit.todo.service.UserServices;
+
+import redis.clients.jedis.Jedis;
 
 /**
  * Login Controller
@@ -36,15 +40,15 @@ public class LoginController {
 
 	@Autowired
 	UserServices service;
-
 	@Autowired
 	TokenService tokservice;
-	
 	@Autowired
 	UserResponse myresponse;
-	
 	@Autowired
 	TokenManipulater manipulater;
+	
+	@Autowired
+	RedisService redisService;
 	
 	
 	private final static Logger logger = Logger.getLogger("loginLog");
@@ -63,18 +67,18 @@ public class LoginController {
 		String encPass = Encryptor.getDigest(user.getPassword());
 		user.setPassword(encPass);
 
+/*		Jedis jedis = new Jedis("localhost");
+		System.out.println(jedis.ping());*/
+		
 		User userresult = null;
-		try
-		{
+		try	{
 			userresult = service.loginWithTodo(user.getEmail(), user.getPassword());
 		} 
-		catch (Exception e) 
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		if (userresult != null)
-		{
+		if (userresult != null)	{
 			System.out.println("Logged in "+userresult);
 			logger.debug("Logged in sucessfully!");
 			HttpSession httpsession = request.getSession();
@@ -83,19 +87,19 @@ public class LoginController {
 			token.setUser(userresult);
 			
 			try {
-				tokservice.saveTokenDetail(token);
+				tokservice.saveTokenDetail(token); // Saving Token object in Database.
 			} 
 			catch (Exception e) {
 				e.printStackTrace();
 			}
+			redisService.saveToken(token); // Saving Token object in Redis.
 			token.setUser(null);
 			myresponse.setStatus(1);
 			myresponse.setMessage("Logged in Successfully");
 			myresponse.setToken(token);
 			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
 		} 
-		else
-		{
+		else {
 			myresponse.setStatus(-1);
 			myresponse.setMessage("Logged in Unsuccessfull");
 			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
@@ -138,16 +142,14 @@ public class LoginController {
 	 * @return {@link ResponseEntity<Void>}
 	 */
 	@RequestMapping(value = "/logout")
-	public ResponseEntity<Void> logout(HttpServletRequest httpServletRequest) 
-	{
+	public ResponseEntity<Void> logout(HttpServletRequest httpServletRequest) {
+		
 		String deletetoken = httpServletRequest.getHeader("AccessToken");
 		System.out.println("delete by this token "+deletetoken);
-		try 
-		{
+		try {
 			tokservice.deleteToken(deletetoken);
 		}
-		catch (Exception e)
-		{
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return new ResponseEntity<Void>(HttpStatus.OK);

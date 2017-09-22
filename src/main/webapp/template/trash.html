@@ -10,35 +10,36 @@
 			<div  ng-class="spacecol2"></div>
 				<div  ng-class="changeView" id="hoverthis">
 		     	   <div id="gridList" ng-style="{'background-color':x.color}">
-				   <div ng-click="openalert()" style="min-height: 110px; word-break: break-word; padding-right:10px;">
-		          	 	<div id="gridtitle" ng-bind-html="x.title"></div>
-				  	 	<div id="griddescription" ng-bind-html="x.description" style="word-break: break-word; padding-right:10px;"></div>
-					</div>
-					<div id="gridfooter">
-						<span id="footerImages" class="dropdown btn-group">
-								<img src="image/list.png" alt="More" data-toggle="dropdown" title="List view" title-direction="bottom" title="More" title-direction="bottom">
-									<ul class="dropdown-menu">
-								<li><a href="" ng-click="deleteNote(x.id)"
-									style="padding-left: 16px">Delete Forever</a></li>
-								<li><a href="" ng-click="doUnTrash(x)"style="padding-left: 16px">Restore</a></li>
-									</ul>
-						</span>	
-					</div>
-					
-					<div id="scraperdiv" ng-repeat="y in x.scrapers">
-						<div style="float: left;width: 60px; margin-left: -2px;">
-							<img ng-src="{{y.imageurl}}" height="56px" width="100%">
+			     	   <div id="gridimage" ng-if="x.picture" style="margin-left: -15px;margin-top: -15px;">
+							<img ng-src="{{x.picture}}" style="width: 100%;">
+					   </div>
+					   <div style="min-height: 110px; word-break: break-word; padding-right:10px;">
+			          	 	<div id="gridtitle" ng-bind-html="x.title"></div>
+					  	 	<div id="griddescription" ng-bind-html="x.description" style="word-break: break-word; padding-right:10px;"></div>
 						</div>
-						<a target="_blank" href="{{y.weburl}}">
-							<div style="margin-top: 5px; margin-left: 60px;">
-								<div id="scraperTitleDiv">{{y.scraptitle}}</div>
-								<div class="scraperhostName">{{y.scraphost}}</div>
+						<div id="gridfooter">
+							<span id="footerImages" class="dropdown btn-group">
+									<img src="image/list.png" alt="More" data-toggle="dropdown" title="List view" title-direction="bottom" title="More" title-direction="bottom">
+										<ul class="dropdown-menu">
+									<li><a href="" ng-click="deleteNote(x.id)"
+										style="padding-left: 16px">Delete Forever</a></li>
+									<li><a href="" ng-click="doUnTrash(x)"style="padding-left: 16px">Restore</a></li>
+										</ul>
+							</span>	
+						</div>
+					
+						<div id="scraperdiv" ng-repeat="y in x.scrapers">
+							<div style="float: left;width: 60px; margin-left: -2px;">
+								<img ng-src="{{y.imageurl}}" height="56px" width="100%">
 							</div>
-						</a>
-					</div>
-								
-				</div>
-						  
+							<a target="_blank" href="{{y.weburl}}">
+								<div style="margin-top: 5px; margin-left: 60px;">
+									<div id="scraperTitleDiv">{{y.scraptitle}}</div>
+									<div class="scraperhostName">{{y.scraphost}}</div>
+								</div>
+							</a>
+						</div>
+				  </div>
 			</div>
 		 </div>   
 				  <!--- DISPLAY CARDS ENDS --->

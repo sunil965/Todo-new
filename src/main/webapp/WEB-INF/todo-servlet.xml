@@ -57,6 +57,8 @@
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+<!-- <bean id="tokenRepository" class="com.bridgeit.todo.Utility.Redis.TokenRepositoryImpl"> -->
+	
 
 	<bean id="validator" class="com.bridgeit.todo.validation.UserRegValidate"></bean>
 

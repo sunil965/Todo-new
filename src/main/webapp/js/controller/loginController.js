@@ -21,6 +21,7 @@ myApp.controller('loginCtrl', function($scope, $state, loginService) {
 			}
 			else 
 			{
+				alert("Login Failed");
 				console.log("login unsuccessfull");
 				console.log(response.data.status);
 				$state.go('login');

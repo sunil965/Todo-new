@@ -28,6 +28,7 @@ public class UserDaoImplement implements UserDao {
 			session.update(user);
 	}
 
+	@SuppressWarnings("deprecation")
 	public User getUserbyId(String email) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(User.class);
@@ -37,6 +38,7 @@ public class UserDaoImplement implements UserDao {
 		return user;
 	}
 
+	@SuppressWarnings("deprecation")
 	public User loginWithTodo(String email, String password) {
 		Session session = sessionFactory.getCurrentSession();
 		Criteria criteria = session.createCriteria(User.class);

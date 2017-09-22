@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.bridgeit.todo.Utility.Redis.TokenRepository;
+import com.bridgeit.todo.Utility.Redis.TokenRepositoryImpl;
 import com.bridgeit.todo.model.Token;
 import com.bridgeit.todo.service.TokenService;
 
@@ -17,6 +19,8 @@ public class TokenManipulater {
 
 	@Autowired
 	TokenService tokenService;
+	@Autowired
+	TokenRepositoryImpl tokenRepository;
 
 	/************** Access Token Generator Method *************/
 
@@ -44,8 +48,16 @@ public class TokenManipulater {
 	/************** Check Access Token Validity Method *************/
 
 	public boolean validateAccessToken(String accesstoken) {
-			
-		Token retuturnedtoken = (Token) tokenService.getTokenfromDB(accesstoken);
+		Token retuturnedtoken = null;
+		
+		retuturnedtoken = tokenRepository.findToken(accesstoken);
+		
+		if(retuturnedtoken ==null){
+			retuturnedtoken = (Token) tokenService.getTokenfromDB(accesstoken);
+		}
+		
+		System.out.println("Token from redis :: "+ retuturnedtoken);
+		
 		if(retuturnedtoken!=null)
 		{
 			long generatedTime = retuturnedtoken.getCreatedOn().getTime();

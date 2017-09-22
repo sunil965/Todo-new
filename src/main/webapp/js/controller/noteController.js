@@ -73,30 +73,24 @@ myApp.controller('notesController',	function($scope, $state, noteservice, $uibMo
 					}
 					
 					/** ********* Image Note Creation. ************* */
-					/*$scope.uploadImage = function() {
-						console.log("profilepiclk;ujiuhjily ");
-						document.getElementById("profileImgselect").click();
-						var profilepic = $scope.profilepicSrc;
-						console.log("profilepic ::",profilepic);
-					}*/
-					
 					$scope.profilepicchangepopup = function(){
 						var modalInstance = $uibModal.open({
 							templateUrl : "template/selectimage.html",
 							controller : function($uibModalInstance) {
 								var $ctrl = this;
+								this.selectedpic = null;
 								this.uploadImage=function(){
 									console.log("file selector");
 									document.getElementById("profileImgselect").click();
 								}
 								this.saveprofilepic=function(){
+									console.log("Image is",this.selectedpic)
 									$uibModalInstance.dismiss('Update');
 									$scope.profilepicSrc = this.selectedpic;
 									var updateUser = {};
 									updateUser.email = $scope.updateuserinfo.email;
 									updateUser.profileImage = this.selectedpic;
 									var httpObject = noteservice.updateUser(updateUser);
-									
 								}
 							},
 							controllerAs : "$ctrl"
