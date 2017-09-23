@@ -51,10 +51,10 @@ public class TokenManipulater {
 		Token retuturnedtoken = null;
 		
 		retuturnedtoken = tokenRepository.findToken(accesstoken);
-		
+	/*	
 		if(retuturnedtoken ==null){
 			retuturnedtoken = (Token) tokenService.getTokenfromDB(accesstoken);
-		}
+		}*/
 		
 		System.out.println("Token from redis :: "+ retuturnedtoken);
 		

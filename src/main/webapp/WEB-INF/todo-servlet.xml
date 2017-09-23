@@ -23,6 +23,15 @@
 	<mvc:resources location="/js/" mapping="/js/**"/>
 	<mvc:resources location="/template/" mapping="/template/**"/>
 	
+	<context:property-placeholder location="classpath*:com/bridgeit/resources/messages"/>
+
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+	  <property name="basenames">
+	    <list>
+	      <value>classpath:com/bridgeit/resources/messages</value>
+	    </list>
+	  </property>
+	</bean>
 
 	<bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">

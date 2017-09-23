@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +22,11 @@ import com.bridgeit.todo.JSONResponse.Response;
 import com.bridgeit.todo.JSONResponse.UserResponse;
 import com.bridgeit.todo.Utility.Encryptor;
 import com.bridgeit.todo.Utility.TokenManipulater;
-import com.bridgeit.todo.Utility.Redis.TokenRepository;
+import com.bridgeit.todo.Utility.Redis.TokenRepositoryImpl;
 import com.bridgeit.todo.model.Token;
 import com.bridgeit.todo.model.User;
-import com.bridgeit.todo.service.RedisService;
 import com.bridgeit.todo.service.TokenService;
 import com.bridgeit.todo.service.UserServices;
-
-import redis.clients.jedis.Jedis;
 
 /**
  * Login Controller
@@ -38,6 +37,7 @@ import redis.clients.jedis.Jedis;
 @RestController
 public class LoginController {
 
+	final static String KEY_ACCESS_TOKEN = "AccessToken"; 
 	@Autowired
 	UserServices service;
 	@Autowired
@@ -48,8 +48,12 @@ public class LoginController {
 	TokenManipulater manipulater;
 	
 	@Autowired
-	RedisService redisService;
+	MessageSource message;
 	
+	/*@Autowired
+	RedisService redisService;*/
+	@Autowired
+	TokenRepositoryImpl tokenRepository;
 	
 	private final static Logger logger = Logger.getLogger("loginLog");
 
@@ -67,6 +71,9 @@ public class LoginController {
 		String encPass = Encryptor.getDigest(user.getPassword());
 		user.setPassword(encPass);
 
+		System.out.println( System.getProperty("catalina.base"));
+		System.out.println( System.getProperty("catalina.home"));
+		
 /*		Jedis jedis = new Jedis("localhost");
 		System.out.println(jedis.ping());*/
 		
@@ -79,6 +86,7 @@ public class LoginController {
 		}
 
 		if (userresult != null)	{
+			
 			System.out.println("Logged in "+userresult);
 			logger.debug("Logged in sucessfully!");
 			HttpSession httpsession = request.getSession();
@@ -92,14 +100,20 @@ public class LoginController {
 			catch (Exception e) {
 				e.printStackTrace();
 			}
-			redisService.saveToken(token); // Saving Token object in Redis.
+			// 
+			tokenRepository.saveToken(token); // Saving Token object in Redis.
 			token.setUser(null);
 			myresponse.setStatus(1);
-			myresponse.setMessage("Logged in Successfully");
+			
+			String msg = message.getMessage("login_success_msg", null , request.getLocale());
+			
+			//myresponse.setMessage("Logged in Successfully");
+			myresponse.setMessage( msg );
 			myresponse.setToken(token);
 			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
 		} 
-		else {
+		else 
+		{
 			myresponse.setStatus(-1);
 			myresponse.setMessage("Logged in Unsuccessfull");
 			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
@@ -118,10 +132,12 @@ public class LoginController {
 			MediaType.APPLICATION_XML_VALUE })
 	public ResponseEntity<Response> generateNewAccessToken(HttpServletRequest request)
 	{
-		String oldaccess = request.getHeader("AccessToken");
+		String oldaccess = request.getHeader(KEY_ACCESS_TOKEN);
 		
 		Token token = manipulater.validateRefreshToken(oldaccess);
-		if(token!=null){
+		
+		if(token!=null)
+		{
 			token.setUser(null);
 			myresponse.setStatus(1);
 			myresponse.setMessage("Token Update is Successful");
