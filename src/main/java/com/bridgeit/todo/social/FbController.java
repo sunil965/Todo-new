@@ -73,6 +73,8 @@ public class FbController {
 			addUser.setName(fbUserData.get("first_name").asText());
 			addUser.setEmail(fbUserData.get("email").asText());
 			addUser.setProfileImage(fbUserData.get("picture").get("data").get("url").asText());
+			addUser.setActive(true);
+			
 			userService.saveUserDetails(addUser);
 			
 			Token token = manipulater.generateToken();
@@ -85,7 +87,7 @@ public class FbController {
 			catch (Exception e) {
 				e.printStackTrace();
 			}
-			response.sendRedirect("http://localhost:8011/ToDo/#!/redirect?tokeninurl=token");
+			response.sendRedirect("http://localhost:8080/ToDo/#!/redirect?tokeninurl=token");
 		}
 		else{
 		Token token = manipulater.generateToken();
@@ -99,7 +101,7 @@ public class FbController {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		response.sendRedirect("http://localhost:8011/ToDo/#!/redirect?tokeninurl=token");
+		response.sendRedirect("http://localhost:8080/ToDo/#!/redirect?tokeninurl=token");
 		}
 	}
 	

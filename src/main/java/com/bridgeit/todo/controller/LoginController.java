@@ -105,10 +105,11 @@ public class LoginController {
 			token.setUser(null);
 			myresponse.setStatus(1);
 			
-			String msg = message.getMessage("login_success_msg", null , request.getLocale());
+
 			
-			//myresponse.setMessage("Logged in Successfully");
-			myresponse.setMessage( msg );
+			myresponse.setMessage("Logged in Successfully");
+//			String msg = message.getMessage("login_success_msg", null , request.getLocale());
+//			myresponse.setMessage( msg );
 			myresponse.setToken(token);
 			return new ResponseEntity<Response>(myresponse, HttpStatus.OK);
 		} 
@@ -163,6 +164,7 @@ public class LoginController {
 		String deletetoken = httpServletRequest.getHeader("AccessToken");
 		System.out.println("delete by this token "+deletetoken);
 		try {
+			tokenRepository.deleteToken(deletetoken);
 			tokservice.deleteToken(deletetoken);
 		}
 		catch (Exception e) {

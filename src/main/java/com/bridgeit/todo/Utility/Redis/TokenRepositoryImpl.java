@@ -15,7 +15,7 @@ public class TokenRepositoryImpl implements TokenRepository {
 	private static final String KEY = "Token";
 
 	private RedisTemplate<String, Token> redisTemplate;
-	private HashOperations hashOps;
+	private HashOperations<String, String, Token> hashOps;
 
 	@Autowired
 	private TokenRepositoryImpl(RedisTemplate redisTemplate) {
@@ -27,18 +27,17 @@ public class TokenRepositoryImpl implements TokenRepository {
 		hashOps = redisTemplate.opsForHash();
 	}
 
-	@SuppressWarnings("unchecked")
+	
 	public void saveToken(Token token) {
 		hashOps.put(KEY, token.getAccesstoken(), token);
 	}
 
-	@SuppressWarnings("unchecked")
 	public Token findToken(String accessToken) {
 		return (Token) hashOps.get(KEY, accessToken);
 	}
 
-	@SuppressWarnings("unchecked")
-	public void deleteToken(int id) {
+	public void deleteToken(String id) {
 		hashOps.delete(KEY, id);
 	}
+	
 }

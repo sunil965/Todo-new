@@ -196,7 +196,7 @@ public class UserRegControl {
 		String emialToVerify = (String) request.getSession().getAttribute(email);
 		service.activateUser(emialToVerify);
 		try {
-			response.sendRedirect("http://localhost:8011/ToDo/#!/login");
+			response.sendRedirect("http://localhost:8080/ToDo/#!/login");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -220,7 +220,7 @@ public class UserRegControl {
 		
 		System.out.println("In resetPasswordApi where email is :"+email);
 		try {
-			response.sendRedirect("http://localhost:8011/ToDo/#!/newpasswordpage");
+			response.sendRedirect("http://localhost:8080/ToDo/#!/newpasswordpage");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

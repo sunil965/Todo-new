@@ -21,7 +21,7 @@ public class FbConnection {
 
 	public static final String FB_APP_ID = "493599474327815";
 	public static final String FB_APP_SECRET = "9f7095b18e5b923b70432e3d6868f7fc";
-	public static final String REDIRECT_URI = "http://localhost:8011/ToDo/todohome";
+	public static final String REDIRECT_URI = "http://localhost:8080/ToDo/todohome";
 
 	public String getFBAuthUrl() {
 		System.out.println("in facebook connection");

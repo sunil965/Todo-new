@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.bridgeit.todo.Utility.Redis.TokenRepository;
 import com.bridgeit.todo.Utility.Redis.TokenRepositoryImpl;
 import com.bridgeit.todo.model.Token;
 import com.bridgeit.todo.service.TokenService;
@@ -51,10 +50,10 @@ public class TokenManipulater {
 		Token retuturnedtoken = null;
 		
 		retuturnedtoken = tokenRepository.findToken(accesstoken);
-	/*	
+		
 		if(retuturnedtoken ==null){
 			retuturnedtoken = (Token) tokenService.getTokenfromDB(accesstoken);
-		}*/
+		}
 		
 		System.out.println("Token from redis :: "+ retuturnedtoken);
 		
@@ -90,6 +89,7 @@ public class TokenManipulater {
 			tokenService.updateAccessToken(newToken);
 			return newToken;
 		}
+		tokenService.getTokenfromDB(accesstoken);
 		tokenService.deleteToken(accesstoken);
 		return null;
 	}

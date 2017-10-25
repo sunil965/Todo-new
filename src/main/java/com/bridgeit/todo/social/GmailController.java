@@ -79,6 +79,8 @@ public class GmailController {
 			addUser.setName(profiledata.get("name").get("givenName").asText());
 			addUser.setEmail(profiledata.get("emails").get(0).get("value").asText());
 			addUser.setProfileImage(profiledata.get("image").get("url").asText());
+			addUser.setActive(true);
+			
 			userService.saveUserDetails(addUser);
 			
 			Token token = manipulater.generateToken();
@@ -93,7 +95,7 @@ public class GmailController {
 			catch (Exception e) {
 				e.printStackTrace();
 			}
-			response.sendRedirect("http://localhost:8011/ToDo/#!/redirect?tokeninurl=token");
+			response.sendRedirect("http://localhost:8080/ToDo/#!/redirect?tokeninurl=token");
 		}
 		else
 		{
@@ -108,7 +110,7 @@ public class GmailController {
 			catch (Exception e) {
 				e.printStackTrace();
 			}
-			response.sendRedirect("http://localhost:8011/ToDo/#!/redirect?tokeninurl=token");
+			response.sendRedirect("http://localhost:8080/ToDo/#!/redirect?tokeninurl=token");
 		}	
 	}
 

@@ -23,7 +23,7 @@ public class GmailLogin {
 	
 	public static final String App_Id = "1024956214628-kip3430tppne3bh7mgvrjt686frlfb1r.apps.googleusercontent.com";
 	public static final String Secret_Id = "Ob4wKrc05h7qVWL5vnkrobAP";
-	public static final String Redirect_URI = "http://localhost:8011/ToDo/gmail_login";
+	public static final String Redirect_URI = "http://localhost:8080/ToDo/gmail_login";
 	
 	public String getGoogleAuthURL(String unid) {
 		

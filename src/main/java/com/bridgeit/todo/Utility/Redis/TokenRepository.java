@@ -8,5 +8,5 @@ public interface TokenRepository {
 	
 	Token findToken(String accessToken);
 	
-	void deleteToken(int id);
+	void deleteToken(String id);
 }
