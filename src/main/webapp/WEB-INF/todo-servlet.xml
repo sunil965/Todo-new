@@ -17,20 +17,22 @@
 	<context:component-scan base-package="com.bridgeit.todo" />
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<mvc:annotation-driven></mvc:annotation-driven>
-	<mvc:resources location="/bower_components/" mapping="/bower_components/**"/>
-	<mvc:resources location="/css/" mapping="/css/**"/>
-	<mvc:resources location="/image/" mapping="/image/**"/>
-	<mvc:resources location="/js/" mapping="/js/**"/>
-	<mvc:resources location="/template/" mapping="/template/**"/>
-	
-	<context:property-placeholder location="classpath*:com/bridgeit/resources/messages"/>
+	<mvc:resources location="/bower_components/" mapping="/bower_components/**" />
+	<mvc:resources location="/css/" mapping="/css/**" />
+	<mvc:resources location="/image/" mapping="/image/**" />
+	<mvc:resources location="/js/" mapping="/js/**" />
+	<mvc:resources location="/template/" mapping="/template/**" />
 
-	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-	  <property name="basenames">
-	    <list>
-	      <value>classpath:com/bridgeit/resources/messages</value>
-	    </list>
-	  </property>
+	<context:property-placeholder
+		location="classpath*:com/bridgeit/resources/messages" />
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:com/bridgeit/resources/messages</value>
+			</list>
+		</property>
 	</bean>
 
 	<bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
@@ -66,9 +68,9 @@
 		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-<!-- <bean id="tokenRepository" class="com.bridgeit.todo.Utility.Redis.TokenRepositoryImpl"> -->
-<!-- <bean id="tokenRepository" class="com.bridgeit.todo.Utility.Redis.TokenRepositoryImpl"> -->
-	
+
+	<!-- <bean id="tokenRepository" class="com.bridgeit.todo.Utility.Redis.TokenRepositoryImpl"> -->
+
 
 	<bean id="validator" class="com.bridgeit.todo.validation.UserRegValidate"></bean>
 
