@@ -54,9 +54,9 @@ var myApp = angular.module('todo',[ 'ui.router', 'ngSanitize', 'ui.bootstrap', '
 			.state("sendemail", {
 				url : "/mail_sent",
 				templateUrl : "template/afterRegistration.html",
-			})
+			});
 			// window.location = "home";
-			$urlRouterProvider.otherwise('/login');
+			$urlRouterProvider.otherwise("/login");
 
 		});
 
@@ -65,15 +65,15 @@ var myApp = angular.module('todo',[ 'ui.router', 'ngSanitize', 'ui.bootstrap', '
 
 /** ******* This direvctive is used to make contents of div editable.****** */
 
-myApp.directive('divdata', [ function()
+myApp.directive("divdata", [ function()
 	{
 	return {
-		require : '?ngModel',
+		require : "?ngModel",
 		scope : {},
 		link : function(scope, element, attrs, ctrl) {
 			// view -> model (when div gets blur update the view value of the
 			// model)
-			element.bind('blur', function() {
+			element.bind("blur", function() {
 				scope.$apply(function() {
 					ctrl.$setViewValue(element.html());
 				});
@@ -88,10 +88,10 @@ myApp.directive('divdata', [ function()
 			ctrl.$render();
 
 			// remove the attached events to element when destroying the scope
-			scope.$on('$destroy', function() {
-				element.unbind('blur');
-				element.unbind('paste');
-				element.unbind('focus');
+			scope.$on("$destroy", function() {
+				element.unbind("blur");
+				element.unbind("paste");
+				element.unbind("focus");
 			});
 		}
 	};
@@ -100,12 +100,12 @@ myApp.directive('divdata', [ function()
 
 /* **********This direvctive is used drag & drop of div.*********** */
 
-myApp.directive('testpackery', [
-		'$rootScope',
-		'$timeout',
+myApp.directive("testpackery", [
+		"$rootScope",
+		"$timeout",
 		function($rootScope, $timeout) {
 			return {
-				restrict : 'A',
+				restrict : "A",
 				link : function(scope, element, attrs) {
 					if ($rootScope.packery === undefined
 							|| $rootScope.packery === null) {
@@ -115,13 +115,13 @@ myApp.directive('testpackery', [
 									isResizeBound : true,
 									// rowHeight: 230,
 									// columnWidth: 230,
-									itemSelector : '.item'
+									itemSelector : ".item"
 								});
 						$rootScope.packery.bindResize();
 						var draggable1 = new Draggabilly(element[0]);
 						$rootScope.packery.bindDraggabillyEvents(draggable1);
 
-						draggable1.on('dragEnd', function(instance, event,
+						draggable1.on("dragEnd", function(instance, event,
 								pointer) {
 							$timeout(function() {
 								$rootScope.packery.layout();
@@ -143,7 +143,7 @@ myApp.directive('testpackery', [
 						var draggable2 = new Draggabilly(element[0]);
 						$rootScope.packery.bindDraggabillyEvents(draggable2);
 
-						draggable2.on('dragEnd', function(instance, event,
+						draggable2.on("dragEnd", function(instance, event,
 								pointer) {
 							$timeout(function() {
 								$rootScope.packery.layout();
